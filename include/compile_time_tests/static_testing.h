@@ -6,32 +6,58 @@ namespace testing {
     /// @tparam RESULTS a list of constexpr booleans
     /// @return true if all RESULTS are true
     template <bool...RESULTS> struct
-    test_suite;
+    assert_all;
 
     //! @cond Doxygen_Suppress
 
     template <bool RESULT> struct
-    test_suite<RESULT> {
+    assert_all<RESULT> {
         public: static constexpr bool
         value = RESULT;
     };
 
 
     template <bool RESULT,bool...REMAINING_TESTS> struct
-    test_suite<RESULT,REMAINING_TESTS...> {
+    assert_all<RESULT,REMAINING_TESTS...> {
         public: static constexpr bool
-        value = RESULT && test_suite<REMAINING_TESTS...>::value;
+        value = RESULT && assert_all<REMAINING_TESTS...>::value;
+    };
+
+    //! @endcond
+    
+    
+    
+    /// @brief metafunction to evaluate a list of individual compile-time tests
+    ///        and returns true if any one of them succeeds
+    /// @tparam RESULTS a list of constexpr booleans
+    /// @return true if any RESULT is true
+    template <bool...RESULTS> struct
+    assert_any;
+
+    //! @cond Doxygen_Suppress
+
+    template <bool RESULT> struct
+    assert_any<RESULT> {
+        public: static constexpr bool
+        value = RESULT;
+    };
+
+
+    template <bool RESULT,bool...REMAINING_TESTS> struct
+    assert_any<RESULT,REMAINING_TESTS...> {
+        public: static constexpr bool
+        value = RESULT || assert_any<REMAINING_TESTS...>::value;
     };
 
     //! @endcond
     
     namespace __testing {
-        static_assert(test_suite<true>::value,"error");
-        static_assert(!test_suite<false>::value,"error");
-        static_assert(test_suite<true,true>::value,"error");
-        static_assert(test_suite<true,true,true>::value,"error");
-        static_assert(!test_suite<true,true,false,true>::value,"error");
-        static_assert(!test_suite<false,true,true,true>::value,"error");
-        static_assert(!test_suite<true,true,true,false>::value,"error");
+        static_assert(assert_all<true>::value,"error");
+        static_assert(!assert_all<false>::value,"error");
+        static_assert(assert_all<true,true>::value,"error");
+        static_assert(assert_all<true,true,true>::value,"error");
+        static_assert(!assert_all<true,true,false,true>::value,"error");
+        static_assert(!assert_all<false,true,true,true>::value,"error");
+        static_assert(!assert_all<true,true,true,false>::value,"error");
     };
 }
