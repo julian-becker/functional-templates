@@ -28,6 +28,9 @@
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
+		B91220C219FBB96800EBFA72 /* has_operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = has_operator.h; path = include/type_traits/has_operator.h; sourceTree = SOURCE_ROOT; };
+		B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoxygenDocs.docset; sourceTree = SOURCE_ROOT; };
+		B9443BF219FBD25400CFA542 /* static_testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = static_testing.h; path = compile_time_tests/static_testing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +49,7 @@
 			children = (
 				B91220B319FBB86600EBFA72 /* FunctionalTemplates */,
 				B91220B219FBB86600EBFA72 /* Products */,
+				B91220C019FBB8F100EBFA72 /* include */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,10 +64,44 @@
 		B91220B319FBB86600EBFA72 /* FunctionalTemplates */ = {
 			isa = PBXGroup;
 			children = (
+				B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */,
 				B91220B419FBB86600EBFA72 /* main.cpp */,
 				B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */,
 			);
 			path = FunctionalTemplates;
+			sourceTree = "<group>";
+		};
+		B91220C019FBB8F100EBFA72 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				B9443BF119FBD20500CFA542 /* compile_time_tests */,
+				B91220CC19FBCCB300EBFA72 /* type_traits */,
+				B91220C119FBB93400EBFA72 /* concepts */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		B91220C119FBB93400EBFA72 /* concepts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = concepts;
+			sourceTree = "<group>";
+		};
+		B91220CC19FBCCB300EBFA72 /* type_traits */ = {
+			isa = PBXGroup;
+			children = (
+				B91220C219FBB96800EBFA72 /* has_operator.h */,
+			);
+			name = type_traits;
+			sourceTree = "<group>";
+		};
+		B9443BF119FBD20500CFA542 /* compile_time_tests */ = {
+			isa = PBXGroup;
+			children = (
+				B9443BF219FBD25400CFA542 /* static_testing.h */,
+			);
+			name = compile_time_tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -76,6 +114,7 @@
 				B91220AD19FBB86600EBFA72 /* Sources */,
 				B91220AE19FBB86600EBFA72 /* Frameworks */,
 				B91220AF19FBB86600EBFA72 /* CopyFiles */,
+				B91220C319FBC28500EBFA72 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -111,6 +150,24 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B91220C319FBC28500EBFA72 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/include",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/DoxygenDocs.docset",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#  Build the doxygen documentation for the project and load the docset into Xcode.\n \n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n \n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to\n#   a get default file.\n \nif ! [ -f $SOURCE_ROOT/doxygen.config ]\nthen\n  echo doxygen config file does not exist\n  $DOXYGEN_PATH -g $SOURCE_ROOT/doxygen.config\nfi\n \n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n \ncp $SOURCE_ROOT/doxygen.config $TEMP_DIR/doxygen.config\n \necho \"INPUT = $SOURCE_ROOT\" >> $TEMP_DIR/doxygen.config\necho \"OUTPUT_DIRECTORY = $SOURCE_ROOT/DoxygenDocs.docset\" >> $TEMP_DIR/doxygen.config\necho \"GENERATE_DOCSET        = YES\" >> $TEMP_DIR/doxygen.config\necho \"DOCSET_BUNDLE_ID       = com.mycompany.DoxygenExample\" >> $TEMP_DIR/doxygen.config\n \n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n \n$DOXYGEN_PATH $TEMP_DIR/doxygen.config\n \n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n \nmake -C $SOURCE_ROOT/DoxygenDocs.docset/html install\n \n#  Construct a temporary applescript file to tell Xcode to load a docset.\n \nrm -f $TEMP_DIR/loadDocSet.scpt\n \necho \"tell application \\\"Xcode\\\"\" >> $TEMP_DIR/loadDocSet.scpt\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\"\n     >> $TEMP_DIR/loadDocSet.scpt\necho \"end tell\" >> $TEMP_DIR/loadDocSet.scpt\n \n#  Run the load-docset applescript command.\n \nosascript $TEMP_DIR/loadDocSet.scpt\n \nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B91220AD19FBB86600EBFA72 /* Sources */ = {
@@ -197,14 +254,20 @@
 		B91220BB19FBB86600EBFA72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = include;
 			};
 			name = Debug;
 		};
 		B91220BC19FBB86600EBFA72 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = include;
 			};
 			name = Release;
 		};
@@ -227,6 +290,7 @@
 				B91220BC19FBB86600EBFA72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

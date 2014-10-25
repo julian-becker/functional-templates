@@ -7,6 +7,8 @@
 //
 
 #include <iostream>
+#include <type_traits/has_operator.h>
+#include <compile_time_tests/static_testing.h>
 
 int main(int argc, const char * argv[])
 {
