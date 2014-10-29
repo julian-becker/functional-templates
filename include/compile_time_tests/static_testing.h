@@ -3,6 +3,7 @@
 #include <utility>
 #include <type_traits>
 
+namespace ftmpl {
 namespace testing {
 
     /// @brief metafunction to evaluate a list of individual compile-time tests
@@ -99,4 +100,5 @@ namespace testing {
         
     };
 
+}
 }
