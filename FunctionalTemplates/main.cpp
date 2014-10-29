@@ -21,6 +21,10 @@ int main(int argc, const char * argv[])
     std::cout << "i="<<i<<std::endl << "some1="<<some1.as<int>() << std::endl;
     some1 = std::string("Hello World");
     std::cout << "some1="<<some1.as<std::string>() << std::endl;
+    some1 = 13;
+    some1 = std::string("test");
+    some1 = 13;
+    std::cout << "some1="<<some1.as<int>() << std::endl;
     
     return 0;
 }

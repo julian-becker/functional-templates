@@ -48,7 +48,7 @@ namespace ftmpl {
         /// @brief Assignment operator for values of type T
         public: any_of&
         operator = (const T& val) {
-            value = val;
+            new (&value) T(val);
             return *this;
         }
         
@@ -110,7 +110,14 @@ namespace ftmpl {
         /// @brief Assignment operator for values of type T
         public: any_of<T>&
         operator = (const T& val) {
-            value = val;
+            new (&value) T(val);
+            return *this;
+        }
+        
+        /// @brief Assignment operator for values of type T
+        public: any_of&
+        operator = (T&& val) {
+            new (&value) T(std::forward<T>(val));
             return *this;
         }
         
