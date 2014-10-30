@@ -30,10 +30,13 @@
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
 		B91220C219FBB96800EBFA72 /* has_operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = has_operator.h; path = include/type_traits/has_operator.h; sourceTree = SOURCE_ROOT; };
 		B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoxygenDocs.docset; sourceTree = SOURCE_ROOT; };
+		B938587C1A019FBD00E5AEDF /* index_of.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = index_of.h; path = type_traits/index_of.h; sourceTree = "<group>"; };
+		B938587D1A01A0CB00E5AEDF /* type_at.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = type_at.h; path = type_traits/type_at.h; sourceTree = "<group>"; };
 		B9443BF219FBD25400CFA542 /* static_testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = static_testing.h; path = compile_time_tests/static_testing.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
 		B9443BF419FBEF5800CFA542 /* monad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = monad.h; sourceTree = "<group>"; };
 		B9443BF619FBF41E00CFA542 /* any_of.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = any_of.h; sourceTree = "<group>"; };
+		B9536B431A02BD6C00C86774 /* insertable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = insertable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				B9443BF419FBEF5800CFA542 /* monad.h */,
+				B9536B431A02BD6C00C86774 /* insertable.h */,
 			);
 			path = concepts;
 			sourceTree = "<group>";
@@ -97,7 +101,9 @@
 		B91220CC19FBCCB300EBFA72 /* type_traits */ = {
 			isa = PBXGroup;
 			children = (
+				B938587C1A019FBD00E5AEDF /* index_of.h */,
 				B91220C219FBB96800EBFA72 /* has_operator.h */,
+				B938587D1A01A0CB00E5AEDF /* type_at.h */,
 			);
 			name = type_traits;
 			sourceTree = "<group>";

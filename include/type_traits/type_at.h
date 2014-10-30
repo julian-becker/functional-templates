@@ -31,7 +31,6 @@ namespace ftmpl {
         public: using type = typename type_at<N-1,Ts...>::type;
     };
 
-
     namespace {
     
         using namespace testing;

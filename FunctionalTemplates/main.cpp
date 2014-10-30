@@ -11,20 +11,23 @@
 #include <compile_time_tests/static_testing.h>
 #include <any_of.h>
 #include <string>
+#include <list>
 
 using namespace ftmpl;
 
 int main(int argc, const char * argv[])
 {
-    any_of<int,std::string> some1(10);
-    int i = any_of<int,std::string>(10).as<int>();
-    std::cout << "i="<<i<<std::endl << "some1="<<some1.as<int>() << std::endl;
-    some1 = std::string("Hello World");
-    std::cout << "some1="<<some1.as<std::string>() << std::endl;
-    some1 = 13;
-    some1 = std::string("test");
-    some1 = 13;
-    std::cout << "some1="<<some1.as<int>() << std::endl;
+    std::list<union_of<int,double,float,std::string>> mylist;
+    mylist.emplace_front(33.1f);
+    mylist.emplace_front(34.576);
+    mylist.emplace_front(77);
+    mylist.emplace_front(std::string("Hello World"));
+    
+    std::list<union_of<int,double,float,std::string>>::iterator it2 = mylist.begin();
+    
+    for(const auto& it: mylist) {
+        std::cout << it << std::endl;
+    }
     
     return 0;
 }
