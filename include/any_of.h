@@ -5,6 +5,7 @@
 #include <type_traits/index_of.h>
 #include <type_traits/type_at.h>
 #include <concepts/insertable.h>
+#include <type_traits/has_type.h>
 
 namespace ftmpl {
 
@@ -219,9 +220,10 @@ namespace ftmpl {
         public:
         ~union_of() {};
         
+
         
         /// @brief Move constructor
-        public: template <typename T> constexpr
+        public: template <typename T, typename = typename std::enable_if<has_type<T,Ts...>::value>::type> constexpr
         union_of(T&& t) noexcept : value(std::forward<T>(t)), type_index(index_of<T,Ts...>::value) {}
         
         /// @brief Constructor
@@ -257,6 +259,7 @@ namespace ftmpl {
         public: template <typename T1>
         union_of&
         operator = (const T1& val) {
+            type_index = index_of<T1,Ts...>::value;
             value = val;
             return *this;
         }
@@ -265,6 +268,7 @@ namespace ftmpl {
         public: template <typename T1>
         union_of&
         operator = (T1&& val) {
+            type_index = index_of<T1,Ts...>::value;
             value = std::forward<T1>(val);
             return *this;
         }
@@ -290,9 +294,8 @@ namespace ftmpl {
         
         public: template<
             typename OTHER_T,
-            unsigned INDEX=0,
             typename = typename std::enable_if<
-                type_traits::is_insertible<OTHER_T,typename type_at<INDEX,Ts...>::type>::value
+                type_traits::is_insertible<OTHER_T,typename type_at<0,Ts...>::type>::value
             >::type
         >
         friend OTHER_T&

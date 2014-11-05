@@ -22,6 +22,13 @@ namespace ftmpl {
 
     ///! @cond Doxygen_Suppress
 
+
+    template <typename T,typename...Ts> struct
+    index_of<T,T,Ts...> {
+        public: static constexpr unsigned
+        value = 0;
+    };
+    
     template <typename T1,typename T2,typename...Ts> struct
     index_of<T1,T2,Ts...> {
         public: static constexpr unsigned
@@ -29,11 +36,6 @@ namespace ftmpl {
     };
 
 
-    template <typename T,typename...Ts> struct
-    index_of<T,T,Ts...> {
-        public: static constexpr unsigned
-        value = 0;
-    };
 
 
     namespace __detail {
