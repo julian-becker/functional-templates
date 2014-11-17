@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B90F317D1A0C01B7001316CE /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B90F317B1A0C01B7001316CE /* logic.cpp */; };
+		B90F31801A0D65A7001316CE /* custom_infix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B90F317E1A0D65A7001316CE /* custom_infix.cpp */; };
+		B90F31831A0D8FBF001316CE /* playground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B90F31811A0D8FBF001316CE /* playground.cpp */; };
+		B91017CD1A1AA2500063D5D6 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017CB1A1AA2500063D5D6 /* map.cpp */; };
+		B91017D01A1AA3440063D5D6 /* result_of.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017CE1A1AA3440063D5D6 /* result_of.cpp */; };
+		B91017D31A1AA4800063D5D6 /* append.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017D11A1AA4800063D5D6 /* append.cpp */; };
 		B91220B519FBB86600EBFA72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91220B419FBB86600EBFA72 /* main.cpp */; };
 		B91220B719FBB86600EBFA72 /* FunctionalTemplates.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */; };
 /* End PBXBuildFile section */
@@ -26,6 +32,18 @@
 
 /* Begin PBXFileReference section */
 		B90F31641A0AC17C001316CE /* curry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curry.h; sourceTree = "<group>"; };
+		B90F317B1A0C01B7001316CE /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
+		B90F317C1A0C01B7001316CE /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
+		B90F317E1A0D65A7001316CE /* custom_infix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = custom_infix.cpp; sourceTree = "<group>"; };
+		B90F317F1A0D65A7001316CE /* custom_infix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = custom_infix.h; sourceTree = "<group>"; };
+		B90F31811A0D8FBF001316CE /* playground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = playground.cpp; sourceTree = "<group>"; };
+		B90F31821A0D8FBF001316CE /* playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playground.h; sourceTree = "<group>"; };
+		B91017CB1A1AA2500063D5D6 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
+		B91017CC1A1AA2500063D5D6 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
+		B91017CE1A1AA3440063D5D6 /* result_of.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = result_of.cpp; sourceTree = "<group>"; };
+		B91017CF1A1AA3440063D5D6 /* result_of.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = result_of.h; sourceTree = "<group>"; };
+		B91017D11A1AA4800063D5D6 /* append.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = append.cpp; sourceTree = "<group>"; };
+		B91017D21A1AA4800063D5D6 /* append.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = append.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -53,6 +71,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B91017CA1A1AA2140063D5D6 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				B91017CB1A1AA2500063D5D6 /* map.cpp */,
+				B91017CC1A1AA2500063D5D6 /* map.h */,
+				B91017D11A1AA4800063D5D6 /* append.cpp */,
+				B91017D21A1AA4800063D5D6 /* append.h */,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
 		B91220A819FBB86600EBFA72 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +106,8 @@
 				B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */,
 				B91220B419FBB86600EBFA72 /* main.cpp */,
 				B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */,
+				B90F31811A0D8FBF001316CE /* playground.cpp */,
+				B90F31821A0D8FBF001316CE /* playground.h */,
 			);
 			path = FunctionalTemplates;
 			sourceTree = "<group>";
@@ -84,12 +115,19 @@
 		B91220C019FBB8F100EBFA72 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				B91017CA1A1AA2140063D5D6 /* List */,
 				B9443BF119FBD20500CFA542 /* compile_time_tests */,
 				B91220CC19FBCCB300EBFA72 /* type_traits */,
 				B91220C119FBB93400EBFA72 /* concepts */,
 				B9443BF619FBF41E00CFA542 /* any_of.h */,
 				B99607311A0818E800F6E6A7 /* Maybe.h */,
 				B90F31641A0AC17C001316CE /* curry.h */,
+				B90F317B1A0C01B7001316CE /* logic.cpp */,
+				B90F317C1A0C01B7001316CE /* logic.h */,
+				B90F317E1A0D65A7001316CE /* custom_infix.cpp */,
+				B90F317F1A0D65A7001316CE /* custom_infix.h */,
+				B91017CE1A1AA3440063D5D6 /* result_of.cpp */,
+				B91017CF1A1AA3440063D5D6 /* result_of.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -192,6 +230,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91017D31A1AA4800063D5D6 /* append.cpp in Sources */,
+				B90F31831A0D8FBF001316CE /* playground.cpp in Sources */,
+				B91017D01A1AA3440063D5D6 /* result_of.cpp in Sources */,
+				B90F31801A0D65A7001316CE /* custom_infix.cpp in Sources */,
+				B90F317D1A0C01B7001316CE /* logic.cpp in Sources */,
+				B91017CD1A1AA2500063D5D6 /* map.cpp in Sources */,
 				B91220B519FBB86600EBFA72 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

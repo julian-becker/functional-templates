@@ -14,6 +14,9 @@
 #include <list>
 #include <Maybe.h>
 #include <curry.h>
+#include <stdio.h>
+#include <custom_infix.h>
+#include <playground.h>
 
 using namespace ftmpl;
 
@@ -23,11 +26,15 @@ Maybe<int> maybetest(int i) {
 }*/
 
 
-std::string fun(int a,int b,int c, char w)
+void fun(int a,int b,int c, char w)
 {
     std::stringstream ret;
     ret << a << b << c << w;
-    return ret.str();
+}
+
+void f(std::string a,std::string b,std::string c)
+{
+    std::cout << a << b << c;
 }
 
 int main(int argc, const char * argv[])
@@ -37,8 +44,14 @@ int main(int argc, const char * argv[])
     mylist.emplace_front(34.576);
     mylist.emplace_front(77);
     mylist.emplace_front(std::string("Hello World"));
+    curry(fun)(4)(7)(88)('X');
+//    std::cout << "fff(4,7,88,'X')=" << curry(fun)(4)(7)(88)('X') << std::endl;
     
-    std::cout << "fff(4,7,88,'X')=" << curry(fun)(4)(7)(88)('X') << std::endl;
+
+    
+    curry(f)("Hello ")("functional ")("world!");
+   
+//    curry(printf)("test %f done")(1.23456f);
 //    std::cout << "fff(4,7,88)=" << ((fff(4))(7))(88) << std::endl;
     
     std::list<union_of<int,double,float,std::string>>::iterator it2 = mylist.begin();
@@ -51,6 +64,7 @@ int main(int argc, const char * argv[])
     a=4.4f;
     
     std::cout << "a=" << a << std::endl;
+    run_playground();
 
     return 0;
 }

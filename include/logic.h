@@ -9,6 +9,9 @@
 #ifndef __FunctionalTemplates__logic__
 #define __FunctionalTemplates__logic__
 
+#include <type_traits>
+#include <result_of.h>
+
 #if defined (ENABLE_TESTS)
 #define ASSERT(...) static_assert(__VA_ARGS__::value,#__VA_ARGS__)
 #else
@@ -16,6 +19,10 @@
 #endif
 
 #define ASSERT_NOT(...) ASSERT(!__VA_ARGS__)
+#define ASSERT_EQUAL(...) static_assert(std::is_same<__VA_ARGS__>::value, "expected types " #__VA_ARGS__ " to be the same, but they are not")
+#define ASSERT_NOT_EQUAL(...) static_assert(!std::is_same<__VA_ARGS__>::value, "expected types " #__VA_ARGS__ " to be different, but they are not")
+
+
 
 // ###################################################################################
 
@@ -38,11 +45,40 @@ struct FALSE {
 
 ASSERT(!FALSE);
 
+
+
+struct
+static_string {
+    private: const char* content;
+    private: const size_t size;
+    
+    public: static_string(const static_string& other) = default;
+    public: template <size_t LEN>
+    constexpr static_string(const char (&str)[LEN]) : content(str), size(LEN) {}
+    constexpr static_string(const char* str,unsigned long len) : content(str), size(len) {}
+    public: constexpr operator const char* () const { return content; }
+    public: constexpr char operator [] (size_t index) const { return content[index]; }
+};
+
+
+constexpr const static_string test("test");
+
+constexpr static_string
+operator "" _str(const char *s, unsigned long len) {
+    return static_string(s,len);
+}
+
+constexpr auto test2 = "12334"_str;
+
+
+struct constexpr_functor {
+    constexpr constexpr_functor() {}
+    constexpr constexpr_functor operator () () const { return constexpr_functor(); }
+};
+
+
 // ###################################################################################
 
-/// extracts the resulting TRUE or FALSE from T::result
-template <typename T> using
-result_of = typename T::result;
 
 //template <typename T> bool
 //value_of = T::value;
@@ -67,6 +103,14 @@ namespace __dtl {
         using
         result = FALSE;
     };
+    
+    /// specialization of negate for TRUE, resulting in FALSE
+    template <typename BOOL> struct
+    __negate<__negate<BOOL>> {
+        /// yield FALSE only if argument is TRUE
+        using
+        result = BOOL;
+    };
 }
 ///! @endcond Doxygen_Suppress
 
@@ -77,6 +121,20 @@ ASSERT(negate<FALSE>);
 ASSERT_NOT(negate<TRUE>);
 ASSERT(negate<negate<TRUE>>);
 ASSERT_NOT(negate<negate<FALSE>>);
+
+#include <type_traits>
+ASSERT(std::is_same<FALSE,FALSE>);
+
+
+// ###################################################################################
+
+template <typename BOOL> using
+id = BOOL;
+
+ASSERT(id<TRUE>);
+ASSERT(id<id<TRUE>>);
+ASSERT_NOT(id<FALSE>);
+ASSERT_EQUAL(FALSE,FALSE);
 
 // ###################################################################################
 
@@ -115,6 +173,8 @@ ASSERT(if_false<FALSE,TRUE,FALSE>);
 ASSERT_NOT(if_false<FALSE,FALSE,TRUE>);
 ASSERT(if_false<TRUE,FALSE,TRUE>);
 
+
+
 // ###################################################################################
 
 ///! @cond Doxygen_Suppress
@@ -131,16 +191,37 @@ namespace __dtl {
         using
         result = TRUE;
     };
+    
+    
+    template <template <typename> class T1, template <typename> class T2> struct
+    __equal_t1 {
+        using
+        result = FALSE;
+    };
+
+    template <template <typename> class T> struct
+    __equal_t1<T,T> {
+        using
+        result = TRUE;
+    };
+
 }
 ///! @endcond Doxygen_Suppress
 
 template <typename BOOL1,typename BOOL2> using
 equal = result_of<__dtl::__equal<BOOL1,BOOL2>>;
 
+template <template <typename> class T1, template <typename> class T2> using
+equal_t1 = result_of<__dtl::__equal_t1<T1,T2>>;
+
 ASSERT(equal<TRUE,TRUE>);
 ASSERT_NOT(equal<TRUE,FALSE>);
 ASSERT_NOT(equal<FALSE,TRUE>);
 ASSERT(equal<FALSE,FALSE>);
+
+
+ASSERT(equal<negate<FALSE>,TRUE>);
+
 
 // ###################################################################################
 
@@ -179,7 +260,7 @@ namespace __dtl {
     template <template <typename,typename> class META_FUN, typename INIT, typename T, typename...TS> struct
     __foldl<META_FUN,INIT,T,TS...> {
         using
-        result = result_of<__foldl<META_FUN, META_FUN<INIT,TS...>>>;
+        result = result_of<__foldl<META_FUN, META_FUN<INIT,T>, TS...>>;
     };
 
 
@@ -252,12 +333,14 @@ ASSERT(!both<FALSE,FALSE>);
 // ###################################################################################
 
 template <typename...BOOLS> using
-any = foldr<either,FALSE,BOOLS...>;
+any = foldl<either,FALSE,BOOLS...>;
+//any = foldr<either,FALSE,BOOLS...>;  /// alternative implementation
 
 // ###################################################################################
 
 template <typename...BOOLS> using
-all = foldr<both,TRUE,BOOLS...>;
+all = foldl<both,TRUE,BOOLS...>;
+//all = foldr<both,TRUE,BOOLS...>;      /// alternative implementation
 
 // ###################################################################################
 
@@ -273,6 +356,43 @@ ASSERT(negate<all<FALSE,TRUE,TRUE>>);
 ASSERT(any<TRUE>);
 ASSERT(any<TRUE,FALSE,TRUE,TRUE,TRUE>);
 ASSERT(negate<any<FALSE,FALSE,FALSE,FALSE>>);
+
+ASSERT(equal_t1<negate,negate>);
+
+
+// ###################################################################################
+
+template <typename...TS> struct
+type_list {};
+
+// ###################################################################################
+
+//! @cond Doxygen_Suppress
+namespace __dtl {
+
+    template <typename T, typename LIST> struct
+    __cons;
+
+    template <typename T, template <typename...> class LIST, typename...TS> struct
+    __cons<T,LIST<TS...> > {
+        using
+        result = LIST<T,TS...>;
+    };
+}
+//! @endcond Doxygen_Suppress
+
+template <typename T, typename LIST> using
+cons = result_of<__dtl::__cons<T,LIST>>;
+
+// ###################################################################################
+
+
+
+// ###################################################################################
+
+
+//template <template <typename> class FUN, template<typename...> class LIST,typename...TS> using
+//map = foldr< compose<cons_t,FUN>, LIST< >, LIST<TS...>>;
 
 
 #endif /* defined(__FunctionalTemplates__logic__) */
