@@ -10,17 +10,25 @@
 #define __FunctionalTemplates__fold__
 
 #include <result_of.h>
+#include <list.h>
 
 ///! @cond Doxygen_Suppress
 namespace __dtl {
 
-    template <template <typename,typename> class META_FUN, typename INIT, typename LIST> struct
-    __foldr;
+    using namespace prelude::list;
 
-    template <template <typename,typename> class META_FUN, typename INIT, template <typename...> class LIST_TYPE, typename T, typename...TS> struct
-    __foldr<META_FUN,INIT,LIST_TYPE<T,TS...>> {
+
+    template <template <typename,typename> class META_FUN, typename INIT, typename LIST> struct
+    __foldr {
         using
-        result = META_FUN<T,result_of<__foldr<META_FUN,INIT,LIST_TYPE<TS...>>>>;
+        result = META_FUN<
+                    head<LIST>,
+                    result_of<__foldr<
+                                META_FUN,
+                                INIT,
+                                tail<LIST> >
+                    >
+                >;
     };
 
 
@@ -39,16 +47,14 @@ foldr = result_of<__dtl::__foldr<META_FUN, INIT, LIST>>;
 
 ///! @cond Doxygen_Suppress
 namespace __dtl {
+    
+    using namespace prelude::list;
 
     template <template <typename,typename> class META_FUN, typename INIT, typename LIST> struct
-    __foldl;
-
-    template <template <typename,typename> class META_FUN, typename INIT, template <typename...> class LIST_TYPE, typename T, typename...TS> struct
-    __foldl<META_FUN,INIT,LIST_TYPE<T,TS...> > {
+    __foldl {
         using
-        result = result_of<__foldl<META_FUN, META_FUN<INIT,T>, LIST_TYPE<TS...> > >;
+        result = result_of<__foldl<META_FUN, META_FUN<INIT,head<LIST>>, tail<LIST> > >;
     };
-
 
     template <template <typename,typename> class META_FUN, typename INIT, template <typename...> class LIST_TYPE> struct
     __foldl<META_FUN,INIT,LIST_TYPE<>> {
