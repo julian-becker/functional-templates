@@ -11,18 +11,9 @@
 
 #include <type_traits>
 #include <result_of.h>
-
-#if defined (ENABLE_TESTS)
-#define ASSERT(...) static_assert(__VA_ARGS__::value,#__VA_ARGS__)
-#else
-#define ASSERT(...) 
-#endif
-
-#define ASSERT_NOT(...) ASSERT(!__VA_ARGS__)
-#define ASSERT_EQUAL(...) static_assert(std::is_same<__VA_ARGS__>::value, "expected types " #__VA_ARGS__ " to be the same, but they are not")
-#define ASSERT_NOT_EQUAL(...) static_assert(!std::is_same<__VA_ARGS__>::value, "expected types " #__VA_ARGS__ " to be different, but they are not")
-
-
+#include <meta_assert.h>
+#include <fold.h>
+#include <list.h>
 
 // ###################################################################################
 
@@ -44,8 +35,6 @@ struct FALSE {
 };
 
 ASSERT(!FALSE);
-
-
 
 struct
 static_string {
@@ -138,142 +127,13 @@ ASSERT_EQUAL(FALSE,FALSE);
 
 // ###################################################################################
 
-///! @cond Doxygen_Suppress
-namespace __dtl {
-
-    template <typename BOOL,typename IF_TRUE,typename ELSE> struct
-    __if_true {
-        using
-        result = ELSE;
-    };
-
-    template <typename IF_TRUE,typename ELSE> struct
-    __if_true<TRUE,IF_TRUE,ELSE> {
-        using
-        result = IF_TRUE;
-    };
-}
-///! @endcond Doxygen_Suppress
-
-template <typename BOOL,typename IF_TRUE,typename ELSE>
-using if_true = result_of<__dtl::__if_true<BOOL,IF_TRUE,ELSE>>;
-
-ASSERT(if_true<TRUE,TRUE,FALSE>);
-ASSERT_NOT(if_true<FALSE,TRUE,FALSE>);
-ASSERT(if_true<FALSE,FALSE,TRUE>);
-ASSERT_NOT(if_true<TRUE,FALSE,TRUE>);
 
 // ###################################################################################
 
-template <typename BOOL, typename IF_TRUE, typename ELSE> using
-if_false = negate<if_true<BOOL, IF_TRUE, ELSE>>;
-
-ASSERT_NOT(if_false<TRUE,TRUE,FALSE>);
-ASSERT(if_false<FALSE,TRUE,FALSE>);
-ASSERT_NOT(if_false<FALSE,FALSE,TRUE>);
-ASSERT(if_false<TRUE,FALSE,TRUE>);
 
 
 
 // ###################################################################################
-
-///! @cond Doxygen_Suppress
-namespace __dtl {
-
-    template <typename BOOL1, typename BOOL2> struct
-    __equal {
-        using
-        result = FALSE;
-    };
-
-    template <typename BOOL> struct
-    __equal <BOOL,BOOL> {
-        using
-        result = TRUE;
-    };
-    
-    
-    template <template <typename> class T1, template <typename> class T2> struct
-    __equal_t1 {
-        using
-        result = FALSE;
-    };
-
-    template <template <typename> class T> struct
-    __equal_t1<T,T> {
-        using
-        result = TRUE;
-    };
-
-}
-///! @endcond Doxygen_Suppress
-
-template <typename BOOL1,typename BOOL2> using
-equal = result_of<__dtl::__equal<BOOL1,BOOL2>>;
-
-template <template <typename> class T1, template <typename> class T2> using
-equal_t1 = result_of<__dtl::__equal_t1<T1,T2>>;
-
-ASSERT(equal<TRUE,TRUE>);
-ASSERT_NOT(equal<TRUE,FALSE>);
-ASSERT_NOT(equal<FALSE,TRUE>);
-ASSERT(equal<FALSE,FALSE>);
-
-
-ASSERT(equal<negate<FALSE>,TRUE>);
-
-
-// ###################################################################################
-
-///! @cond Doxygen_Suppress
-namespace __dtl {
-
-    template <template <typename,typename> class META_FUN, typename INIT, typename...TS> struct
-    __foldr;
-
-    template <template <typename,typename> class META_FUN, typename INIT, typename T, typename...TS> struct
-    __foldr<META_FUN,INIT,T,TS...> {
-        using
-        result = META_FUN<T,result_of<__foldr<META_FUN,INIT,TS...>>>;
-    };
-
-
-    template <template <typename,typename> class META_FUN, typename INIT> struct
-    __foldr<META_FUN,INIT> {
-        using
-        result = INIT;
-    };
-}
-///! @endcond Doxygen_Suppress
-
-template <template <typename,typename> class META_FUN, typename INIT, typename T, typename...TS> using
-foldr = result_of<__dtl::__foldr<META_FUN, INIT, T, TS...>>;
-
-// ###################################################################################
-
-///! @cond Doxygen_Suppress
-namespace __dtl {
-
-    template <template <typename,typename> class META_FUN, typename INIT, typename...TS> struct
-    __foldl;
-
-    template <template <typename,typename> class META_FUN, typename INIT, typename T, typename...TS> struct
-    __foldl<META_FUN,INIT,T,TS...> {
-        using
-        result = result_of<__foldl<META_FUN, META_FUN<INIT,T>, TS...>>;
-    };
-
-
-    template <template <typename,typename> class META_FUN, typename INIT> struct
-    __foldl<META_FUN,INIT> {
-        using
-        result = INIT;
-    };
-}
-///! @endcond Doxygen_Suppress
-
-template <template <typename,typename> class META_FUN, typename INIT, typename T, typename...TS> using
-foldl = result_of<__dtl::__foldl<META_FUN, INIT, T, TS...>>;
 
 // ###################################################################################
 
@@ -333,13 +193,13 @@ ASSERT(!both<FALSE,FALSE>);
 // ###################################################################################
 
 template <typename...BOOLS> using
-any = foldl<either,FALSE,BOOLS...>;
+any = foldl<either,FALSE,prelude::list::list<BOOLS...>>;
 //any = foldr<either,FALSE,BOOLS...>;  /// alternative implementation
 
 // ###################################################################################
 
 template <typename...BOOLS> using
-all = foldl<both,TRUE,BOOLS...>;
+all = foldl<both,TRUE,prelude::list::list<BOOLS...>>;
 //all = foldr<both,TRUE,BOOLS...>;      /// alternative implementation
 
 // ###################################################################################
@@ -356,8 +216,6 @@ ASSERT(negate<all<FALSE,TRUE,TRUE>>);
 ASSERT(any<TRUE>);
 ASSERT(any<TRUE,FALSE,TRUE,TRUE,TRUE>);
 ASSERT(negate<any<FALSE,FALSE,FALSE,FALSE>>);
-
-ASSERT(equal_t1<negate,negate>);
 
 
 // ###################################################################################
