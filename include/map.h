@@ -28,6 +28,10 @@ namespace prelude {
     //! @endcond Doxygen_Suppress
     
     
+    /// @brief maps a given LIST using the metafunction FN.
+    /// @tparam FN the metafunction used for the mapping of the types in the typelist LIST
+    /// @tparam LIST the typelist which is to be mapped using FN
+    /// @return new typelist based on the same tamplate as LIST, containing the types contained in LIST mapped via FN
     template <template <typename> class FN, typename LIST> using
     map = result_of<__dtl::__map<FN,LIST> >;
 
