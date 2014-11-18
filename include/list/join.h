@@ -11,6 +11,10 @@
 
 #include <result_of.h>
 
+// for testing purposes:
+#include <meta_assert.h>
+#include <list/list.h>
+
 namespace list {
   
     //! @cond Doxygen_Suppress
@@ -34,6 +38,8 @@ namespace list {
     template <typename LIST1, typename LIST2> using
     join = result_of<__dtl::__join<LIST1,LIST2> >;
 
+
+    ASSERT_EQUAL(join<list<void*,int>,list<char,double>>,list<void*,int,char,double>);
 }
 
 #endif /* defined(__FunctionalTemplates__join__) */

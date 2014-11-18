@@ -11,6 +11,10 @@
 
 #include <result_of.h>
 
+// for testing purposes:
+#include <meta_assert.h>
+#include <list/list.h>
+
 namespace list {
 
     // ! @cond Doxygen_Suppress
@@ -28,6 +32,10 @@ namespace list {
     
     template <typename LIST> using
     clear = result_of<__dtl::__clear<LIST>>;
+    
+    ASSERT_EQUAL(clear<list<int,double>>,list<>);
+    
+    
     
 }
 

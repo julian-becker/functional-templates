@@ -11,6 +11,10 @@
 
 #include <result_of.h>
 
+// for testing purposes:
+#include <meta_assert.h>
+#include <list/list.h>
+
 namespace list {
 
     namespace __dtl {
@@ -25,6 +29,9 @@ namespace list {
     }
     
     template <typename LIST> using tail = result_of<__dtl::__tail<LIST>>;
+    
+    
+    ASSERT_EQUAL(tail<list<void*,char,double>>,list<char,double>);
 }
 
 #endif /* defined(__FunctionalTemplates__tail__) */
