@@ -36,36 +36,6 @@ struct FALSE {
 
 ASSERT(!FALSE);
 
-struct
-static_string {
-    private: const char* content;
-    private: const size_t size;
-    
-    public: static_string(const static_string& other) = default;
-    public: template <size_t LEN>
-    constexpr static_string(const char (&str)[LEN]) : content(str), size(LEN) {}
-    constexpr static_string(const char* str,unsigned long len) : content(str), size(len) {}
-    public: constexpr operator const char* () const { return content; }
-    public: constexpr char operator [] (size_t index) const { return content[index]; }
-};
-
-
-constexpr const static_string test("test");
-
-constexpr static_string
-operator "" _str(const char *s, unsigned long len) {
-    return static_string(s,len);
-}
-
-constexpr auto test2 = "12334"_str;
-
-
-struct constexpr_functor {
-    constexpr constexpr_functor() {}
-    constexpr constexpr_functor operator () () const { return constexpr_functor(); }
-};
-
-
 // ###################################################################################
 
 
