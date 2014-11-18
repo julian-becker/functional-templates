@@ -20,7 +20,7 @@ namespace prelude {
     /// @tparam T       the type to add to the end of the typelist LIST.
     /// @tparam LIST    the list, to which to add T at the end.
     template <typename T, typename LIST> using
-    append = join<LIST,cons<T,prelude::list::clear<LIST>>>;
+    append = join<LIST,cons<T,clear<LIST>>>;
   }
 }
 
