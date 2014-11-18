@@ -7,3 +7,10 @@
 //
 
 #include "join.h"
+
+#include <meta_assert.h>
+#include <list/list.h>
+
+using namespace list;
+    
+ASSERT_EQUAL(join<list<void*,int>,list<char,double>>,list<void*,int,char,double>);

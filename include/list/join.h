@@ -9,27 +9,11 @@
 #ifndef __FunctionalTemplates__join__
 #define __FunctionalTemplates__join__
 
+#include <list/detail/dtl_join.h>
 #include <result_of.h>
 
-// for testing purposes:
-#include <meta_assert.h>
-#include <list/list.h>
 
 namespace list {
-  
-    //! @cond Doxygen_Suppress
-    namespace __dtl {
-    // ! 
-        template <typename LIST1,typename LIST2> struct
-        __join;
-        
-        template <template <typename...> class LIST_TEMPLATE, typename...ELEMENTS1, typename...ELEMENTS2> struct
-        __join<LIST_TEMPLATE<ELEMENTS1...>,LIST_TEMPLATE<ELEMENTS2...>> {
-            using result = LIST_TEMPLATE<ELEMENTS1...,ELEMENTS2...>;
-        };
-    }
-    //! @endcond Doxygen_Suppress
-    
     
     /// @brief metafunction JOIN.
     /// @tparam LIST1 the first list
@@ -38,8 +22,6 @@ namespace list {
     template <typename LIST1, typename LIST2> using
     join = result_of<__dtl::__join<LIST1,LIST2> >;
 
-
-    ASSERT_EQUAL(join<list<void*,int>,list<char,double>>,list<void*,int,char,double>);
 }
 
 #endif /* defined(__FunctionalTemplates__join__) */

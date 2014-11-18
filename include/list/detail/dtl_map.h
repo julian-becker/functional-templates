@@ -1,5 +1,5 @@
 //
-//  map.h
+//  dtl_map.h
 //  FunctionalTemplates
 //
 //  Created by Julian Becker on 17.11.14.

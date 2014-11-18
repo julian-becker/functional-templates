@@ -1,5 +1,5 @@
 //
-//  filter.h
+//  dtl_filter.h
 //  FunctionalTemplates
 //
 //  Created by Julian Becker on 17.11.14.

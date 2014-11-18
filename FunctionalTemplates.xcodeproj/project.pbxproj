@@ -103,6 +103,7 @@
 		B910180C1A1BCA090063D5D6 /* reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reverse.h; path = list/reverse.h; sourceTree = "<group>"; };
 		B910180F1A1BF19D0063D5D6 /* dtl_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_map.h; sourceTree = "<group>"; };
 		B91018101A1BF2730063D5D6 /* dtl_filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_filter.h; sourceTree = "<group>"; };
+		B91018111A1BF4680063D5D6 /* dtl_join.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_join.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 			children = (
 				B910180F1A1BF19D0063D5D6 /* dtl_map.h */,
 				B91018101A1BF2730063D5D6 /* dtl_filter.h */,
+				B91018111A1BF4680063D5D6 /* dtl_join.h */,
 			);
 			name = detail;
 			path = list/detail;
