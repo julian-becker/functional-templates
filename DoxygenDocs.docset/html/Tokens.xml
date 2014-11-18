@@ -1,3 +1,742 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
+  <Token>
+    <TokenIdentifier>
+      <Name>__down_to</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>__down_to</Scope>
+    </TokenIdentifier>
+    <Path>struct____down__to.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>__plus</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>__plus</Scope>
+    </TokenIdentifier>
+    <Path>struct____plus.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>__up_to</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>__up_to</Scope>
+    </TokenIdentifier>
+    <Path>struct____up__to.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>A</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>A</Scope>
+    </TokenIdentifier>
+    <Path>struct_a.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>constexpr_functor</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>constexpr_functor</Scope>
+    </TokenIdentifier>
+    <Path>structconstexpr__functor.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>FALSE</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>FALSE</Scope>
+    </TokenIdentifier>
+    <Path>struct_f_a_l_s_e.html</Path>
+    <Abstract>compile-time boolean </Abstract>
+    <DeclaredIn>logic.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>value</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>FALSE</Scope>
+    </TokenIdentifier>
+    <Path>struct_f_a_l_s_e.html</Path>
+    <Anchor>ab145fdf7d0c1272ed7aebe6e25ecdd02</Anchor>
+    <Abstract>conversion to concrete boolean type: </Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Generic</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>Generic</Scope>
+    </TokenIdentifier>
+    <Path>struct_generic.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>has_type</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>has_type</Scope>
+    </TokenIdentifier>
+    <Path>structhas__type.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>has_type&lt; T &gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>has_type&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structhas__type_3_01_t_01_4.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>has_type&lt; T, T1, Ts...&gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>has_type&lt; T, T1, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structhas__type_3_01_t_00_01_t1_00_01_ts_8_8_8_4.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>make_infix_ext</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>make_infix_ext</Scope>
+    </TokenIdentifier>
+    <Path>structmake__infix__ext.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>make_infix_ext&lt; BINARY_FUNCTION &gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>make_infix_ext&lt; BINARY_FUNCTION &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structmake__infix__ext_3_01_b_i_n_a_r_y___f_u_n_c_t_i_o_n_01_4.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Nothing</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>Nothing</Scope>
+    </TokenIdentifier>
+    <Path>struct_nothing.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>static_string</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>static_string</Scope>
+    </TokenIdentifier>
+    <Path>structstatic__string.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>TRUE</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>TRUE</Scope>
+    </TokenIdentifier>
+    <Path>struct_t_r_u_e.html</Path>
+    <Abstract>compile-time boolean </Abstract>
+    <DeclaredIn>logic.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>value</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>TRUE</Scope>
+    </TokenIdentifier>
+    <Path>struct_t_r_u_e.html</Path>
+    <Anchor>a14d7412da3d91eda8f88c2e1438b4714</Anchor>
+    <Abstract>conversion to concrete boolean type: </Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>type_list</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>type_list</Scope>
+    </TokenIdentifier>
+    <Path>structtype__list.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>__dtl::__curry</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>__dtl::__curry</Scope>
+    </TokenIdentifier>
+    <Path>struct____dtl_1_1____curry.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::any_of</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::any_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of.html</Path>
+    <Abstract>Union template that allows storage of any value of any of the types listed in the template arguments...</Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::any_of&lt; T &gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Abstract>specialization of the template any_of for one particular type </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a5a235e56d4bd10619b0a64052f878e3d</Anchor>
+    <Abstract>Move constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a88ce2ba705b2befd4fc8f85a675f0e7d</Anchor>
+    <Abstract>Constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>~any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>aade858201e83cd3e424f5cb679e55e56</Anchor>
+    <Abstract>Destructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a6e5a2e9d4bf1a652a4df18e9fcc7dec2</Anchor>
+    <Abstract>copy constructor </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a9cfa1170309c89da00fc99f54ce66252</Anchor>
+    <Abstract>Casts the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a4ecce4b9334f160394972dd5ba40ed9a</Anchor>
+    <Abstract>Casts the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator T</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a92f169b36b8a13d52ec17779e0a60ace</Anchor>
+    <Abstract>Type conversion to T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_01_4.html</Path>
+    <Anchor>a84b593eb2b3dcbc8d381b6bafef137b2</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::any_of&lt; T, Ts...&gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Abstract>Specialization of any_of template for multiple types. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>~any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a9e68f493248320227853e631f99e0725</Anchor>
+    <Abstract>destructor </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>abeb20f599944e2e8c76c4f0cb8bcd9e8</Anchor>
+    <Abstract>Move constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>ac5511484ee0343bd8c5b60edd70bd2bd</Anchor>
+    <Abstract>Constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>aee0359c321dc6501e20178991a6d10bd</Anchor>
+    <Abstract>Move constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>any_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a22e28812d69b1c8c361a24324f1b7601</Anchor>
+    <Abstract>Constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>ab374ce174aa4fca315edd4e397ef28b6</Anchor>
+    <Abstract>Casts (reinterprets) the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a54d4ff2a8884b3715844626d16f57353</Anchor>
+    <Abstract>Casts (reinterprets) the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a153773b6b46194628cb7c79f0138f300</Anchor>
+    <Abstract>Casts (reinterprets) the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>as</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>ae7c8855f029f7501895f5ad9f68a7243</Anchor>
+    <Abstract>Casts (reinterprets) the value to the specified type. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator T</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a1814d92744a81afe9273ee47e7147183</Anchor>
+    <Abstract>Type conversion to T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator OTHER_T</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a33ae8e8e8765d86d47261befa93fc6c8</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>a9da5e85f2ef982ab3ea32ddae5e35897</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>aefd0e7726bdd36f1ad29cddc87c778b2</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::any_of&lt; T, Ts...&gt;</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1any__of_3_01_t_00_01_ts_8_8_8_4.html</Path>
+    <Anchor>ad7c09546b52a7d45d940bc0b0f8d00e8</Anchor>
+    <Abstract>Assignment operator for values of types different than T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::index_of</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::index_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1index__of.html</Path>
+    <Abstract>Template metafunction to find the index of a given type T in the given typelist. </Abstract>
+    <DeclaredIn>index_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::type_at</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::type_at</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1type__at.html</Path>
+    <Abstract>Template metafunction to get the type at index N in the given typelist. </Abstract>
+    <DeclaredIn>type_at.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::union_of</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Abstract>Union template that allows storage of any value of any of the types listed in the template arguments...</Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>~union_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>ae0222d24e049cab3db7297deccf250a4</Anchor>
+    <Abstract>destructor </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>union_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>a73be907b7c7c286cec37350bd676c0f1</Anchor>
+    <Abstract>Move constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>union_of</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>ad273c54fac655a49e79938466fd0f445</Anchor>
+    <Abstract>Constructor. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator T1</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>a1b958f957f150f40b9756855d82814ae</Anchor>
+    <Abstract>Type conversion to T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>a6d3b82268109621a52b29f8dcc2a10b8</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>operator=</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>ftmpl::union_of</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of.html</Path>
+    <Anchor>a24715c74613cce33ebff8aba35a19e56</Anchor>
+    <Abstract>Assignment operator for values of type T. </Abstract>
+    <DeclaredIn>any_of.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::union_of::__helper</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::union_of::__helper</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1union__of_1_1____helper.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::testing::assert_all</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::testing::assert_all</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1testing_1_1assert__all.html</Path>
+    <Abstract>metafunction to evaluate a list of individual compile-time tests </Abstract>
+    <DeclaredIn>static_testing.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::testing::assert_any</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::testing::assert_any</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1testing_1_1assert__any.html</Path>
+    <Abstract>metafunction to evaluate a list of individual compile-time tests and returns true if any one of them ...</Abstract>
+    <DeclaredIn>static_testing.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ftmpl::testing::assert_none</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>ftmpl::testing::assert_none</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1testing_1_1assert__none.html</Path>
+    <Abstract>metafunction to evaluate a list of individual compile-time tests and returns true if any one of them ...</Abstract>
+    <DeclaredIn>static_testing.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>value</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>ftmpl::testing::assert_none</Scope>
+    </TokenIdentifier>
+    <Path>structftmpl_1_1testing_1_1assert__none.html</Path>
+    <Anchor>ae81c1e1e403c574e3910f790372201e1</Anchor>
+    <Abstract>the static return value. Is true if none of the RESULTS is true. </Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>list::list</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>list::list</Scope>
+    </TokenIdentifier>
+    <Path>structlist_1_1list.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>list::__dtl::__head</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>list::__dtl::__head</Scope>
+    </TokenIdentifier>
+    <Path>structlist_1_1____dtl_1_1____head.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>list::__dtl::__head&lt; LIST_TYPE&lt; T, TS...&gt; &gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>list::__dtl::__head&lt; LIST_TYPE&lt; T, TS...&gt; &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structlist_1_1____dtl_1_1____head_3_01_l_i_s_t___t_y_p_e_3_01_t_00_01_t_s_8_8_8_4_01_4.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>list::__dtl::__tail</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>list::__dtl::__tail</Scope>
+    </TokenIdentifier>
+    <Path>structlist_1_1____dtl_1_1____tail.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>list::__dtl::__tail&lt; LIST_TYPE&lt; T, TS...&gt; &gt;</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>list::__dtl::__tail&lt; LIST_TYPE&lt; T, TS...&gt; &gt;</Scope>
+    </TokenIdentifier>
+    <Path>structlist_1_1____dtl_1_1____tail_3_01_l_i_s_t___t_y_p_e_3_01_t_00_01_t_s_8_8_8_4_01_4.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>meta_types::value_type</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>meta_types::value_type</Scope>
+    </TokenIdentifier>
+    <Path>structmeta__types_1_1value__type.html</Path>
+    <Abstract>Wrapper type that makes a concrete non-type template argument into a type. </Abstract>
+    <DeclaredIn>meta_types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>type</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>meta_types::value_type</Scope>
+    </TokenIdentifier>
+    <Path>structmeta__types_1_1value__type.html</Path>
+    <Anchor>a6aae2a3dff9df870391b31ed285b968e</Anchor>
+    <Abstract>the actual type of the enclosed value </Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>value</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>meta_types::value_type</Scope>
+    </TokenIdentifier>
+    <Path>structmeta__types_1_1value__type.html</Path>
+    <Anchor>a5552ef62109580bbed029910b7b98eae</Anchor>
+    <Abstract>the value to wrap </Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>type_traits::is_insertible</Name>
+      <APILanguage>c</APILanguage>
+      <Type>tmplt</Type>
+      <Scope>type_traits::is_insertible</Scope>
+    </TokenIdentifier>
+    <Path>structtype__traits_1_1is__insertible.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>type_traits::__testing::not_insertible_struct</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>type_traits::__testing::not_insertible_struct</Scope>
+    </TokenIdentifier>
+    <Path>structtype__traits_1_1____testing_1_1not__insertible__struct.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>type_traits::__testing::struct_with_no_comparison_operators</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>type_traits::__testing::struct_with_no_comparison_operators</Scope>
+    </TokenIdentifier>
+    <Path>structtype__traits_1_1____testing_1_1struct__with__no__comparison__operators.html</Path>
+  </Token>
 </Tokens>

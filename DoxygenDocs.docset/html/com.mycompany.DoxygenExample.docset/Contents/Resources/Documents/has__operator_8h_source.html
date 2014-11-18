@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -88,7 +89,7 @@ $(document).ready(function(){initNavTree('has__operator_8h_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-</div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -125,7 +126,7 @@ $(document).ready(function(){initNavTree('has__operator_8h_source.html','');});
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">        private: template&lt;typename T_TO_TEST&gt; static no_such_operator                       \</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">        test_ ## name (...);                                                                \</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">                                                                                            \</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">        static constexpr bool                                                               \</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">        public: static constexpr bool                                                       \</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">        value = std::is_convertible&lt;                                                        \</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">                    decltype(test_ ## name&lt;T&gt;(nullptr)),                                    \</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">                    bool                                                                    \</span></div>
@@ -140,17 +141,36 @@ $(document).ready(function(){initNavTree('has__operator_8h_source.html','');});
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    ___DEFINE_HAS_RELATIONAL_OPERATOR(lteq,&lt;=);      </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    ___DEFINE_HAS_RELATIONAL_OPERATOR(gt,&gt;);         </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ___DEFINE_HAS_RELATIONAL_OPERATOR(gteq,&gt;=);      </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#undef ___DEFINE_HAS_RELATIONAL_OPERATOR</span></div>
-<div class="ttc" id="namespacetype__traits_html"><div class="ttname"><a href="namespacetype__traits.html">type_traits</a></div><div class="ttdef"><b>Definition:</b> has_operator.h:31</div></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">namespace </span>__testing {</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structtype__traits_1_1____testing_1_1struct__with__no__comparison__operators.html">   41</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structtype__traits_1_1____testing_1_1struct__with__no__comparison__operators.html">struct_with_no_comparison_operators</a> {};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        constexpr <span class="keywordtype">bool</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        test1 = has_eq&lt;int&gt;::value,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        test2 = has_neq&lt;int&gt;::value,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        test3 = has_lt&lt;int&gt;::value,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        test4 = has_lteq&lt;int&gt;::value,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        test5 = has_gteq&lt;int&gt;::value,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        test6 = has_gteq&lt;int&gt;::value,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        test7 = !has_eq&lt;struct_with_no_comparison_operators&gt;::value;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        constexpr <span class="keywordtype">bool</span> testresult = test1;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        static_assert(testresult,<span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#undef ___DEFINE_HAS_RELATIONAL_OPERATOR</span></div>
+<div class="ttc" id="structtype__traits_1_1____testing_1_1struct__with__no__comparison__operators_html"><div class="ttname"><a href="structtype__traits_1_1____testing_1_1struct__with__no__comparison__operators.html">type_traits::__testing::struct_with_no_comparison_operators</a></div><div class="ttdef"><b>Definition:</b> has_operator.h:41</div></div>
+<div class="ttc" id="namespacetype__traits_html"><div class="ttname"><a href="namespacetype__traits.html">type_traits</a></div><div class="ttdef"><b>Definition:</b> insertable.h:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_42761cbf96bc5660f72a2d1a926765c0.html">type_traits</a></li><li class="navelem"><b>has_operator.h</b></li>
-    <li class="footer">Generated on Sat Oct 25 2014 14:10:42 for FunctionalTemplates by
+    <li class="footer">Generated on Tue Nov 18 2014 19:49:04 for FunctionalTemplates by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

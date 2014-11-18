@@ -1,6 +1,17 @@
 var NAVTREE =
 [
   [ "FunctionalTemplates", "index.html", [
+    [ "Classes", null, [
+      [ "Class List", "annotated.html", "annotated" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ]
+      ] ]
+    ] ],
     [ "Files", null, [
       [ "File List", "files.html", "files" ]
     ] ]
@@ -9,7 +20,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dir_42761cbf96bc5660f72a2d1a926765c0.html"
+".html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
