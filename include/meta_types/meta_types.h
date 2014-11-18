@@ -11,20 +11,20 @@
 
 namespace meta_types {
 
-    /// @brief wraps an int some_int into a type int_<some_int>
-    template <int VALUE> struct
-    int_{
-        /// the actual value
-        static constexpr int value = VALUE;
+    template <typename T, T VALUE> struct
+    value_type {
+        static constexpr T
+        value = VALUE;
     };
+
+    /// @brief wraps an int some_int into a type int_<some_int>
+    template <int VALUE> using
+    int_ = value_type<int, VALUE>;
     
     
     /// @brief wraps an unsigned int some_uint into a type uint_<some_uint>
-    template <unsigned int VALUE> struct
-    uint_{
-        /// the actual value
-        static constexpr unsigned int value = VALUE;
-    };
+    template <unsigned int VALUE> using
+    uint_ = value_type<unsigned int, VALUE>;
 }
 
 #endif /* defined(__FunctionalTemplates__meta_types__) */
