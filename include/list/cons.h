@@ -12,6 +12,8 @@
 #include <result_of.h>
 
 namespace list {
+
+    // ! @cond Doxygen_Suppress
     namespace __dtl {
         template <typename T,typename LIST> struct
         __cons;
@@ -22,6 +24,8 @@ namespace list {
         };
     
     }
+    
+    // ! @endcond
 
     template <typename T, typename LIST> using
     cons = result_of<__dtl::__cons<T,LIST>>;

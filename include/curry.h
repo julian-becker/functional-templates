@@ -15,6 +15,9 @@ namespace __dtl {
     template <typename FUNCTION> struct
     __curry;
 
+
+    // ! @cond Doxygen_Suppress
+    
     // specialization for functions with a single argument
     template <typename R,typename T> struct
     __curry<std::function<R(T)>> {
@@ -56,6 +59,8 @@ namespace __dtl {
         using
         type = T;
     };
+    
+    // ! @endcond
 }
 
 template <typename R,typename...Ts> auto
