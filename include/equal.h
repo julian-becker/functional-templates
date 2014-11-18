@@ -9,7 +9,7 @@
 #ifndef __FunctionalTemplates__equal__
 #define __FunctionalTemplates__equal__
 
-#include <logic.h>
+#include <logic/types.h>
 #include <meta_assert.h>
 #include <result_of.h>
 

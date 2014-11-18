@@ -9,32 +9,15 @@
 #ifndef __FunctionalTemplates__logic__
 #define __FunctionalTemplates__logic__
 
+#include <logic/types.h>
+
 #include <type_traits>
 #include <result_of.h>
 #include <meta_assert.h>
 #include <fold.h>
 #include <list.h>
+#include <meta_types/meta_types.h>
 
-// ###################################################################################
-
-/// compile-time boolean
-struct
-TRUE {
-    /// conversion to concrete boolean type:
-    static constexpr bool
-    value = true;
-};
-
-ASSERT(TRUE);
-
-/// compile-time boolean
-struct FALSE {
-    /// conversion to concrete boolean type:
-    static constexpr bool
-    value = false;
-};
-
-ASSERT(!FALSE);
 
 // ###################################################################################
 

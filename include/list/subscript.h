@@ -24,9 +24,7 @@ namespace list {
     namespace __dtl {
         template <typename INDEX,typename LIST> struct
         __subscript {
-            using result = if_true<meta_types::zero<INDEX>,
-                               head<LIST>,
-                               result_of<__subscript<meta_types::dec<INDEX>,tail<LIST>>>>;
+            using result = result_of<__subscript<meta_types::dec<INDEX>,tail<LIST>>>;
         };
         
         template <typename INDEX_TYPE,typename LIST> struct

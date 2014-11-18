@@ -51,8 +51,8 @@
 
 /* Begin PBXFileReference section */
 		B90F31641A0AC17C001316CE /* curry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curry.h; sourceTree = "<group>"; };
-		B90F317B1A0C01B7001316CE /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
-		B90F317C1A0C01B7001316CE /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
+		B90F317B1A0C01B7001316CE /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = logic.cpp; path = include/logic/logic.cpp; sourceTree = SOURCE_ROOT; };
+		B90F317C1A0C01B7001316CE /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = logic.h; path = include/logic/logic.h; sourceTree = SOURCE_ROOT; };
 		B90F317E1A0D65A7001316CE /* custom_infix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = custom_infix.cpp; sourceTree = "<group>"; };
 		B90F317F1A0D65A7001316CE /* custom_infix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = custom_infix.h; sourceTree = "<group>"; };
 		B90F31811A0D8FBF001316CE /* playground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = playground.cpp; sourceTree = "<group>"; };
@@ -104,6 +104,7 @@
 		B910180F1A1BF19D0063D5D6 /* dtl_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_map.h; sourceTree = "<group>"; };
 		B91018101A1BF2730063D5D6 /* dtl_filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_filter.h; sourceTree = "<group>"; };
 		B91018111A1BF4680063D5D6 /* dtl_join.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_join.h; sourceTree = "<group>"; };
+		B91018131A1BF9A10063D5D6 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -182,6 +183,16 @@
 			path = list/detail;
 			sourceTree = "<group>";
 		};
+		B91018121A1BF9880063D5D6 /* logic */ = {
+			isa = PBXGroup;
+			children = (
+				B90F317B1A0C01B7001316CE /* logic.cpp */,
+				B90F317C1A0C01B7001316CE /* logic.h */,
+				B91018131A1BF9A10063D5D6 /* types.h */,
+			);
+			path = logic;
+			sourceTree = "<group>";
+		};
 		B91220A819FBB86600EBFA72 = {
 			isa = PBXGroup;
 			children = (
@@ -215,11 +226,10 @@
 		B91220C019FBB8F100EBFA72 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				B91018121A1BF9880063D5D6 /* logic */,
 				B91018041A1BBEB50063D5D6 /* meta_types */,
 				B91017CA1A1AA2140063D5D6 /* List */,
 				B90F31641A0AC17C001316CE /* curry.h */,
-				B90F317B1A0C01B7001316CE /* logic.cpp */,
-				B90F317C1A0C01B7001316CE /* logic.h */,
 				B90F317E1A0D65A7001316CE /* custom_infix.cpp */,
 				B90F317F1A0D65A7001316CE /* custom_infix.h */,
 				B91017CE1A1AA3440063D5D6 /* result_of.cpp */,

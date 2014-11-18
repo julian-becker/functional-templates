@@ -9,11 +9,6 @@
 #ifndef __FunctionalTemplates__meta_types__
 #define __FunctionalTemplates__meta_types__
 
-#include <equal.h>
-#include <logic.h>
-
-#include <meta_assert.h>
-
 namespace meta_types {
 
     /// @brief Wrapper type that makes a concrete non-type template argument into a type
@@ -48,13 +43,6 @@ namespace meta_types {
     /// @brief evaluates to true if VALUE is a value_type for 0
     template <typename VALUE> using
     dec = value_type<typename VALUE::type, static_cast<typename VALUE::type>(VALUE::value-1)>;
-    
-    ASSERT(zero<int_<0>>);
-    ASSERT_NOT(zero<int_<1>>);
-    ASSERT(zero<uint_<0>>);
-    ASSERT_NOT(zero<uint_<1>>);
-    
-    ASSERT_EQUAL(dec<int_<5>>,int_<4>);
 }
 
 #endif /* defined(__FunctionalTemplates__meta_types__) */
