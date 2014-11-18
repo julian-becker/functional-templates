@@ -7,3 +7,12 @@
 //
 
 #include "reverse.h"
+
+// for testing purposes only
+#include <meta_assert.h>
+#include <list/list.h>
+
+using namespace
+list;
+
+ASSERT_EQUAL(reverse<list<void*,int*,wchar_t,float>>,list<float,wchar_t,int*,void*>);

@@ -106,6 +106,7 @@
 		B91018111A1BF4680063D5D6 /* dtl_join.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_join.h; sourceTree = "<group>"; };
 		B91018131A1BF9A10063D5D6 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		B91018141A1BFC810063D5D6 /* dtl_subscript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_subscript.h; sourceTree = "<group>"; };
+		B91018151A1BFDD60063D5D6 /* dtl_reverse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_reverse.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 				B91018101A1BF2730063D5D6 /* dtl_filter.h */,
 				B91018111A1BF4680063D5D6 /* dtl_join.h */,
 				B91018141A1BFC810063D5D6 /* dtl_subscript.h */,
+				B91018151A1BFDD60063D5D6 /* dtl_reverse.h */,
 			);
 			name = detail;
 			path = list/detail;
