@@ -10,7 +10,9 @@
 #define __FunctionalTemplates__fold__
 
 #include <result_of.h>
-#include <list.h>
+#include <list/list.h>
+#include <list/head.h>
+#include <list/tail.h>
 
 ///! @cond Doxygen_Suppress
 namespace __dtl {

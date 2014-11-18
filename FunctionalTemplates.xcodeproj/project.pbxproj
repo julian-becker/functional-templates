@@ -20,6 +20,10 @@
 		B91017E21A1AACF30063D5D6 /* conditional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017E01A1AACF30063D5D6 /* conditional.cpp */; };
 		B91017E51A1ABC150063D5D6 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017E31A1ABC150063D5D6 /* list.cpp */; };
 		B91017E81A1ACAAF0063D5D6 /* join.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017E61A1ACAAF0063D5D6 /* join.cpp */; };
+		B91017EB1A1ACEC00063D5D6 /* head.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017E91A1ACEC00063D5D6 /* head.cpp */; };
+		B91017EE1A1ACF190063D5D6 /* tail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017EC1A1ACF190063D5D6 /* tail.cpp */; };
+		B91017F11A1ACF770063D5D6 /* clear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017EF1A1ACF770063D5D6 /* clear.cpp */; };
+		B91017F41A1ACFEA0063D5D6 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91017F21A1ACFEA0063D5D6 /* cons.cpp */; };
 		B91220B519FBB86600EBFA72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91220B419FBB86600EBFA72 /* main.cpp */; };
 		B91220B719FBB86600EBFA72 /* FunctionalTemplates.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */; };
 /* End PBXBuildFile section */
@@ -65,6 +69,14 @@
 		B91017E41A1ABC150063D5D6 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = list.h; path = list/list.h; sourceTree = "<group>"; };
 		B91017E61A1ACAAF0063D5D6 /* join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = join.cpp; path = list/join.cpp; sourceTree = "<group>"; };
 		B91017E71A1ACAAF0063D5D6 /* join.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = join.h; path = list/join.h; sourceTree = "<group>"; };
+		B91017E91A1ACEC00063D5D6 /* head.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = head.cpp; path = list/head.cpp; sourceTree = "<group>"; };
+		B91017EA1A1ACEC00063D5D6 /* head.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = head.h; path = list/head.h; sourceTree = "<group>"; };
+		B91017EC1A1ACF190063D5D6 /* tail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tail.cpp; path = list/tail.cpp; sourceTree = "<group>"; };
+		B91017ED1A1ACF190063D5D6 /* tail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tail.h; path = list/tail.h; sourceTree = "<group>"; };
+		B91017EF1A1ACF770063D5D6 /* clear.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = clear.cpp; path = list/clear.cpp; sourceTree = "<group>"; };
+		B91017F01A1ACF770063D5D6 /* clear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = clear.h; path = list/clear.h; sourceTree = "<group>"; };
+		B91017F21A1ACFEA0063D5D6 /* cons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cons.cpp; path = list/cons.cpp; sourceTree = "<group>"; };
+		B91017F31A1ACFEA0063D5D6 /* cons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cons.h; path = list/cons.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -105,6 +117,14 @@
 				B91017E41A1ABC150063D5D6 /* list.h */,
 				B91017E61A1ACAAF0063D5D6 /* join.cpp */,
 				B91017E71A1ACAAF0063D5D6 /* join.h */,
+				B91017E91A1ACEC00063D5D6 /* head.cpp */,
+				B91017EA1A1ACEC00063D5D6 /* head.h */,
+				B91017EC1A1ACF190063D5D6 /* tail.cpp */,
+				B91017ED1A1ACF190063D5D6 /* tail.h */,
+				B91017EF1A1ACF770063D5D6 /* clear.cpp */,
+				B91017F01A1ACF770063D5D6 /* clear.h */,
+				B91017F21A1ACFEA0063D5D6 /* cons.cpp */,
+				B91017F31A1ACFEA0063D5D6 /* cons.h */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -267,12 +287,16 @@
 			files = (
 				B91017D31A1AA4800063D5D6 /* append.cpp in Sources */,
 				B91017DF1A1AAC960063D5D6 /* fold.cpp in Sources */,
+				B91017F41A1ACFEA0063D5D6 /* cons.cpp in Sources */,
 				B91017D91A1AA9A10063D5D6 /* meta_assert.cpp in Sources */,
+				B91017EE1A1ACF190063D5D6 /* tail.cpp in Sources */,
 				B91017D61A1AA6E80063D5D6 /* filter.cpp in Sources */,
 				B90F31831A0D8FBF001316CE /* playground.cpp in Sources */,
 				B91017D01A1AA3440063D5D6 /* result_of.cpp in Sources */,
 				B90F31801A0D65A7001316CE /* custom_infix.cpp in Sources */,
 				B91017DC1A1AAAF50063D5D6 /* equal.cpp in Sources */,
+				B91017F11A1ACF770063D5D6 /* clear.cpp in Sources */,
+				B91017EB1A1ACEC00063D5D6 /* head.cpp in Sources */,
 				B91017E51A1ABC150063D5D6 /* list.cpp in Sources */,
 				B91017E81A1ACAAF0063D5D6 /* join.cpp in Sources */,
 				B91017E21A1AACF30063D5D6 /* conditional.cpp in Sources */,

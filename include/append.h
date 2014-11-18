@@ -9,9 +9,9 @@
 #ifndef __FunctionalTemplates__append__
 #define __FunctionalTemplates__append__
 
-#include <result_of.h>
-#include <list.h>
-#include <join.h>
+#include <list/join.h>
+#include <list/clear.h>
+#include <list/cons.h>
 
 namespace list {
     
