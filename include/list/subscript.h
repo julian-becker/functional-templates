@@ -13,6 +13,7 @@
 #include <list/head.h>
 #include <list/tail.h>
 #include <meta_types/meta_types.h>
+#include <conditional.h>
 
 // for testing purposes only
 #include <meta_assert.h>
@@ -22,11 +23,10 @@ namespace list {
     // ! @cond Doxygen_Suppress
     namespace __dtl {
         template <typename INDEX,typename LIST> struct
-        __subscript;
-        
-        template <typename INDEX_TYPE,INDEX_TYPE INDEX,typename LIST> struct
-        __subscript<meta_types::value_type<INDEX_TYPE,INDEX>,LIST> {
-            using result = result_of<__subscript<meta_types::value_type<INDEX_TYPE,INDEX-1>,tail<LIST>>>;
+        __subscript {
+            using result = if_true<meta_types::zero<INDEX>,
+                               head<LIST>,
+                               result_of<__subscript<meta_types::dec<INDEX>,tail<LIST>>>>;
         };
         
         template <typename INDEX_TYPE,typename LIST> struct
