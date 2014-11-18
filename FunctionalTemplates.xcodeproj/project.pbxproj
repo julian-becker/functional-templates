@@ -105,7 +105,6 @@
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
 		B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoxygenDocs.docset; sourceTree = SOURCE_ROOT; };
-		B9443BF219FBD25400CFA542 /* static_testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = static_testing.h; path = compile_time_tests/static_testing.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -203,7 +202,6 @@
 			children = (
 				B91018041A1BBEB50063D5D6 /* meta_types */,
 				B91017CA1A1AA2140063D5D6 /* List */,
-				B9443BF119FBD20500CFA542 /* compile_time_tests */,
 				B90F31641A0AC17C001316CE /* curry.h */,
 				B90F317B1A0C01B7001316CE /* logic.cpp */,
 				B90F317C1A0C01B7001316CE /* logic.h */,
@@ -221,14 +219,6 @@
 				B91017E11A1AACF30063D5D6 /* conditional.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		B9443BF119FBD20500CFA542 /* compile_time_tests */ = {
-			isa = PBXGroup;
-			children = (
-				B9443BF219FBD25400CFA542 /* static_testing.h */,
-			);
-			name = compile_time_tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

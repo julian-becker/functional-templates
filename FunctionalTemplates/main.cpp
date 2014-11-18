@@ -7,7 +7,6 @@
 //
 
 #include <iostream>
-#include <compile_time_tests/static_testing.h>
 #include <string>
 #include <list>
 #include <curry.h>
