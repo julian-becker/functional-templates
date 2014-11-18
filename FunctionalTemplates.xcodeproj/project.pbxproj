@@ -101,6 +101,8 @@
 		B91018091A1BC0CE0063D5D6 /* subscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = subscript.h; path = list/subscript.h; sourceTree = "<group>"; };
 		B910180B1A1BCA090063D5D6 /* reverse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reverse.cpp; path = list/reverse.cpp; sourceTree = "<group>"; };
 		B910180C1A1BCA090063D5D6 /* reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reverse.h; path = list/reverse.h; sourceTree = "<group>"; };
+		B910180F1A1BF19D0063D5D6 /* dtl_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_map.h; sourceTree = "<group>"; };
+		B91018101A1BF2730063D5D6 /* dtl_filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_filter.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		B91017CA1A1AA2140063D5D6 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				B910180E1A1BF11A0063D5D6 /* detail */,
 				B91017CB1A1AA2500063D5D6 /* map.cpp */,
 				B91017CC1A1AA2500063D5D6 /* map.h */,
 				B91017D11A1AA4800063D5D6 /* append.cpp */,
@@ -165,6 +168,16 @@
 				B91018061A1BBED70063D5D6 /* meta_types.h */,
 			);
 			name = meta_types;
+			sourceTree = "<group>";
+		};
+		B910180E1A1BF11A0063D5D6 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				B910180F1A1BF19D0063D5D6 /* dtl_map.h */,
+				B91018101A1BF2730063D5D6 /* dtl_filter.h */,
+			);
+			name = detail;
+			path = list/detail;
 			sourceTree = "<group>";
 		};
 		B91220A819FBB86600EBFA72 = {

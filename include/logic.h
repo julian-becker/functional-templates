@@ -225,29 +225,6 @@ type_list {};
 
 // ###################################################################################
 
-//! @cond Doxygen_Suppress
-namespace __dtl {
-
-    template <typename T, typename LIST> struct
-    __cons;
-
-    template <typename T, template <typename...> class LIST, typename...TS> struct
-    __cons<T,LIST<TS...> > {
-        using
-        result = LIST<T,TS...>;
-    };
-}
-//! @endcond Doxygen_Suppress
-
-template <typename T, typename LIST> using
-cons = result_of<__dtl::__cons<T,LIST>>;
-
-// ###################################################################################
-
-
-
-// ###################################################################################
-
 
 //template <template <typename> class FUN, template<typename...> class LIST,typename...TS> using
 //map = foldr< compose<cons_t,FUN>, LIST< >, LIST<TS...>>;

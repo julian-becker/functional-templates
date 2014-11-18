@@ -9,24 +9,11 @@
 #ifndef __FunctionalTemplates__map__
 #define __FunctionalTemplates__map__
 
+#include <list/detail/dtl_map.h>
 #include <result_of.h>
 
 
 namespace list {
-  
-    //! @cond Doxygen_Suppress
-    namespace __dtl {
-    // ! 
-        template <template <typename> class FN, typename LIST> struct
-        __map;
-        
-        template <template <typename> class FN, template <typename...> class LIST_TEMPLATE, typename...ELEMENTS> struct
-        __map<FN,LIST_TEMPLATE<ELEMENTS...>> {
-            using result = LIST_TEMPLATE<FN<ELEMENTS>...>;
-        };
-    }
-    //! @endcond Doxygen_Suppress
-    
     
     /// @brief maps a given LIST using the metafunction FN.
     /// @tparam FN the metafunction used for the mapping of the types in the typelist LIST
