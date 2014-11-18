@@ -25,7 +25,7 @@ namespace list {
        
         template <template <typename...> class LIST_TYPE,typename...TS> struct
         __length<LIST_TYPE<TS...>> {
-            using result = meta_types::int_<sizeof...(TS)>;
+            using result = meta_types::uint_<sizeof...(TS)>;
         };
     }
     // ! @endcond
@@ -33,8 +33,8 @@ namespace list {
     template <typename LIST> using
     length = result_of<__dtl::__length<LIST>>;
     
-    ASSERT_EQUAL(length<list<int,double,wchar_t>>,meta_types::int_<3>);
-    ASSERT_EQUAL(length<list<>>,meta_types::int_<0>);
+    ASSERT_EQUAL(length<list<int,double,wchar_t>>,meta_types::uint_<3>);
+    ASSERT_EQUAL(length<list<>>,meta_types::uint_<0>);
 }
 
 #endif /* defined(__FunctionalTemplates__length__) */
