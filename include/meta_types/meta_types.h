@@ -40,9 +40,14 @@ namespace meta_types {
     zero = bool_<VALUE::value == static_cast<typename VALUE::type>(VALUE::value)>;
 
 
-    /// @brief evaluates to true if VALUE is a value_type for 0
+    /// @brief decrements the given value by 1
     template <typename VALUE> using
     dec = value_type<typename VALUE::type, static_cast<typename VALUE::type>(VALUE::value-1)>;
+
+    /// @brief increments the given value by 1
+    template <typename VALUE> using
+    inc = value_type<typename VALUE::type, static_cast<typename VALUE::type>(VALUE::value+1)>;
+    
 }
 
 #endif /* defined(__FunctionalTemplates__meta_types__) */
