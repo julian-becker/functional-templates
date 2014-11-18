@@ -193,13 +193,13 @@ ASSERT(!both<FALSE,FALSE>);
 // ###################################################################################
 
 template <typename...BOOLS> using
-any = foldl<either,FALSE,prelude::list::list<BOOLS...>>;
+any = foldl<either,FALSE,list::list<BOOLS...>>;
 //any = foldr<either,FALSE,BOOLS...>;  /// alternative implementation
 
 // ###################################################################################
 
 template <typename...BOOLS> using
-all = foldl<both,TRUE,prelude::list::list<BOOLS...>>;
+all = foldl<both,TRUE,list::list<BOOLS...>>;
 //all = foldr<both,TRUE,BOOLS...>;      /// alternative implementation
 
 // ###################################################################################

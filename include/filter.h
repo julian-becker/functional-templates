@@ -18,13 +18,13 @@
 #include <list.h>
 #include <append.h>
 
-namespace prelude {
-  namespace list {
+
+namespace list {
   
     //! @cond Doxygen_Suppress
     namespace __dtl {
     
-        using namespace prelude::list;
+        using namespace list;
         
         template <template <typename> class PREDICATE_FN> struct
         __helper {
@@ -44,7 +44,7 @@ namespace prelude {
     /// @tparam PREDICATE_FN the metafunction used for the mapping of the types in the typelist LIST.
     /// @tparam LIST the typelist which is to be mapped using PREDICATE_FN
     template <template <typename> class PREDICATE_FN, typename LIST> using
-    filter = foldl<__dtl::__helper<PREDICATE_FN>::template cons_if, prelude::list::clear<LIST>, LIST>;
+    filter = foldl<__dtl::__helper<PREDICATE_FN>::template cons_if, clear<LIST>, LIST>;
     
     
     
@@ -62,7 +62,6 @@ namespace prelude {
     ASSERT_EQUAL(filter<is_integral,list<double,int,float,long>>,
                  list<int,long>);
 
-  }
 }
 
 #endif /* defined(__FunctionalTemplates__filter__) */

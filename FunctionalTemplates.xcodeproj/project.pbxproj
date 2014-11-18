@@ -45,8 +45,8 @@
 		B90F317F1A0D65A7001316CE /* custom_infix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = custom_infix.h; sourceTree = "<group>"; };
 		B90F31811A0D8FBF001316CE /* playground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = playground.cpp; sourceTree = "<group>"; };
 		B90F31821A0D8FBF001316CE /* playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playground.h; sourceTree = "<group>"; };
-		B91017CB1A1AA2500063D5D6 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
-		B91017CC1A1AA2500063D5D6 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
+		B91017CB1A1AA2500063D5D6 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = map.cpp; path = list/map.cpp; sourceTree = "<group>"; };
+		B91017CC1A1AA2500063D5D6 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = map.h; path = list/map.h; sourceTree = "<group>"; };
 		B91017CE1A1AA3440063D5D6 /* result_of.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = result_of.cpp; sourceTree = "<group>"; };
 		B91017CF1A1AA3440063D5D6 /* result_of.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = result_of.h; sourceTree = "<group>"; };
 		B91017D11A1AA4800063D5D6 /* append.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = append.cpp; sourceTree = "<group>"; };
@@ -61,10 +61,10 @@
 		B91017DE1A1AAC960063D5D6 /* fold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fold.h; sourceTree = "<group>"; };
 		B91017E01A1AACF30063D5D6 /* conditional.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = conditional.cpp; sourceTree = "<group>"; };
 		B91017E11A1AACF30063D5D6 /* conditional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conditional.h; sourceTree = "<group>"; };
-		B91017E31A1ABC150063D5D6 /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = list.cpp; sourceTree = "<group>"; };
-		B91017E41A1ABC150063D5D6 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
-		B91017E61A1ACAAF0063D5D6 /* join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = join.cpp; sourceTree = "<group>"; };
-		B91017E71A1ACAAF0063D5D6 /* join.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = join.h; sourceTree = "<group>"; };
+		B91017E31A1ABC150063D5D6 /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = list.cpp; path = list/list.cpp; sourceTree = "<group>"; };
+		B91017E41A1ABC150063D5D6 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = list.h; path = list/list.h; sourceTree = "<group>"; };
+		B91017E61A1ACAAF0063D5D6 /* join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = join.cpp; path = list/join.cpp; sourceTree = "<group>"; };
+		B91017E71A1ACAAF0063D5D6 /* join.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = join.h; path = list/join.h; sourceTree = "<group>"; };
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };

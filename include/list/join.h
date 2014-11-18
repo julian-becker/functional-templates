@@ -11,8 +11,7 @@
 
 #include <result_of.h>
 
-namespace prelude {
-  namespace list {
+namespace list {
   
     //! @cond Doxygen_Suppress
     namespace __dtl {
@@ -35,7 +34,6 @@ namespace prelude {
     template <typename LIST1, typename LIST2> using
     join = result_of<__dtl::__join<LIST1,LIST2> >;
 
-  }
 }
 
 #endif /* defined(__FunctionalTemplates__join__) */

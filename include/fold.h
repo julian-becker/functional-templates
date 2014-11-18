@@ -15,7 +15,7 @@
 ///! @cond Doxygen_Suppress
 namespace __dtl {
 
-    using namespace prelude::list;
+    using namespace list;
 
 
     template <template <typename,typename> class META_FUN, typename INIT, typename LIST> struct
@@ -48,7 +48,7 @@ foldr = result_of<__dtl::__foldr<META_FUN, INIT, LIST>>;
 ///! @cond Doxygen_Suppress
 namespace __dtl {
     
-    using namespace prelude::list;
+    using namespace list;
 
     template <template <typename,typename> class META_FUN, typename INIT, typename LIST> struct
     __foldl {

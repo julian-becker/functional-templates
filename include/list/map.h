@@ -11,8 +11,8 @@
 
 #include <result_of.h>
 
-namespace prelude {
-  namespace list {
+
+namespace list {
   
     //! @cond Doxygen_Suppress
     namespace __dtl {
@@ -35,6 +35,6 @@ namespace prelude {
     template <template <typename> class FN, typename LIST> using
     map = result_of<__dtl::__map<FN,LIST> >;
 
-  }
 }
+
 #endif /* defined(__FunctionalTemplates__map__) */
