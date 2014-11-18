@@ -10,22 +10,13 @@
 #define __FunctionalTemplates__null__
 
 #include <list/clear.h>
-#include <logic.h>
 #include <equal.h>
-#include <conditional.h>
-
-// for tests only:
-#include <meta_assert.h>
-#include <list/list.h>
-
 
 namespace list {
 
     template <typename LIST> using
-    null = if_true<equal<LIST,clear<LIST>>,TRUE,FALSE>;
-    
-    ASSERT_NOT(null<list<int,double,wchar_t>>);
-    ASSERT(null<list<>>);
+    null = equal<LIST,clear<LIST>>;
+
 }
 
 #endif /* defined(__FunctionalTemplates__null__) */
