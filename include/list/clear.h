@@ -13,6 +13,7 @@
 
 namespace list {
 
+    // ! @cond Doxygen_Suppress
     namespace __dtl {
         template <typename LIST> struct
         __clear;
@@ -23,8 +24,10 @@ namespace list {
         };
     
     }
+    // ! @endcond
     
-    template <typename LIST> using clear = result_of<__dtl::__clear<LIST>>;
+    template <typename LIST> using
+    clear = result_of<__dtl::__clear<LIST>>;
     
 }
 

@@ -11,6 +11,10 @@
 
 #include <result_of.h>
 #include <list/tail.h>
+#include <meta_assert.h>
+
+// for tests only:
+#include <list/list.h>
 
 
 namespace list {
@@ -30,6 +34,9 @@ namespace list {
     
     template <typename LIST> using
     last = result_of<__dtl::__last<LIST>>;
+    
+    ASSERT_EQUAL(last<list<int,double,wchar_t>>,wchar_t);
+    ASSERT_EQUAL(last<list<int>>,int);
 }
 
 #endif /* defined(__FunctionalTemplates__last__) */
