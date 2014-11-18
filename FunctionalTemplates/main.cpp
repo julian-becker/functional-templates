@@ -12,9 +12,11 @@
 #include <curry.h>
 #include <stdio.h>
 #include <custom_infix.h>
+#include "playground.h"
 
 int main(int argc, const char * argv[])
 {
+    run_playground();
     return 0;
 }
 
