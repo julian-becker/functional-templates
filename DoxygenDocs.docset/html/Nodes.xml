@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+  <TOC>
+    <Node>
+      <Name>Root</Name>
+      <Path>index.html</Path>
+      <Subnodes>
+       <Node>
+        <Name>Files</Name>
+        <Path></Path>
+        <Subnodes>
+         <Node>
+          <Name>File List</Name>
+          <Path>files.html</Path>
+          <Subnodes>
+           <Node>
+            <Name>include</Name>
+            <Path>dir_d44c64559bbebec7f509842c48db8b23.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>type_traits</Name>
+              <Path>dir_42761cbf96bc5660f72a2d1a926765c0.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>has_operator.h</Name>
+                <Path>has__operator_8h_source.html</Path>
+               </Node>
+              </Subnodes>
+             </Node>
+            </Subnodes>
+           </Node>
+          </Subnodes>
+         </Node>
+        </Subnodes>
+       </Node>
+      </Subnodes>
+    </Node>
+  </TOC>
+</DocSetNodes>
