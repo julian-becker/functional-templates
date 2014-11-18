@@ -104,17 +104,9 @@
 		B91220B119FBB86600EBFA72 /* FunctionalTemplates */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FunctionalTemplates; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91220B419FBB86600EBFA72 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FunctionalTemplates.1; sourceTree = "<group>"; };
-		B91220C219FBB96800EBFA72 /* has_operator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = has_operator.h; path = include/type_traits/has_operator.h; sourceTree = SOURCE_ROOT; };
 		B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoxygenDocs.docset; sourceTree = SOURCE_ROOT; };
-		B938587C1A019FBD00E5AEDF /* index_of.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = index_of.h; path = type_traits/index_of.h; sourceTree = "<group>"; };
-		B938587D1A01A0CB00E5AEDF /* type_at.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = type_at.h; path = type_traits/type_at.h; sourceTree = "<group>"; };
 		B9443BF219FBD25400CFA542 /* static_testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = static_testing.h; path = compile_time_tests/static_testing.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
-		B9443BF419FBEF5800CFA542 /* monad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = monad.h; sourceTree = "<group>"; };
-		B9443BF619FBF41E00CFA542 /* any_of.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = any_of.h; sourceTree = "<group>"; };
-		B9536B431A02BD6C00C86774 /* insertable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = insertable.h; sourceTree = "<group>"; };
-		B99607311A0818E800F6E6A7 /* Maybe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maybe.h; sourceTree = "<group>"; };
-		B99607321A081BCD00F6E6A7 /* has_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = has_type.h; path = type_traits/has_type.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,10 +204,6 @@
 				B91018041A1BBEB50063D5D6 /* meta_types */,
 				B91017CA1A1AA2140063D5D6 /* List */,
 				B9443BF119FBD20500CFA542 /* compile_time_tests */,
-				B91220CC19FBCCB300EBFA72 /* type_traits */,
-				B91220C119FBB93400EBFA72 /* concepts */,
-				B9443BF619FBF41E00CFA542 /* any_of.h */,
-				B99607311A0818E800F6E6A7 /* Maybe.h */,
 				B90F31641A0AC17C001316CE /* curry.h */,
 				B90F317B1A0C01B7001316CE /* logic.cpp */,
 				B90F317C1A0C01B7001316CE /* logic.h */,
@@ -233,26 +221,6 @@
 				B91017E11A1AACF30063D5D6 /* conditional.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		B91220C119FBB93400EBFA72 /* concepts */ = {
-			isa = PBXGroup;
-			children = (
-				B9443BF419FBEF5800CFA542 /* monad.h */,
-				B9536B431A02BD6C00C86774 /* insertable.h */,
-			);
-			path = concepts;
-			sourceTree = "<group>";
-		};
-		B91220CC19FBCCB300EBFA72 /* type_traits */ = {
-			isa = PBXGroup;
-			children = (
-				B938587C1A019FBD00E5AEDF /* index_of.h */,
-				B91220C219FBB96800EBFA72 /* has_operator.h */,
-				B938587D1A01A0CB00E5AEDF /* type_at.h */,
-				B99607321A081BCD00F6E6A7 /* has_type.h */,
-			);
-			name = type_traits;
 			sourceTree = "<group>";
 		};
 		B9443BF119FBD20500CFA542 /* compile_time_tests */ = {
