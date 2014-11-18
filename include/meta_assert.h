@@ -9,6 +9,8 @@
 #ifndef __FunctionalTemplates__meta_assert__
 #define __FunctionalTemplates__meta_assert__
 
+#include <type_traits>
+
 #if defined (ENABLE_TESTS)
 #define ASSERT(...) static_assert(__VA_ARGS__::value,#__VA_ARGS__)
 #else
