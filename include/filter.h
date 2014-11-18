@@ -15,6 +15,8 @@
 #include <fold.h>
 #include <conditional.h>
 #include <meta_assert.h>
+#include <list.h>
+#include <append.h>
 
 namespace prelude {
   namespace list {
@@ -22,29 +24,16 @@ namespace prelude {
     //! @cond Doxygen_Suppress
     namespace __dtl {
     
+        using namespace prelude::list;
+        
         template <template <typename> class PREDICATE_FN> struct
         __helper {
-            template <typename T, typename LIST> struct
-            __prepend_if;
-            
-            template <typename T, template <typename...> class LIST_TEMPLATE, typename...ELEMENTS> struct
-            __prepend_if<T,LIST_TEMPLATE<ELEMENTS...>> {
-                using result =
+            template <typename LIST, typename T> using
+            cons_if =
                 if_true< PREDICATE_FN<T>,
-                    LIST_TEMPLATE<T,ELEMENTS...>,
-                    LIST_TEMPLATE<ELEMENTS...>
-                >;
-            };
+                    append<T,LIST>,
+                    LIST>;
         };
-        
-        template <typename LIST_TYPE> struct
-        __list_template_of;
-        
-        template <template <typename...> class LIST_TEMPLATE,typename...ELEMENTS> struct
-        __list_template_of<LIST_TEMPLATE<ELEMENTS...>> {
-            template <typename...TS> using result = LIST_TEMPLATE<TS...>;
-        };
-        
         
         
     }
@@ -55,7 +44,7 @@ namespace prelude {
     /// @tparam PREDICATE_FN the metafunction used for the mapping of the types in the typelist LIST.
     /// @tparam LIST the typelist which is to be mapped using PREDICATE_FN
     template <template <typename> class PREDICATE_FN, typename LIST> using
-    filter = foldl<__dtl::__helper<PREDICATE_FN>::template __prepend_if,typename __dtl::__list_template_of<LIST>::template result<>, LIST>;
+    filter = foldl<__dtl::__helper<PREDICATE_FN>::template cons_if, prelude::list::clear<LIST>, LIST>;
     
     
     
@@ -63,7 +52,15 @@ namespace prelude {
     is_integral = typename std::conditional<std::is_integral<T>::value,TRUE,FALSE>::type;
     
     ASSERT_EQUAL(is_integral<int>,TRUE);
-    ASSERT_EQUAL(is_integral<int>,TRUE);
+    ASSERT_EQUAL(is_integral<double>,FALSE);
+    ASSERT_EQUAL(if_true< is_integral<int>,
+                    cons<int,list<>>,
+                    list<>>,list<int>);
+    
+    ASSERT_EQUAL(filter<is_integral,list<double>>,
+                 list<>);
+    ASSERT_EQUAL(filter<is_integral,list<double,int,float,long>>,
+                 list<int,long>);
 
   }
 }
