@@ -9,25 +9,17 @@
 #ifndef __FunctionalTemplates__head__
 #define __FunctionalTemplates__head__
 
+#include <list/detail/dtl_head.h>
 #include <result_of.h>
 
 
 namespace list {
     
-    namespace __dtl {
-        template <typename LIST> struct
-        __head;
-        
-        template <template <typename...> class LIST_TYPE, typename T, typename...TS> struct
-        __head<LIST_TYPE<T,TS...>> {
-            using result = T;
-        };
-    
-    }
-    
-    template <typename LIST> using head = result_of<__dtl::__head<LIST>>;
+    /// @brief evaluates to the first type in the given typelist LIST
+    /// @tparam LIST a type list
+    template <typename LIST> using
+    head = result_of<__dtl::__head<LIST>>;
 
 }
-
 
 #endif /* defined(__FunctionalTemplates__head__) */
