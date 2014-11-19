@@ -13,6 +13,10 @@
 
 namespace list {
     
+    
+    /// @brief retrieve the type at index INDEX from the given typelist LIST
+    /// @tparam INDEX the index into the typelist LIST
+    /// @tparam LIST the typelist from which to retrieve the type at index INDEX
     template <typename INDEX,typename LIST> using
     subscript = result_of<__dtl::__subscript<INDEX, LIST>>;
     
