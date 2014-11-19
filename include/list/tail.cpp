@@ -7,3 +7,12 @@
 //
 
 #include "tail.h"
+
+// for testing purposes:
+#include <meta_assert.h>
+#include <list/list.h>
+
+using namespace
+list;
+
+ASSERT_EQUAL(tail<list<void*,char,double>>,list<char,double>);

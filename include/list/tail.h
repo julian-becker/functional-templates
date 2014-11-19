@@ -9,29 +9,13 @@
 #ifndef __FunctionalTemplates__tail__
 #define __FunctionalTemplates__tail__
 
+#include <list/detail/dtl_tail.h>
 #include <result_of.h>
 
-// for testing purposes:
-#include <meta_assert.h>
-#include <list/list.h>
-
 namespace list {
-
-    namespace __dtl {
-        template <typename LIST> struct
-        __tail;
-        
-        template <template <typename...> class LIST_TYPE, typename T, typename...TS> struct
-        __tail<LIST_TYPE<T,TS...>> {
-            using result = LIST_TYPE<TS...>;
-        };
     
-    }
-    
-    template <typename LIST> using tail = result_of<__dtl::__tail<LIST>>;
-    
-    
-    ASSERT_EQUAL(tail<list<void*,char,double>>,list<char,double>);
+    template <typename LIST> using
+    tail = result_of<__dtl::__tail<LIST>>;
 }
 
 #endif /* defined(__FunctionalTemplates__tail__) */
