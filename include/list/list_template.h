@@ -13,20 +13,14 @@
 
 namespace list {
 
-    // ! @cond Doxygen_Suppress
-    namespace __dtl {
-        template <typename LIST> struct
-        __list_template;
-        
-        template <template <typename...> class LIST_TEMPLATE, typename...TS> struct
-        __list_template<LIST_TEMPLATE<TS...>> {
-            template <typename...ELEMENTS> using result = LIST_TEMPLATE<ELEMENTS...>;
-        };
-    }
-    // ! @endcond
+    template <typename LIST> struct
+    list_template;
     
-    template <typename LIST> using
-    list_template = result_of<__dtl::__list_template<LIST>>;
+    template <template <typename...> class LIST_TEMPLATE, typename...TS> struct
+    list_template<LIST_TEMPLATE<TS...>> {
+        template <typename...ELEMENTS> using
+        result = LIST_TEMPLATE<ELEMENTS...>;
+    };
 }
 
 #endif /* defined(__FunctionalTemplates__list_template__) */
