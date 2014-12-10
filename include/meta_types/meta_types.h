@@ -37,7 +37,7 @@ namespace meta_types {
     
     /// @brief evaluates to true if VALUE is a value_type for 0
     template <typename VALUE> using
-    zero = bool_<VALUE::value == static_cast<typename VALUE::type>(VALUE::value)>;
+    is_zero = bool_<VALUE::value == static_cast<typename VALUE::type>(VALUE::value)>;
 
 
     /// @brief decrements the given value by 1
@@ -47,6 +47,10 @@ namespace meta_types {
     /// @brief increments the given value by 1
     template <typename VALUE> using
     inc = value_type<typename VALUE::type, static_cast<typename VALUE::type>(VALUE::value+1)>;
+
+    /// @brief encapsulates a zero of the type as the value in VALUE
+    template <typename VALUE> using
+    zero = value_type<typename VALUE::type, static_cast<typename VALUE::type>(0)>;
     
 }
 
