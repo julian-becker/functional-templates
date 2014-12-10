@@ -42,6 +42,7 @@
 		B9D87E471A38DC0F0023CD16 /* semaphore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E451A38DC0F0023CD16 /* semaphore.cpp */; };
 		B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E481A38DF830023CD16 /* message.cpp */; };
 		B9D87E4D1A38E17E0023CD16 /* value_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E4B1A38E17E0023CD16 /* value_list.cpp */; };
+		B9D87E531A38E5CC0023CD16 /* thread_safe_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -140,6 +141,8 @@
 		B9D87E491A38DF830023CD16 /* message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = message.h; sourceTree = "<group>"; };
 		B9D87E4B1A38E17E0023CD16 /* value_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = value_list.cpp; sourceTree = "<group>"; };
 		B9D87E4C1A38E17E0023CD16 /* value_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value_list.h; sourceTree = "<group>"; };
+		B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_safe_queue.cpp; sourceTree = "<group>"; };
+		B9D87E521A38E5CC0023CD16 /* thread_safe_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_safe_queue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +330,8 @@
 				B9D87E461A38DC0F0023CD16 /* semaphore.h */,
 				B9D87E481A38DF830023CD16 /* message.cpp */,
 				B9D87E491A38DF830023CD16 /* message.h */,
+				B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */,
+				B9D87E521A38E5CC0023CD16 /* thread_safe_queue.h */,
 			);
 			path = multithreading;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 				B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */,
 				B91017FD1A1BB7990063D5D6 /* init.cpp in Sources */,
 				B910180A1A1BC0CE0063D5D6 /* subscript.cpp in Sources */,
+				B9D87E531A38E5CC0023CD16 /* thread_safe_queue.cpp in Sources */,
 				B91017E81A1ACAAF0063D5D6 /* join.cpp in Sources */,
 				B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */,
 				B91018071A1BBED70063D5D6 /* meta_types.cpp in Sources */,
