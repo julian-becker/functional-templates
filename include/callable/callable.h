@@ -10,6 +10,7 @@
 #define __FunctionalTemplates__callable__
 
 #include <callable/detail/dtl_callable.h>
+#include <list/value_list.h>
 
 namespace
 callable {
@@ -25,5 +26,40 @@ callable {
         using
         result_type = typename __dtl::__call_result_type<decltype(&CALLABLE::operator())>::type;
     };
+    
+    
+    template <typename CALLABLE_TYPE> struct
+    callable {
+        //----
+        public: typename callable_traits<CALLABLE_TYPE>::wrapper_type
+        function;
+        
+        //----
+        public:
+        callable(CALLABLE_TYPE function) : function(function) {}
+        
+        
+        public: using
+        t_return = typename callable_traits<CALLABLE_TYPE>::result_type;
+        
+        //----
+        private: template <typename...Ts, int...ARGUMENT_INDICES> t_return
+        executeCall(
+                    const std::tuple<Ts...>&& arguments,
+                    list::int_list<ARGUMENT_INDICES...>)
+        {
+            return function(std::get<ARGUMENT_INDICES>(arguments)...);
+        }
+        
+        //----
+        public: template <typename...Ts> t_return
+        operator() (const std::tuple<Ts...>& arguments)
+        {
+            return executeCall(
+                        std::move(arguments),
+                        typename list::make_int_range_list<sizeof...(Ts)>::type());
+        }
+    };
+
 }
 #endif /* defined(__FunctionalTemplates__callable__) */
