@@ -11,6 +11,7 @@
 
 #include <callable/detail/dtl_callable.h>
 #include <list/value_list.h>
+#include <result_of.h>
 
 namespace
 callable {
@@ -18,13 +19,13 @@ callable {
     callable_traits {
        
         template <template <typename...> class LIST_TYPE> using
-        arguments = typename __dtl::__member_fn_arguments_extractor<decltype(&CALLABLE::operator())>::template type<LIST_TYPE>;
+        arguments = typename __dtl::__member_fn_arguments_extractor<decltype(&CALLABLE::operator())>::template result<LIST_TYPE>;
         
         using
-        wrapper_type = typename __dtl::__call_wrapper_type<decltype(&CALLABLE::operator())>::type;
+        wrapper_type = ::result_of<__dtl::__call_wrapper_type<decltype(&CALLABLE::operator())>>;
 
         using
-        result_type = typename __dtl::__call_result_type<decltype(&CALLABLE::operator())>::type;
+        result_type = ::result_of<__dtl::__call_result_type<decltype(&CALLABLE::operator())>>;
     };
     
     
@@ -57,7 +58,7 @@ callable {
         {
             return executeCall(
                         std::move(arguments),
-                        typename list::make_int_range_list<sizeof...(Ts)>::type());
+                        list::int_range_up_to<sizeof...(Ts)>());
         }
     };
 

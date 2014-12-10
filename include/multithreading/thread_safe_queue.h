@@ -28,7 +28,7 @@ namespace multithreading {
             new_msg_notification.post();
         }
         
-        public: const message
+        public: message
         wait_and_pop() {
             new_msg_notification.wait();
             auto msg(std::move(queue.front()));

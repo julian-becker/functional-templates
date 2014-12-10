@@ -18,8 +18,8 @@ list {
     int_list {
     };
 
-    template<int N2, int...S> struct
-    make_int_range_list : make_int_range_list<0, N2-1, N2-1, S...> {
+    template<int N1, int N2, int...S> struct
+    make_int_range_list : make_int_range_list<N1, N2-1, N2-1, S...> {
     };
     
     template<int N, int...S> struct
@@ -29,7 +29,7 @@ list {
     };
     
     template <int N> using
-    int_range_up_to = result_of<make_int_range_list<N>>;
+    int_range_up_to = result_of<make_int_range_list<0,N>>;
     
 }
 

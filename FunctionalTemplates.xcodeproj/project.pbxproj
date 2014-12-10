@@ -43,6 +43,7 @@
 		B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E481A38DF830023CD16 /* message.cpp */; };
 		B9D87E4D1A38E17E0023CD16 /* value_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E4B1A38E17E0023CD16 /* value_list.cpp */; };
 		B9D87E531A38E5CC0023CD16 /* thread_safe_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */; };
+		B9D87E561A38E7DE0023CD16 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E541A38E7DE0023CD16 /* actor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -143,6 +144,8 @@
 		B9D87E4C1A38E17E0023CD16 /* value_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value_list.h; sourceTree = "<group>"; };
 		B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_safe_queue.cpp; sourceTree = "<group>"; };
 		B9D87E521A38E5CC0023CD16 /* thread_safe_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_safe_queue.h; sourceTree = "<group>"; };
+		B9D87E541A38E7DE0023CD16 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
+		B9D87E551A38E7DE0023CD16 /* actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = actor.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +335,8 @@
 				B9D87E491A38DF830023CD16 /* message.h */,
 				B9D87E511A38E5CC0023CD16 /* thread_safe_queue.cpp */,
 				B9D87E521A38E5CC0023CD16 /* thread_safe_queue.h */,
+				B9D87E541A38E7DE0023CD16 /* actor.cpp */,
+				B9D87E551A38E7DE0023CD16 /* actor.h */,
 			);
 			path = multithreading;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 				B90F31831A0D8FBF001316CE /* playground.cpp in Sources */,
 				B91017D01A1AA3440063D5D6 /* result_of.cpp in Sources */,
 				B910180D1A1BCA090063D5D6 /* reverse.cpp in Sources */,
+				B9D87E561A38E7DE0023CD16 /* actor.cpp in Sources */,
 				B90F31801A0D65A7001316CE /* custom_infix.cpp in Sources */,
 				B91017DC1A1AAAF50063D5D6 /* equal.cpp in Sources */,
 				B91017F11A1ACF770063D5D6 /* clear.cpp in Sources */,
