@@ -7,7 +7,14 @@
 //
 
 #include "playground.h"
+#include <list/length.h>
+#include <list/join_n.h>
+#include <tuple>
+
+
 
 void run_playground() {
-
 }
+
+
+
