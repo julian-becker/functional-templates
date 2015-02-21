@@ -14,24 +14,57 @@ using namespace multithreading;
 
 
 #include <sstream>
+#include <map>
+#include <memory>
+
+struct
+message_broker {
+    private: std::map<std::string,const std::unique_ptr<actor>>
+    registry;
+    
+    private: std::mutex
+    mutex;
+    
+    public:
+    message_broker() {}
+    
+    public: template <typename ACTOR_TYPE, typename...ACTOR_CONSTRUCTOR_ARGS> void
+    register_actor(const std::string name,ACTOR_CONSTRUCTOR_ARGS...args) {
+        std::lock_guard<std::mutex> lock(mutex);
+        registry.emplace(name,std::unique_ptr<actor>(new ACTOR_TYPE(*this, args...)));
+    }
+    
+    public: template <typename MESSAGE_TYPE> void
+    post(const std::string destination, MESSAGE_TYPE&& msg) {
+        std::lock_guard<std::mutex> lock(mutex);
+        if(!registry.count(destination))
+            throw "unknown actor identifier";
+        registry.at(destination)->notify(std::move(msg));
+        
+    }
+};
+
+
 
 struct
 tic_message {};
 
 struct
 tic_actor : actor {
-    private: std::shared_ptr<actor>
+    private: std::string
     target;
     
+    private: message_broker& broker;
+    
     public:
-    tic_actor(const std::shared_ptr<actor>& target)
-    : target(target) {}
+    tic_actor(message_broker& broker, const std::string& target)
+    : broker(broker), target(target) {}
     
     private: virtual void
     process(const message& msg) {
         msg.get_dispatcher()
         .handle([&](init_message)   {
-            target->notify(tic_message());
+            broker.post(target,tic_message());
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
             this->notify(init_message());
            // std::this_thread::yield();
@@ -43,13 +76,18 @@ tic_actor : actor {
 
 struct
 some_actor : actor {
-    private: int counter;
-    private: std::shared_ptr<actor>
+    private: int
+    counter;
+    
+    private: std::string
     target;
     
+    private: message_broker&
+    broker;
+    
     public:
-    some_actor(const std::shared_ptr<actor>& target)
-    : counter(0), target(target) {}
+    some_actor(message_broker& broker, const std::string& target)
+    : counter(0), broker(broker), target(target) {}
     
     private: virtual void
     process(const message& msg) {
@@ -57,8 +95,8 @@ some_actor : actor {
         .handle([&](tic_message) {
             if(counter++%100==0) {
                 std::cout << "some_actor: tic " << counter << "\n";
-                target->notify(std::string("message from some_actor"));
-                target->notify(
+                broker.post(target,std::string("message from some_actor"));
+                broker.post(target,
                     message(
                         std::function<void(std::string)>([](std::string s){ std::cout << "handling string s="<<s<<"\n"; }),
                         std::string("message from some_actor")
@@ -71,6 +109,12 @@ some_actor : actor {
 
 struct
 consuming_actor : actor {
+    private: message_broker& broker;
+    
+    public:
+    consuming_actor(message_broker& broker)
+    : broker(broker) {}
+    
     private: virtual void
     process(const message& msg) {
         msg.get_dispatcher()
@@ -85,9 +129,10 @@ consuming_actor : actor {
 
 int run_playground()
 {
-    std::shared_ptr<actor> receptor = std::shared_ptr<actor>(new consuming_actor);
-    std::shared_ptr<actor> some = std::shared_ptr<actor>(new some_actor(receptor));
-    std::shared_ptr<actor> clock = std::shared_ptr<actor>(new tic_actor(some));
-    std::this_thread::sleep_for(std::chrono::seconds(20));
+    std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
+    broker->register_actor<consuming_actor>("consuming_actor");
+    broker->register_actor<some_actor>("some_actor","consuming_actor");
+    broker->register_actor<tic_actor>("tic_actor","some_actor");
+    std::this_thread::sleep_for(std::chrono::seconds(10));
     return 0;
 }

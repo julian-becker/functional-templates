@@ -49,7 +49,7 @@ multithreading {
             })
         {}
         
-        private: virtual void
+        private: void
         run_actor() {
             while(!interrupt.is_triggered())
                 process(incoming_msgs.wait_and_pop());
