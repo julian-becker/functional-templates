@@ -13,12 +13,20 @@
 
 
 namespace list {
+    /// general list
     template <typename...> struct list;
     
+    /// non-empty list specialization
     template <typename HEAD,typename...TAIL> struct
     list<HEAD,TAIL...> {
-        public: using head = HEAD;
-        public: using tail = list<TAIL...>;
+        
+        /// the first element in the list
+        public: using
+        head = HEAD;
+        
+        /// the rest of the list
+        public: using
+        tail = list<TAIL...>;
     };
 }
 
