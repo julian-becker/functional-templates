@@ -13,7 +13,13 @@
 
 
 namespace list {
-    template <typename...> struct list {};
+    template <typename...> struct list;
+    
+    template <typename HEAD,typename...TAIL> struct
+    list<HEAD,TAIL...> {
+        public: using head = HEAD;
+        public: using tail = list<TAIL...>;
+    };
 }
 
 #endif /* defined(__FunctionalTemplates__list__) */
