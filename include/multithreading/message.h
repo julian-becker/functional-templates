@@ -27,24 +27,16 @@ multithreading {
         private: template <typename...TS> struct
         message_wrapper : message_base {
             const std::tuple<TS...> content;
-            explicit message_wrapper(TS&&...content) : content{content...} {}
-            explicit message_wrapper(const TS&...content) : content{content...} {}
+            explicit message_wrapper(TS&&...content) : content{std::forward<TS>(content)...} {}
             virtual ~message_wrapper() throw() {}
         };
         
         public: message_base const * msg;
         
         public: template <typename...TS>
-        message(const TS&...content)
-        : msg(new message_wrapper<TS...>(content...))
-        {}
-        
-        public: template <typename...TS>
-        explicit
         message(TS&&...content)
-        : msg(new message_wrapper<TS...>(std::move(content)...))
-        {
-        }
+        : msg(new message_wrapper<TS...>(std::forward<TS>(content)...))
+        {}
         
         public:
         message(message&& other)
