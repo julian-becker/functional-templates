@@ -14,7 +14,9 @@
 
 namespace list {
     /// general list
-    template <typename...> struct list;
+    template <typename...> struct
+    list {
+    };
     
     /// non-empty list specialization
     template <typename HEAD,typename...TAIL> struct
