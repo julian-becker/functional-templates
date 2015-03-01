@@ -30,7 +30,8 @@ show() {
     std::cout << demangle<T>() << std::endl;
 }
 
+
 void forth_test() {
-    using resT = eval_t<word<quote<dup>,dup>,stack<>>;
+    using resT = eval_t<word<int_<1>,int_<2>,int_<3>,swap>,stack<>>;
     show<resT>();
 }

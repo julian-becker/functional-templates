@@ -124,6 +124,13 @@ words {
         };
     };
     
+    template <int N> struct
+    int_ : push<meta_types::int_<N>> {};
+    
+    template <bool B> struct
+    bool_ : push<meta_types::bool_<B>> {};
+    
+    
     /// [B] [A] k == A
     struct
     k {
@@ -143,7 +150,11 @@ words {
     struct cons : word<cake,quote<>,k> {};
     //  using i = word<quote<quote<>>,dip,k> {}; // already defined as primitive
     struct dup : word<quote<>,cake,dip,dip> {};
+    struct unit : word<quote<>,cons> {};
+    struct swap : word<unit,dip> {};
+    struct w : word<quote<dup>,dip,i> {};
     
+
     template<typename WORD, typename STACK = words::stack<>> using
     eval_t = typename do_continuation<STACK,WORD>::stack;
 }
