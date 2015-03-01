@@ -14,12 +14,14 @@
 #include <custom_infix.h>
 #include "playground.h"
 #include <callable/callable.h>
+#include <words/forth.h>
 
 int main(int argc, const char * argv[])
 {
     //test_callable();
     //run_playground();
-    test_curry();
+    //test_curry();
+    forth_test();
     return 0;
 }
 

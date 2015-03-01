@@ -4,13 +4,14 @@
 //
 //  Created by Julian Becker on 27.02.15.
 //  Copyright (c) 2015 Julian Becker. All rights reserved.
-//
+//  Note: this code was inspired by https://pubby8.wordpress.com/2012/10/15/stack-based-template-metaprogramming-in-c-11/
 
 #ifndef __FunctionalTemplates__forth__
 #define __FunctionalTemplates__forth__
 
 #include <words/stack.h>
 #include <type_traits>
+#include <meta_types/meta_types.h>
 
 //! @cond Doxygen_Suppress
 
@@ -26,7 +27,11 @@ words {
     template <typename T,typename...WORDS> using
     continuation_of = typename T::template continuation<WORDS...>;
     
-    
+    /// @brief: This will be equal to the stack resulting from executing WORD and REMAINING_WORDS
+    ///         with the stack STACK as input
+    template <typename STACK, typename WORD, typename...REMAINING_WORDS> using
+    do_continuation_ext = stack_of<continuation_of<apply_to<WORD,STACK>,REMAINING_WORDS...>>;
+  
     struct
     id {
         template<typename STACK> struct
@@ -40,10 +45,13 @@ words {
             template<typename WORD, typename... REST> struct
             continuation<WORD, REST...> {
                 using
-                stack =stack_of<continuation_of<apply_to<WORD,STACK>,REST...>>;
+                stack = do_continuation_ext<STACK,WORD,REST...>;
             };
       };
     };
+
+    template <typename STACK, typename...REMAINING_WORDS> using
+    do_continuation = do_continuation_ext<STACK, id, REMAINING_WORDS...>;
 
     template<typename... WORDS> struct
     word {
@@ -51,113 +59,96 @@ words {
         apply {
             template<typename... REST> struct
             continuation {
-            
-            using
-            stack = stack_of<
-                        continuation_of<apply_to<id,
-                            stack_of<continuation_of<apply_to<id,STACK>,WORDS...>
-                            >
-                        >,
-                        REST...>
-                    >;
+                using
+                stack = do_continuation< do_continuation<STACK,WORDS...>, REST...>;
+            };
+        };
+    };
+
+    /// @brief: pushes the given argument onto the stack when executed:
+    /// push<A,B,C> == A B C
+    template <typename...TS> struct
+    push {
+        template<typename STACK> struct
+        apply {
+            template<typename... REST> struct
+            continuation {
+                using newStack = typename STACK::template push<TS...>;
+                using stack = do_continuation<newStack,REST...>;
+            };
+        };
+    };
+   
+    /// will push a word onto the stack:
+    /// quote<A,B> == [ A B ]
+    template <typename...TS> struct
+    quote {
+        template<typename STACK> struct
+        apply {
+            template<typename... REST> struct
+            continuation {
+                using stack = do_continuation<typename STACK::template push<word<TS...>>, REST...>;
+            };
+        };
+    };
+
+    /// executes the word on top of the stack:
+    /// [A] i == A
+    struct
+    i {
+        template<typename STACK> struct
+        apply {
+            template<typename... REST> struct
+            continuation {
+                using stack = do_continuation<typename STACK::pop, typename STACK::top, REST...>;
+            };
+        };
+    };
+
+    /// [B] [A] cake == [[B] A] [A [B]]
+    struct
+    cake {
+        template<typename STACK> struct
+        apply {
+            template<typename... REST> struct
+            continuation {
+                using quotedA = push<typename STACK::top>;
+                using quotedB = push<typename STACK::pop::top>;
+                using newStack = typename STACK::pop::pop::
+                                    template push<
+                                        word<quotedB,quotedA,i>,
+                                        word<quotedA,i,quotedB>
+                                    >;
+                using stack = do_continuation<newStack, REST...>;
             };
         };
     };
     
-
-    template <typename WORD> struct
-    unquote;
-
-    template <typename WORD> struct
-    unquote<word<WORD>> {
-        using type = WORD;
-    };
-
-    
-    template <typename WORD> using
-    unquote_t = typename unquote<WORD>::type;
-    
-    
-
+    /// [B] [A] k == A
     struct
     k {
         template<typename STACK> struct
         apply {
             template<typename... REST> struct
             continuation {
-                using quotedA = typename STACK::top;
-                using quotedB = typename STACK::pop::top;
-                using A = unquote_t<quotedA>;
+                using wordA = typename STACK::top;
                 using newStack = typename STACK::pop::pop;
-                using stack = stack_of<continuation_of<apply_to<A,newStack>,REST...>>;
+                using stack = do_continuation<newStack,wordA,REST...>;
             };
         };
     };
     
-    struct
-    s {
-        template<typename STACK> struct
-        apply {
-            template<typename... REST> struct
-            continuation {
-                using quotedX = typename STACK::top;
-                using quotedA = typename STACK::pop::top;
-                using quotedB = typename STACK::pop::pop::top;
-                using quotedC = typename STACK::pop::pop::pop::top;
-                using X = unquote_t<quotedX>;
-                using A = unquote_t<quotedA>;
-                using B = unquote_t<quotedB>;
-                using newStack = typename STACK::pop::pop::pop::template push<word<quotedC,B>>;
-                using contX = continuation_of<apply_to<X,newStack>,REST...>;
-                using newStack2 = typename stack_of<contX>::template push<quotedC>;
-                using stack = stack_of<continuation_of<apply_to<A,newStack2>,REST...>>;
-            };
-        };
-    };
-
-    struct
-    dup {
-        template<typename STACK> struct
-        apply {
-            template<typename... REST> struct
-            continuation {
-                using tos = typename STACK::top;
-                using newStack = typename STACK::template push<tos>;
-                using stack = stack_of<continuation_of<apply_to<id,newStack>,REST...>>;
-            };
-        };
-    };
+    struct zap : word<quote<>,k> {};
+    struct dip : word<cake,k> {};
+    struct cons : word<cake,quote<>,k> {};
+    //  using i = word<quote<quote<>>,dip,k> {}; // already defined as primitive
+    struct dup : word<quote<>,cake,dip,dip> {};
     
-    
-    template<typename WORD, typename STACK = words::stack<>> struct
-    eval {
-        //using
-        //stack = stack_of<continuation_of<apply_to<id,STACK>,WORD>>;
-        using stack =  typename id::apply<STACK>::template continuation<WORD>::stack;
-        
-    };
-
     template<typename WORD, typename STACK = words::stack<>> using
-    eval_t = typename eval<WORD,STACK>::stack;
-    
-    static_assert(std::is_same<
-        stack<>,
-        typename apply_to<id,stack<>>::continuation<>::stack
-    >::value,"");
-    
-    static_assert(std::is_same<
-        stack<id,id>,
-        typename dup::apply<stack<id>>::template continuation<>::stack
-    >::value,"");
-
-    static_assert(std::is_same<
-        stack<id>,
-        eval_t<word<id>,stack<id>>
-    >::value,"");
-
-    int test();
-    static_assert(std::is_same<int,decltype((test()))>::value,"error");
+    eval_t = typename do_continuation<STACK,WORD>::stack;
 }
+
+void forth_test();
 
 //! @endcond Doxygen_Suppress
 
