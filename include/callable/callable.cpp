@@ -7,3 +7,5 @@
 //
 
 #include "callable.h"
+
+void test_callable() {}

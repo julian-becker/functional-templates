@@ -38,6 +38,9 @@
 		B91353421A2520C5007F4A5C /* CopyConstructible.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353401A2520C5007F4A5C /* CopyConstructible.cpp */; };
 		B91353481A25216D007F4A5C /* Signed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353461A25216D007F4A5C /* Signed.cpp */; };
 		B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913534A1A27CA7B007F4A5C /* join_n.cpp */; };
+		B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */; };
+		B9A2E7B91AA0FB4900EB1FF6 /* stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */; };
+		B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */; };
 		B9D87E411A38D8910023CD16 /* callable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E3F1A38D8910023CD16 /* callable.cpp */; };
 		B9D87E471A38DC0F0023CD16 /* semaphore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E451A38DC0F0023CD16 /* semaphore.cpp */; };
 		B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E481A38DF830023CD16 /* message.cpp */; };
@@ -136,6 +139,11 @@
 		B913534A1A27CA7B007F4A5C /* join_n.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = join_n.cpp; sourceTree = "<group>"; };
 		B913534B1A27CA7B007F4A5C /* join_n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = join_n.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
+		B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = forth.cpp; path = words/forth.cpp; sourceTree = "<group>"; };
+		B9A2E7B51AA0FB1100EB1FF6 /* forth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = forth.h; path = words/forth.h; sourceTree = "<group>"; };
+		B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack.cpp; path = words/stack.cpp; sourceTree = "<group>"; };
+		B9A2E7B81AA0FB4900EB1FF6 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = words/stack.h; sourceTree = "<group>"; };
+		B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = curry.cpp; sourceTree = "<group>"; };
 		B9D87E3F1A38D8910023CD16 /* callable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = callable.cpp; sourceTree = "<group>"; };
 		B9D87E401A38D8910023CD16 /* callable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = callable.h; sourceTree = "<group>"; };
 		B9D87E431A38D8D90023CD16 /* dtl_callable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_callable.h; sourceTree = "<group>"; };
@@ -282,6 +290,7 @@
 		B91220C019FBB8F100EBFA72 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				B9A2E7B31AA0FAE100EB1FF6 /* Words */,
 				B9FF76371A99B7FD0004A7E0 /* Factory */,
 				B9D87E441A38DBD70023CD16 /* multithreading */,
 				B9D87E3E1A38D86B0023CD16 /* callable */,
@@ -290,6 +299,7 @@
 				B91018041A1BBEB50063D5D6 /* meta_types */,
 				B91017CA1A1AA2140063D5D6 /* List */,
 				B90F31641A0AC17C001316CE /* curry.h */,
+				B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */,
 				B90F317E1A0D65A7001316CE /* custom_infix.cpp */,
 				B90F317F1A0D65A7001316CE /* custom_infix.h */,
 				B91017CE1A1AA3440063D5D6 /* result_of.cpp */,
@@ -317,6 +327,17 @@
 				B91353471A25216D007F4A5C /* Signed.h */,
 			);
 			name = concepts;
+			sourceTree = "<group>";
+		};
+		B9A2E7B31AA0FAE100EB1FF6 /* Words */ = {
+			isa = PBXGroup;
+			children = (
+				B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */,
+				B9A2E7B51AA0FB1100EB1FF6 /* forth.h */,
+				B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */,
+				B9A2E7B81AA0FB4900EB1FF6 /* stack.h */,
+			);
+			name = Words;
 			sourceTree = "<group>";
 		};
 		B9D87E3E1A38D86B0023CD16 /* callable */ = {
@@ -451,6 +472,7 @@
 				B9FF763E1A99BF4A0004A7E0 /* factory_evolution.cpp in Sources */,
 				B91017D61A1AA6E80063D5D6 /* filter.cpp in Sources */,
 				B9D87E4D1A38E17E0023CD16 /* value_list.cpp in Sources */,
+				B9A2E7B91AA0FB4900EB1FF6 /* stack.cpp in Sources */,
 				B90F31831A0D8FBF001316CE /* playground.cpp in Sources */,
 				B91017D01A1AA3440063D5D6 /* result_of.cpp in Sources */,
 				B910180D1A1BCA090063D5D6 /* reverse.cpp in Sources */,
@@ -463,6 +485,7 @@
 				B91018031A1BBE140063D5D6 /* length.cpp in Sources */,
 				B91018001A1BBCFD0063D5D6 /* null.cpp in Sources */,
 				B91017E51A1ABC150063D5D6 /* list.cpp in Sources */,
+				B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */,
 				B91017F71A1AD1680063D5D6 /* last.cpp in Sources */,
 				B913533E1A251C5C007F4A5C /* concepts.cpp in Sources */,
 				B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */,
@@ -473,6 +496,7 @@
 				B91017E81A1ACAAF0063D5D6 /* join.cpp in Sources */,
 				B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */,
 				B91018071A1BBED70063D5D6 /* meta_types.cpp in Sources */,
+				B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */,
 				B9D87E411A38D8910023CD16 /* callable.cpp in Sources */,
 				B91353421A2520C5007F4A5C /* CopyConstructible.cpp in Sources */,
 				B91017E21A1AACF30063D5D6 /* conditional.cpp in Sources */,

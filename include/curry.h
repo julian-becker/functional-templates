@@ -9,6 +9,7 @@
 #pragma once
 #include <functional>
 #include <type_traits>
+#include <callable/callable.h>
 
 namespace __dtl {
 
@@ -63,16 +64,11 @@ namespace __dtl {
     // ! @endcond
 }
 
-template <typename R,typename...Ts> auto
-curry(const std::function<R(Ts...)> fun)
--> typename __dtl::__curry<std::function<R(Ts...)>>::type
+template <typename CALLABLE> auto
+curry(CALLABLE callable)
+-> typename __dtl::__curry<typename callable::callable_traits<CALLABLE>::wrapper_type>::type
 {
-    return __dtl::__curry<std::function<R(Ts...)>>(fun).result;
+    return __dtl::__curry<typename callable::callable_traits<CALLABLE>::wrapper_type>(callable).result;
 }
 
-template <typename R,typename...Ts> auto
-curry(R(* const fun)(Ts...))
--> typename __dtl::__curry<std::function<R(Ts...)>>::type
-{
-    return __dtl::__curry<std::function<R(Ts...)>>(fun).result;
-}
+void test_curry();

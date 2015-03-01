@@ -26,6 +26,12 @@ callable {
             result = LIST_TYPE<ARG_TYPES...>;
         };
         
+        template <typename CALLABLE, typename R,typename...ARG_TYPES> struct
+        __member_fn_arguments_extractor<R (CALLABLE::*)(ARG_TYPES...)> {
+            public: template <template <typename...> class LIST_TYPE> using
+            result = LIST_TYPE<ARG_TYPES...>;
+        };
+        
        
         template <typename T> struct
         __call_wrapper_type;
@@ -36,12 +42,24 @@ callable {
             result = std::function<R(ARG_TYPES...)>;
         };
         
+        template <typename CALLABLE, typename R, typename...ARG_TYPES> struct
+        __call_wrapper_type<R (CALLABLE::*)(ARG_TYPES...)> {
+            public: using
+            result = std::function<R(ARG_TYPES...)>;
+        };
+        
         
         template <typename T> struct
         __call_result_type;
 
         template <typename CALLABLE, typename R, typename...ARG_TYPES> struct
         __call_result_type<R (CALLABLE::*)(ARG_TYPES...) const> {
+            public: using
+            result = R;
+        };
+
+        template <typename CALLABLE, typename R, typename...ARG_TYPES> struct
+        __call_result_type<R (CALLABLE::*)(ARG_TYPES...)> {
             public: using
             result = R;
         };

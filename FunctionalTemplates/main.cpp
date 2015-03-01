@@ -13,10 +13,13 @@
 #include <stdio.h>
 #include <custom_infix.h>
 #include "playground.h"
+#include <callable/callable.h>
 
 int main(int argc, const char * argv[])
 {
-    run_playground();
+    //test_callable();
+    //run_playground();
+    test_curry();
     return 0;
 }
 

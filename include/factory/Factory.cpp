@@ -26,7 +26,7 @@ struct Derived2 : Base {
 
 using namespace factory;
 
-int run_playground() {
+int run_playground1() {
 
     std::unordered_map<std::string, std::type_index> keyToTypeMap {
         {"Derived2",std::type_index(typeid(Derived2))},

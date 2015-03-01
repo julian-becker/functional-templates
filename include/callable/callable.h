@@ -75,4 +75,7 @@ callable {
     };
 
 }
+
+void test_callable();
+
 #endif /* defined(__FunctionalTemplates__callable__) */

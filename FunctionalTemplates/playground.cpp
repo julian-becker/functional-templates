@@ -10,6 +10,7 @@
     #include <list/length.h>
     #include <list/join_n.h>
     #include <tuple>
+    #include <callable.h>
 
 
 
@@ -17,6 +18,7 @@
     #include <functional>
     #include <memory>
     #include <unordered_map>
+    #include <type_traits>
 
     template <typename BASE>
     struct
@@ -71,42 +73,57 @@
         }
     };
 
-    #include <thread>
-    #include <setjmp.h>
-    #include <exception>>
+#include <thread>
+#include <setjmp.h>
+#include <exception>
 
-    static jmp_buf buf;
-
-    void my_terminate() {
-        std::cout << "caught terminate \n";
-        longjmp(buf,1);
-    }
-
-    void kill_thread(std::thread* t) {
-        std::set_terminate(&my_terminate);
-        
-        if ( !setjmp(buf) ) {
-       //     t.detach();
-            delete t;
+struct wrapper_factor
+{
+    template<class F>
+    struct wrapper
+    {
+        static_assert(std::is_empty<F>(), "Lambdas must be empty");
+        template<class... Ts>
+        auto operator()(Ts&&... xs) const -> decltype(reinterpret_cast<const F&>(*this)(std::forward<Ts>(xs)...))
+        {
+            return reinterpret_cast<const F&>(*this)(std::forward<Ts>(xs)...);
         }
+    };
+
+    template<class F>
+    constexpr wrapper<F> operator += (F*) const
+    {
+        return {};
     }
-/*
-    void run_playground() {
-        std::shared_ptr<Base> p1 = Factory<Base>::create<Derived>("Original");
-        std::shared_ptr<Base> p2 = Factory<Base>::clone(p1);
-        std::shared_ptr<Base> p3 = Factory<Base>::clone(p2);
-        p1->whoAmI();
-        p2->whoAmI();
-        p3->whoAmI();
-        std::set_terminate(&my_terminate);
-        std::thread* t = new std::thread([]{ while(1)
-            std::cout << ".";
-            });
-        kill_thread(t);
-        std::cout << "done\n";
-        
-        while(1);
+};
+
+struct addr_add
+{
+    template<class T>
+    friend typename std::remove_reference<T>::type *operator+(addr_add, T &&t) 
+    {
+        return &t;
     }
-*/
+};
+
+#define STATIC_LAMBDA wrapper_factor() += true ? nullptr : addr_add() + []
+
+const constexpr auto add_one = STATIC_LAMBDA(int x)
+{
+    return x + 1;
+};
+
+#include <vector>
+void run_playground() {
+    std::cout << add_one(41) << "\n";
+    std::vector<int> l { 1,2,3,4,5,6,7 };
+    for( auto& i:l){
+        std::cout << "i="<<i<<"\n";
+        i+=10;
+    }
+    
+    for( auto&& i:l)
+        std::cout << "i="<<i<<"\n";
+}
 
 
