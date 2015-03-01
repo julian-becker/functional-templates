@@ -152,8 +152,8 @@ words {
     struct dup : word<quote<>,cake,dip,dip> {};
     struct unit : word<quote<>,cons> {};
     struct swap : word<unit,dip> {};
-    struct w : word<quote<dup>,dip,i> {};
-    
+    struct w : word<quote<dup>,dip,i> {}; /// [B] [A] w == [B] [B] A
+    struct over : word<quote<>,cons,w,quote<>,cons,dip> {}; /// [B] [A] over == [B] [A] [B]
 
     template<typename WORD, typename STACK = words::stack<>> using
     eval_t = typename do_continuation<STACK,WORD>::stack;
