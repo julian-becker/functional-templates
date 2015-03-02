@@ -82,15 +82,15 @@ words {
     /// will push a word onto the stack:
     /// quote<A,B> == [ A B ]
     template <typename...TS> struct
-    quote {
-        template<typename STACK> struct
+    quote : push<word<TS...>> {};
+/*        template<typename STACK> struct
         apply {
             template<typename... REST> struct
             continuation {
                 using stack = do_continuation<typename STACK::template push<word<TS...>>, REST...>;
             };
         };
-    };
+    };*/
 
     /// executes the word on top of the stack:
     /// [A] i == A
@@ -124,13 +124,6 @@ words {
         };
     };
     
-    template <int N> struct
-    int_ : push<meta_types::int_<N>> {};
-    
-    template <bool B> struct
-    bool_ : push<meta_types::bool_<B>> {};
-    
-    
     /// [B] [A] k == A
     struct
     k {
@@ -144,19 +137,48 @@ words {
             };
         };
     };
-    
-    struct zap : word<quote<>,k> {};
-    struct dip : word<cake,k> {};
-    struct cons : word<cake,quote<>,k> {};
-    //  using i = word<quote<quote<>>,dip,k> {}; // already defined as primitive
-    struct dup : word<quote<>,cake,dip,dip> {};
-    struct unit : word<quote<>,cons> {};
-    struct swap : word<unit,dip> {};
-    struct w : word<quote<dup>,dip,i> {}; /// [B] [A] w == [B] [B] A
-    struct over : word<quote<>,cons,w,quote<>,cons,dip> {}; /// [B] [A] over == [B] [A] [B]
 
     template<typename WORD, typename STACK = words::stack<>> using
     eval_t = typename do_continuation<STACK,WORD>::stack;
+    
+    template <bool B> struct
+    bool_ : push<meta_types::bool_<B>> {};
+
+    template <int N> struct
+    int_ : push<meta_types::int_<N>> {};
+    
+    /// [A] zap  ==
+    struct zap : word<quote<>,k> {};
+    
+    /// [B] [A] dip == A [B]
+    struct dip : word<cake,k> {};
+    
+    /// [B] [A] cons == [[B] A]
+    struct cons : word<cake,quote<>,k> {};
+    
+    /// [A] i == A
+    ///  using i = word<quote<quote<>>,dip,k> {}; // already defined as primitive
+    
+    /// [A] dup == [A] [A]
+    struct dup : word<quote<>,cake,dip,dip> {};
+    
+    /// [A] unit == [[A]]
+    struct unit : word<quote<>,cons> {};
+    
+    /// [B] [A] swap == [A] [B]
+    struct swap : word<unit,dip> {};
+    
+    /// [B] [A] w == [B] [B] A
+    struct w : word<quote<dup>,dip,i> {};
+    
+    /// [B] [A] over == [B] [A] [B]
+    struct over : word<quote<>,cons,w,quote<>,cons,dip> {};
+    
+    /// [B] [A] nip == [A]
+    struct nip : word<swap,zap> {};
+    
+    /// [B] [A] cat == [B A]
+    struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
 }
 
 void forth_test();
