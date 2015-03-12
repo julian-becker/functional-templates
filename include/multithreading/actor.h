@@ -64,11 +64,13 @@ multithreading {
         }
         
         public: virtual
-        ~actor() throw (interrupt_exception) {
+        ~actor() throw () {
             interrupt.trigger();
             my_thread.join();
-    //        if(exception)
-    //            std::rethrow_exception(exception);
+
+            // do not rethrow the exception from the destructor
+            // if(exception)
+            //     std::rethrow_exception(exception);
         }
     };
 }

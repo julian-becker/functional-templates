@@ -19,9 +19,9 @@
 int main(int argc, const char * argv[])
 {
     //test_callable();
-    //run_playground();
+    run_playground();
     //test_curry();
-    forth_test();
+    //forth_test();
     return 0;
 }
 

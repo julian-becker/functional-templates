@@ -38,6 +38,7 @@
 		B91353421A2520C5007F4A5C /* CopyConstructible.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353401A2520C5007F4A5C /* CopyConstructible.cpp */; };
 		B91353481A25216D007F4A5C /* Signed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353461A25216D007F4A5C /* Signed.cpp */; };
 		B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913534A1A27CA7B007F4A5C /* join_n.cpp */; };
+		B95125B61AA6293C00F7B210 /* type_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B95125B41AA6293C00F7B210 /* type_array.cpp */; };
 		B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */; };
 		B9A2E7B91AA0FB4900EB1FF6 /* stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */; };
 		B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */; };
@@ -139,6 +140,8 @@
 		B913534A1A27CA7B007F4A5C /* join_n.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = join_n.cpp; sourceTree = "<group>"; };
 		B913534B1A27CA7B007F4A5C /* join_n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = join_n.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
+		B95125B41AA6293C00F7B210 /* type_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = type_array.cpp; path = playground/type_array.cpp; sourceTree = "<group>"; };
+		B95125B51AA6293C00F7B210 /* type_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = type_array.h; path = playground/type_array.h; sourceTree = "<group>"; };
 		B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = forth.cpp; path = words/forth.cpp; sourceTree = "<group>"; };
 		B9A2E7B51AA0FB1100EB1FF6 /* forth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = forth.h; path = words/forth.h; sourceTree = "<group>"; };
 		B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack.cpp; path = words/stack.cpp; sourceTree = "<group>"; };
@@ -389,6 +392,8 @@
 				B90F31811A0D8FBF001316CE /* playground.cpp */,
 				B9FF763C1A99BF4A0004A7E0 /* factory_evolution.cpp */,
 				B9FF763D1A99BF4A0004A7E0 /* factory_evolution.h */,
+				B95125B41AA6293C00F7B210 /* type_array.cpp */,
+				B95125B51AA6293C00F7B210 /* type_array.h */,
 			);
 			name = Playground;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 				B9FF76471A99C20B0004A7E0 /* pair.cpp in Sources */,
 				B90F31801A0D65A7001316CE /* custom_infix.cpp in Sources */,
 				B91017DC1A1AAAF50063D5D6 /* equal.cpp in Sources */,
+				B95125B61AA6293C00F7B210 /* type_array.cpp in Sources */,
 				B91017F11A1ACF770063D5D6 /* clear.cpp in Sources */,
 				B91017EB1A1ACEC00063D5D6 /* head.cpp in Sources */,
 				B91018031A1BBE140063D5D6 /* length.cpp in Sources */,
@@ -515,7 +521,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -553,7 +559,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

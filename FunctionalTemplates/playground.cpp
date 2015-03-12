@@ -114,16 +114,15 @@ const constexpr auto add_one = STATIC_LAMBDA(int x)
 };
 
 #include <vector>
-void run_playground() {
-    std::cout << add_one(41) << "\n";
-    std::vector<int> l { 1,2,3,4,5,6,7 };
-    for( auto& i:l){
-        std::cout << "i="<<i<<"\n";
-        i+=10;
-    }
-    
-    for( auto&& i:l)
-        std::cout << "i="<<i<<"\n";
-}
+
+
+
+
+template <typename T, T val> struct someval {
+    using type = T;
+    static constexpr T value = val;
+};
+
+
 
 

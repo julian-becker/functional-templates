@@ -12,6 +12,7 @@
 #include <type_traits> // for std::enable_if and std::is_base_of
 #include <unordered_map> // for std::unordered_map
 #include <typeindex>
+#include <future>
 
 namespace
 factory {

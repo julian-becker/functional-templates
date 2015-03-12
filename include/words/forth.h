@@ -179,6 +179,8 @@ words {
     
     /// [B] [A] cat == [B A]
     struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
+    
+    
 }
 
 void forth_test();

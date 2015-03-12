@@ -127,7 +127,7 @@ consuming_actor : actor {
     }
 };
 
-/*
+
 int run_playground()
 {
     std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
@@ -137,4 +137,4 @@ int run_playground()
     std::this_thread::sleep_for(std::chrono::seconds(10));
     return 0;
 }
-*/
+
