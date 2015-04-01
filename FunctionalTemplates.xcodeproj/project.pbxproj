@@ -42,6 +42,7 @@
 		B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */; };
 		B9A2E7B91AA0FB4900EB1FF6 /* stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */; };
 		B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */; };
+		B9BDE56A1ACC8C68003F82CB /* broker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9BDE5681ACC8C68003F82CB /* broker.cpp */; };
 		B9D87E411A38D8910023CD16 /* callable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E3F1A38D8910023CD16 /* callable.cpp */; };
 		B9D87E471A38DC0F0023CD16 /* semaphore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E451A38DC0F0023CD16 /* semaphore.cpp */; };
 		B9D87E4A1A38DF830023CD16 /* message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D87E481A38DF830023CD16 /* message.cpp */; };
@@ -147,6 +148,9 @@
 		B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack.cpp; path = words/stack.cpp; sourceTree = "<group>"; };
 		B9A2E7B81AA0FB4900EB1FF6 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = words/stack.h; sourceTree = "<group>"; };
 		B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = curry.cpp; sourceTree = "<group>"; };
+		B9BDE5681ACC8C68003F82CB /* broker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = broker.cpp; sourceTree = "<group>"; };
+		B9BDE5691ACC8C68003F82CB /* broker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = broker.h; sourceTree = "<group>"; };
+		B9BDE56B1ACC8CF7003F82CB /* i_actor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i_actor.h; sourceTree = "<group>"; };
 		B9D87E3F1A38D8910023CD16 /* callable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = callable.cpp; sourceTree = "<group>"; };
 		B9D87E401A38D8910023CD16 /* callable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = callable.h; sourceTree = "<group>"; };
 		B9D87E431A38D8D90023CD16 /* dtl_callable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtl_callable.h; sourceTree = "<group>"; };
@@ -372,6 +376,9 @@
 				B9D87E521A38E5CC0023CD16 /* thread_safe_queue.h */,
 				B9D87E541A38E7DE0023CD16 /* actor.cpp */,
 				B9D87E551A38E7DE0023CD16 /* actor.h */,
+				B9BDE5681ACC8C68003F82CB /* broker.cpp */,
+				B9BDE5691ACC8C68003F82CB /* broker.h */,
+				B9BDE56B1ACC8CF7003F82CB /* i_actor.h */,
 			);
 			path = multithreading;
 			sourceTree = "<group>";
@@ -472,6 +479,7 @@
 				B91017DF1A1AAC960063D5D6 /* fold.cpp in Sources */,
 				B9D87E471A38DC0F0023CD16 /* semaphore.cpp in Sources */,
 				B91017F41A1ACFEA0063D5D6 /* cons.cpp in Sources */,
+				B9BDE56A1ACC8C68003F82CB /* broker.cpp in Sources */,
 				B91017D91A1AA9A10063D5D6 /* meta_assert.cpp in Sources */,
 				B91017EE1A1ACF190063D5D6 /* tail.cpp in Sources */,
 				B9FF763E1A99BF4A0004A7E0 /* factory_evolution.cpp in Sources */,

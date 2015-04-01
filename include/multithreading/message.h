@@ -28,6 +28,7 @@ multithreading {
         message_wrapper : message_base {
             const std::tuple<TS...> content;
             explicit message_wrapper(TS&&...content) : content{std::forward<TS>(content)...} {}
+            message_wrapper(const TS&...content) = delete;
             virtual ~message_wrapper() throw() {}
         };
         
@@ -37,6 +38,8 @@ multithreading {
         message(TS&&...content)
         : msg(new message_wrapper<TS...>(std::forward<TS>(content)...))
         {}
+        
+        message(const message&) = delete;
         
         public:
         message(message&& other)
@@ -52,9 +55,8 @@ multithreading {
         struct
         dispatcher {
             message_base const * msg;
-            
 
-            
+                
             template <typename LAMBDA>
             dispatcher
             handle(LAMBDA handler) const {
