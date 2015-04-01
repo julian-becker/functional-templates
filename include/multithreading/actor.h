@@ -25,7 +25,7 @@ multithreading {
         incoming_msgs;
         
         /// must be declared after incoming_msgs due to construction order!
-        private: semaphore::interrupt&
+        private: interrupt
         interrupt;
         
         private: std::thread
@@ -37,7 +37,7 @@ multithreading {
         
         public:
         actor()
-        : interrupt(incoming_msgs.get_interrupt()), my_thread(
+        : interrupt(std::move(incoming_msgs.get_interrupt())), my_thread(
             [&]{
                 try {
                     notify(message(init_message()));

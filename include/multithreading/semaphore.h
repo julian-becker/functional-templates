@@ -19,86 +19,92 @@ multithreading {
 
     struct
     interrupt_exception {};
-
-    class
-    semaphore {
-        public: class
-        interrupt;
-
-        private: std::atomic<long>
-        counter;
-
-        private: mutable std::mutex
-        mutex;
-
-        // must be declared after our mutex due to construction order!
-        private: interrupt
-        *informed_by;
+    
+    class interrupt {
+        const std::shared_ptr<std::atomic<bool>>
+        is_interrupted;
         
-        private: std::condition_variable
+        const std::shared_ptr<std::condition_variable>
         cond;
         
-        public:
-        semaphore();
+        const std::shared_ptr<std::mutex>
+        mutex;
 
         public:
-        ~semaphore() throw();
-        
-        public: void
-        wait();
-        
-        public: interrupt&
-        get_interrupt() const { return *informed_by; }
-        
-        public: void
-        post() {
-            std::lock_guard<std::mutex> lock(mutex);
-            counter++;
-            cond.notify_one(); // never throws
-        }
-        
-        public: unsigned long
-        load () const {
-            return counter.load();
-        }
-        
-    };
+	interrupt(
+            const std::shared_ptr<std::condition_variable> cond,
+            const std::shared_ptr<std::atomic<bool>> is_interrupted,
+            const std::shared_ptr<std::mutex> mutex)
+        : cond(cond),
+          is_interrupted(is_interrupted),
+          mutex(mutex) {}
 
-
-    class
-    semaphore::interrupt {
-        private: std::atomic<bool>
-        triggered;
-
-        private: semaphore
-        *forward_posts_to;
-        
         public:
-        interrupt(semaphore *forward_posts_to) : triggered(false), forward_posts_to(forward_posts_to) {
-            assert(forward_posts_to);
-            std::lock_guard<std::mutex> lock(forward_posts_to->mutex);
-            forward_posts_to->informed_by = this;
-        }
-       
+        interrupt(interrupt&& other)
+        : cond(std::move(other.cond)),
+          is_interrupted(std::move(other.is_interrupted)),
+          mutex(std::move(other.mutex)) {}
+
+        public:
+        interrupt(const interrupt& other)
+        : cond(other.cond),
+          is_interrupted(other.is_interrupted),
+          mutex(other.mutex) {};
+
+        public:
+        ~interrupt() {}
+
         public: void
         trigger() {
-            assert(forward_posts_to);
-            std::lock_guard<std::mutex>(forward_posts_to->mutex);
-            
-            triggered = true;
-            forward_posts_to->cond.notify_one(); // never throws
+            is_interrupted->store(true);
+            cond->notify_all();
         }
 
         public: bool
         is_triggered () const throw() {
-            return triggered.load();
+            return is_interrupted->load();
         }
-        
+    };
+    
+    class
+    semaphore {
+        private: std::atomic<long>
+        counter;
+
+        private: std::shared_ptr<std::atomic<bool>>
+        is_interrupted;
+
+        private: const std::shared_ptr<std::mutex>
+        mutex;
+
+        private: const std::shared_ptr<std::condition_variable>
+        cond;
+
+        public:
+        semaphore();
+
+        public:
+        ~semaphore() throw() {}
+
         public: void
-        reset () throw() {
-            return triggered.store(false);
+        wait();
+
+        public: interrupt
+        get_interrupt() const { return interrupt(cond,is_interrupted,mutex); }
+
+        public: void
+        post() {
+                if(!is_interrupted || is_interrupted->load())
+                        throw std::make_error_condition(std::errc::io_error);
+                std::lock_guard<std::mutex> lock(*mutex);
+                counter++;
+                cond->notify_one(); // never throws
         }
-        
+
+        public: unsigned long
+        load () const {
+                return counter.load();
+        }
     };
 
 }

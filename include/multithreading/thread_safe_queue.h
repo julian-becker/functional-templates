@@ -36,7 +36,7 @@ namespace multithreading {
             return msg;
         }
         
-        public: semaphore::interrupt&
+        public: interrupt
         get_interrupt() const { return new_msg_notification.get_interrupt(); }
     };
 }

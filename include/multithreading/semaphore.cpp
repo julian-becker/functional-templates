@@ -10,21 +10,20 @@
 
 using namespace multithreading;
 
-semaphore::semaphore()  : counter(0L), informed_by(new interrupt(this)) {}
-
-// must be declared here because otherwise semaphore::interrupt is an incomplete type
-semaphore::~semaphore() throw()  {
-    delete informed_by;
-}
+semaphore::semaphore()
+: counter(0L),
+  is_interrupted(new std::atomic<bool>(false)),
+  cond(new std::condition_variable),
+  mutex(new std::mutex) {}
 
 void
 semaphore::wait() {
-    std::unique_lock<std::mutex> lock(mutex);
-    if(0L==counter) {
-        cond.wait(lock,[&]{
-            if(informed_by->is_triggered())
-                throw interrupt_exception();
-            return counter>0;
+    std::unique_lock<std::mutex> lock(*mutex);
+    if(0L==counter && !is_interrupted->load() && cond) {
+        cond->wait(lock,[&]{
+                if(is_interrupted->load())
+                        throw interrupt_exception();
+                return counter>0;
         });
     }
     counter--;
