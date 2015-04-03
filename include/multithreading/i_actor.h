@@ -14,7 +14,9 @@
 namespace
 multithreading {
 
-    using actor_id = size_t;
+    struct i_actor;
+    
+    using actor_id = i_actor const *;
     
     /// @brief: abstract actor interfaces
     struct
@@ -29,8 +31,8 @@ multithreading {
         run() = 0;
 
         /// @brief: Retrieve the actors id
-        public: virtual actor_id
-        get_id() const = 0;
+        public: actor_id
+        get_id() const { return this; };
 
         public: virtual
         ~i_actor() throw() {}

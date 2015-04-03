@@ -19,31 +19,27 @@
 
 using namespace multithreading;
 
-
-actor_id multithreading::generate_actor_id() {
-    static actor_id id = 0;
-    return id++;
-}
-
-
-
 /// @brief: An example for an actor that listens for a 'tic_message' event on the broker that
 ///         manages this actor's lifetime.
 struct
 consuming_actor : public actor {
 
+    std::chrono::time_point<std::chrono::steady_clock>
+    start_time;
+
     /// @brief: constructor
     /// @param broker:  The message broker that manages this actor's lifetime.
     public:
     consuming_actor(message_broker& broker)
-    : actor([&broker](const message& msg) {
+    : actor([this](const message& msg) {
         static size_t i=0;
         msg.get_dispatcher()
-//          .handle([](init_message u) {
-//            std::cout << "consuming_actor: init\n";
-//        })
-        .handle([](tic_message u)   {
-            std::cout << "consuming_actor: tic "<<++i<<"\n";
+          .handle([this](init_message u) {
+            std::cout << "consuming_actor: init\n";
+            this->start_time = std::chrono::steady_clock::now();
+        })
+        .handle([this](tic_message u)   {
+            std::cout << "consuming_actor: tic "<<++i<<" " << (std::chrono::steady_clock::now()-start_time).count()/1000000000.0 << "\n";
         });
       })
       {
@@ -56,7 +52,7 @@ int run_playground()
 {
     std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
     broker->run();
-    broker->register_actor<tic_actor<std::chrono::milliseconds>>(std::chrono::milliseconds(1));
+    broker->register_actor<tic_actor<std::chrono::milliseconds>>(std::chrono::milliseconds(100));
     broker->register_actor<consuming_actor>();
     std::this_thread::sleep_for(std::chrono::seconds(10));
     return 0;

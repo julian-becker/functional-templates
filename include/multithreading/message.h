@@ -66,7 +66,6 @@ multithreading {
         ///             message msg(/*some content*/);
         ///             msg.get_dispatcher()
         ///             .handle([](int i) { /*this will be executed if message contains an int*/ })
-        ///             .handle([](double d) { /*executed if message contains an double*/ })
         ///             .handle([](std::string) { /*executed if message contains an std::string*/ });
         struct
         dispatcher {
@@ -91,6 +90,8 @@ multithreading {
             }
         };
         
+        /// @brief: Returns a dispatcher object that can be used to dispatch behavior on the message depending on the type of the message content
+        ///         ATTENTION: The returned dispatcher is invalidated when the message itself is destroyed!
         dispatcher get_dispatcher() const {
             return dispatcher{msg};
         }

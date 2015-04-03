@@ -19,17 +19,11 @@
 namespace
 multithreading {
 
-    actor_id generate_actor_id();
-
     /// @brief: Implementation of the i_actor interface. In order to use this class, derive from it and
     ///         provide a behavior in form of a std::function<void(const message&)> to the constructor of actor
     class
     actor : public i_actor {
         protected: class init_message{};
-
-        /// a unique id that can be used to identify each actor instance
-        private: actor_id
-        id;
 
         /// pointer to the callable object that constitutes the actual actor behavior
         private: std::function<void(const message&)>
@@ -64,17 +58,12 @@ multithreading {
         ///                     }
         protected:
         actor(std::function<void(const message&)> behavior)
-        : id(generate_actor_id()), behavior(behavior),
+        : behavior(behavior),
           interrupt(incoming_msgs.get_interrupt()), my_thread()
         {
             notify(message(init_message()));
         }
-        
-        public: actor_id
-        get_id() const override final {
-            return id;
-        }
-        
+                
         
         /// @brief: Start the actor thread.
         ///         Any messages added to the incoming queue via notify() will now get processed.
