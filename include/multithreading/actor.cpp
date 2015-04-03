@@ -15,6 +15,7 @@
 #include <chrono>
 
 #include <multithreading/broker.h>
+#include <multithreading/tic_actor.h>
 
 using namespace multithreading;
 
@@ -24,30 +25,7 @@ actor_id multithreading::generate_actor_id() {
     return id++;
 }
 
-struct
-tic_message {};
 
-/// @brief: Actor that generates messages of type 'tic_message' at the specified regular interval
-template <typename INTERVAL_TYPE> struct
-tic_actor : actor {
-    private: INTERVAL_TYPE
-    duration;
-    
-    /// @brief: constructor for the tic_actor
-    /// @param broker:   The broker that manages this actor's lifetime.
-    /// @param duration: The time interval between the 'tic_message's that will be generated.
-    public:
-    tic_actor(message_broker& broker, INTERVAL_TYPE duration)
-    : duration(duration),
-      actor([this,&broker,duration](const message& msg) {
-        msg.get_dispatcher()
-        .handle([&broker,this,duration](init_message)   {
-            broker.notify(tic_message());
-            std::this_thread::sleep_for(duration);
-            this->notify(init_message());
-        });
-      }) {}
-};
 
 /// @brief: An example for an actor that listens for a 'tic_message' event on the broker that
 ///         manages this actor's lifetime.
@@ -79,12 +57,8 @@ int run_playground()
     std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
     broker->run();
     broker->register_actor<tic_actor<std::chrono::milliseconds>>(std::chrono::milliseconds(1));
-    actor_id consumer = broker->register_actor<consuming_actor>();
-    std::cout << "consumer id=" << consumer << std::endl;
-    //broker->post(consumer, message(tic_message()));
-    //broker->notify(message(tic_message()));
-    for(;;);
-    //std::this_thread::sleep_for(std::chrono::seconds(10));
+    broker->register_actor<consuming_actor>();
+    std::this_thread::sleep_for(std::chrono::seconds(10));
     return 0;
 }
 
