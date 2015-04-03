@@ -15,16 +15,22 @@
 #include <multithreading/i_actor.h>
 #include <multithreading/thread_safe_queue.h>
 
+
 namespace
 multithreading {
 
+    actor_id generate_actor_id();
 
     /// @brief: Implementation of the i_actor interface. In order to use this class, derive from it and
     ///         provide a behavior in form of a std::function<void(const message&)> to the constructor of actor
     class
     actor : public i_actor {
         protected: class init_message{};
-        
+
+        /// a unique id that can be used to identify each actor instance
+        private: actor_id
+        id;
+
         /// pointer to the callable object that constitutes the actual actor behavior
         private: std::function<void(const message&)>
         behavior;
@@ -47,6 +53,7 @@ multithreading {
         private: std::thread
         my_thread;
         
+        
         /// @brief: Constructor for the actor class
         /// @param behavior:  The actual behavior of the actor. This is typically initialized
         ///                   from a lambda expression like the following:
@@ -55,11 +62,18 @@ multithreading {
         ///                             handle([](int i){ /* handle integer message */ }).
         ///                             handle([](some_type t){ /* handle message t of type some_type */ });
         ///                     }
-        public:
+        protected:
         actor(std::function<void(const message&)> behavior)
-        : behavior(behavior),
+        : id(generate_actor_id()), behavior(behavior),
           interrupt(incoming_msgs.get_interrupt()), my_thread()
-        {}
+        {
+            notify(message(init_message()));
+        }
+        
+        public: actor_id
+        get_id() const override final {
+            return id;
+        }
         
         
         /// @brief: Start the actor thread.
@@ -68,9 +82,10 @@ multithreading {
         run() override final {
             my_thread = std::thread([&]{
                 try {
-                    notify(message(init_message()));
-                    while(!interrupt.is_triggered())
-                        behavior(incoming_msgs.wait_and_pop());
+                    while(!interrupt.is_triggered()) {
+                        message msg(incoming_msgs.wait_and_pop());
+                        behavior(std::move(msg));
+                    }
                 }
                 catch(...) {
                     exception = std::current_exception();

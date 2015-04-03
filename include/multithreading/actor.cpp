@@ -12,64 +12,79 @@
 #include <sstream>
 #include <map>
 #include <memory>
+#include <chrono>
 
 #include <multithreading/broker.h>
 
 using namespace multithreading;
 
 
+actor_id multithreading::generate_actor_id() {
+    static actor_id id = 0;
+    return id++;
+}
+
 struct
 tic_message {};
 
-struct
+/// @brief: Actor that generates messages of type 'tic_message' at the specified regular interval
+template <typename INTERVAL_TYPE> struct
 tic_actor : actor {
-    private: std::string
-    target;
+    private: INTERVAL_TYPE
+    duration;
     
-    private: message_broker& broker;
-    
+    /// @brief: constructor for the tic_actor
+    /// @param broker:   The broker that manages this actor's lifetime.
+    /// @param duration: The time interval between the 'tic_message's that will be generated.
     public:
-    tic_actor(message_broker& broker, const std::string& target)
-    : broker(broker), target(target),
-      actor([this](const message& msg) {
+    tic_actor(message_broker& broker, INTERVAL_TYPE duration)
+    : duration(duration),
+      actor([this,&broker,duration](const message& msg) {
         msg.get_dispatcher()
-        .handle([&](init_message)   {
-            this->broker.post(this->target,tic_message());
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        .handle([&broker,this,duration](init_message)   {
+            broker.notify(tic_message());
+            std::this_thread::sleep_for(duration);
             this->notify(init_message());
-           // std::this_thread::yield();
         });
       }) {}
-    
 };
 
-
+/// @brief: An example for an actor that listens for a 'tic_message' event on the broker that
+///         manages this actor's lifetime.
 struct
 consuming_actor : public actor {
-    private: message_broker& broker;
-    
+
+    /// @brief: constructor
+    /// @param broker:  The message broker that manages this actor's lifetime.
     public:
     consuming_actor(message_broker& broker)
-    : broker(broker), actor([](const message& msg) {
+    : actor([&broker](const message& msg) {
         static size_t i=0;
         msg.get_dispatcher()
-        .handle([](init_message) { std::cout << "consuming_actor: init_message\n";})
-        .handle([](tic_message u)   { if(++i%100==0) std::cout << "consuming_actor: tic "<<i<<"\n";})
-        .handle([](unsigned u)   { std::cout << "consuming_actor: unsigned: "<<u<<"\n";})
-        .handle([](unsigned u,std::string s)   { std::cout << "consuming_actor: unsigned: "<<u<<", string="<<s<<"\n";})
-        .handle([](std::function<void(std::string)> f,std::string s)   { f(s); })
-        .handle([](int i)        { std::cout << "consuming_actor: int: "<<i<<"\n";})
-        .handle([](std::string s){ std::cout << "consuming_actor: std::string: "<<s<<"\n";});
-      }) {}
+//          .handle([](init_message u) {
+//            std::cout << "consuming_actor: init\n";
+//        })
+        .handle([](tic_message u)   {
+            std::cout << "consuming_actor: tic "<<++i<<"\n";
+        });
+      })
+      {
+          // register this actor to be informed about all tic_messages that arrive at the broker
+          broker.register_forwarding(message_broker::type_wrapper<tic_message>(),get_id());
+      }
 };
-
 
 int run_playground()
 {
     std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
-    broker->register_actor<consuming_actor>("consuming_actor");
-    broker->register_actor<tic_actor>("tic_actor","consuming_actor");
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    broker->run();
+    broker->register_actor<tic_actor<std::chrono::milliseconds>>(std::chrono::milliseconds(1));
+    actor_id consumer = broker->register_actor<consuming_actor>();
+    std::cout << "consumer id=" << consumer << std::endl;
+    //broker->post(consumer, message(tic_message()));
+    //broker->notify(message(tic_message()));
+    for(;;);
+    //std::this_thread::sleep_for(std::chrono::seconds(10));
     return 0;
 }
 
