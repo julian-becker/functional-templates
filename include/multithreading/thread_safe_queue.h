@@ -19,18 +19,25 @@ namespace multithreading {
         private: std::queue<message>
         queue;
         
+        private: std::mutex
+        mutex;
+        
         private: semaphore
         new_msg_notification;
         
         public: void
         push(message&& msg) {
-            queue.push(std::move(msg));
+            {
+                std::lock_guard<std::mutex> lock(mutex);
+                queue.push(std::move(msg));
+            }
             new_msg_notification.post();
         }
         
         public: message
         wait_and_pop() {
             new_msg_notification.wait();
+            std::lock_guard<std::mutex> lock(mutex);
             auto msg(std::move(queue.front()));
             queue.pop();
             return msg;
