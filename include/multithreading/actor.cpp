@@ -52,9 +52,9 @@ int run_playground()
 {
     std::shared_ptr<message_broker> broker = std::make_shared<message_broker>();
     broker->run();
-    broker->register_actor<tic_actor<std::chrono::milliseconds>>(std::chrono::milliseconds(100));
+    broker->register_actor<tic_actor<std::chrono::microseconds>>(std::chrono::microseconds(10000));
     broker->register_actor<consuming_actor>();
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::this_thread::sleep_for(std::chrono::seconds(1000));
     return 0;
 }
 
