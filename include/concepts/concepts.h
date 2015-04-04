@@ -124,6 +124,12 @@ namespace concepts {
     {
     };
     
+    
+    /// @brief: Convenience wrapper for 'constrain<T,CONCEPTS...>::type', that allows using a type
+    ///         but ensuring it has the desired properties in one place.
+    template <typename T,typename...CONCEPTS> using
+    constrain_t = typename constrain<T,CONCEPTS...>::type;
+    
 
     
     /// @brief: Makes an unconstrained bare type 'T' constrained with an empty list of constraints.
