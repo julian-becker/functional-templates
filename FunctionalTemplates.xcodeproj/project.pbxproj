@@ -35,8 +35,7 @@
 		B91220B519FBB86600EBFA72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91220B419FBB86600EBFA72 /* main.cpp */; };
 		B91220B719FBB86600EBFA72 /* FunctionalTemplates.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B91220B619FBB86600EBFA72 /* FunctionalTemplates.1 */; };
 		B913533E1A251C5C007F4A5C /* concepts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913533C1A251C5C007F4A5C /* concepts.cpp */; };
-		B91353421A2520C5007F4A5C /* CopyConstructible.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353401A2520C5007F4A5C /* CopyConstructible.cpp */; };
-		B91353481A25216D007F4A5C /* Signed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353461A25216D007F4A5C /* Signed.cpp */; };
+		B91353421A2520C5007F4A5C /* BaseConcepts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353401A2520C5007F4A5C /* BaseConcepts.cpp */; };
 		B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913534A1A27CA7B007F4A5C /* join_n.cpp */; };
 		B95125B61AA6293C00F7B210 /* type_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B95125B41AA6293C00F7B210 /* type_array.cpp */; };
 		B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */; };
@@ -135,10 +134,8 @@
 		B91220CB19FBCAD100EBFA72 /* DoxygenDocs.docset */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoxygenDocs.docset; sourceTree = SOURCE_ROOT; };
 		B913533C1A251C5C007F4A5C /* concepts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = concepts.cpp; path = concepts/concepts.cpp; sourceTree = "<group>"; };
 		B913533D1A251C5C007F4A5C /* concepts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = concepts.h; path = concepts/concepts.h; sourceTree = "<group>"; };
-		B91353401A2520C5007F4A5C /* CopyConstructible.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopyConstructible.cpp; path = concepts/CopyConstructible.cpp; sourceTree = "<group>"; };
-		B91353411A2520C5007F4A5C /* CopyConstructible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyConstructible.h; path = concepts/CopyConstructible.h; sourceTree = "<group>"; };
-		B91353461A25216D007F4A5C /* Signed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Signed.cpp; path = concepts/Signed.cpp; sourceTree = "<group>"; };
-		B91353471A25216D007F4A5C /* Signed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Signed.h; path = concepts/Signed.h; sourceTree = "<group>"; };
+		B91353401A2520C5007F4A5C /* BaseConcepts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseConcepts.cpp; path = concepts/BaseConcepts.cpp; sourceTree = "<group>"; };
+		B91353411A2520C5007F4A5C /* BaseConcepts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseConcepts.h; path = concepts/BaseConcepts.h; sourceTree = "<group>"; };
 		B913534A1A27CA7B007F4A5C /* join_n.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = join_n.cpp; sourceTree = "<group>"; };
 		B913534B1A27CA7B007F4A5C /* join_n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = join_n.h; sourceTree = "<group>"; };
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
@@ -333,10 +330,8 @@
 			children = (
 				B913533C1A251C5C007F4A5C /* concepts.cpp */,
 				B913533D1A251C5C007F4A5C /* concepts.h */,
-				B91353401A2520C5007F4A5C /* CopyConstructible.cpp */,
-				B91353411A2520C5007F4A5C /* CopyConstructible.h */,
-				B91353461A25216D007F4A5C /* Signed.cpp */,
-				B91353471A25216D007F4A5C /* Signed.h */,
+				B91353401A2520C5007F4A5C /* BaseConcepts.cpp */,
+				B91353411A2520C5007F4A5C /* BaseConcepts.h */,
 			);
 			name = concepts;
 			sourceTree = "<group>";
@@ -520,10 +515,9 @@
 				B91018071A1BBED70063D5D6 /* meta_types.cpp in Sources */,
 				B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */,
 				B9D87E411A38D8910023CD16 /* callable.cpp in Sources */,
-				B91353421A2520C5007F4A5C /* CopyConstructible.cpp in Sources */,
+				B91353421A2520C5007F4A5C /* BaseConcepts.cpp in Sources */,
 				B91017E21A1AACF30063D5D6 /* conditional.cpp in Sources */,
 				B90F317D1A0C01B7001316CE /* logic.cpp in Sources */,
-				B91353481A25216D007F4A5C /* Signed.cpp in Sources */,
 				B91017FA1A1AD1DC0063D5D6 /* list_template.cpp in Sources */,
 				B91017CD1A1AA2500063D5D6 /* map.cpp in Sources */,
 				B91220B519FBB86600EBFA72 /* main.cpp in Sources */,

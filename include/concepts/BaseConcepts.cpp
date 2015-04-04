@@ -9,11 +9,12 @@
 #define ENABLE_TESTS
 
 #include <concepts/concepts.h>
-#include "CopyConstructible.h"
+#include "BaseConcepts.h"
 
 using namespace concepts;
 
-ASSERT(CopyConstructible::apply<int>);
+CONCEPT_ASSERT(Integral::apply<int>());
+CONCEPT_ASSERT_NOT(Integral::apply<double>());
 
 // ! @cond Doxygen_Suppress
 struct __not_copyable {
@@ -26,5 +27,5 @@ struct __copyable {
 
 // ! @endcond Doxygen_Suppress
 
-ASSERT(CopyConstructible::apply<__copyable>);
-ASSERT_NOT(CopyConstructible::apply<__not_copyable>);
+CONCEPT_ASSERT(CopyConstructible::apply<__copyable>());
+CONCEPT_ASSERT_NOT(CopyConstructible::apply<__not_copyable>());

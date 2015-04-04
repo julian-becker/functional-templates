@@ -15,6 +15,17 @@
 #include <list/join.h>
 #include <logic/logic.h>
 
+
+#if defined (ENABLE_TESTS)
+#define CONCEPT_ASSERT_(...) static_assert(__VA_ARGS__,#__VA_ARGS__)
+#else
+#define CONCEPT_ASSERT_(...)
+#endif
+
+#define CONCEPT_ASSERT_NOT(...) CONCEPT_ASSERT_(!__VA_ARGS__)
+#define CONCEPT_ASSERT(...) CONCEPT_ASSERT_(__VA_ARGS__)
+
+
 namespace concepts {
 
     /// helper meta-function to check if all given arguments are true
@@ -67,7 +78,7 @@ namespace concepts {
         static constexpr bool
         value =apply<TYPE>::value;
         
-        static_assert(value,"invalid concept instantiation");
+        //static_assert(value,"invalid concept instantiation");
     };
     
     
@@ -125,10 +136,19 @@ namespace concepts {
     };
     
     
-    /// @brief: Convenience wrapper for 'constrain<T,CONCEPTS...>::type', that allows using a type
+    template <typename TYPE, typename...CONCEPTS> struct
+    constrain_verified
+    : check_concept<typename get_type<TYPE>::type,
+               list::join<list::list<CONCEPTS...>, typename get_constraints<TYPE>::type>
+      >
+    {
+        static_assert(check_concept<typename get_type<TYPE>::type,list::join<list::list<CONCEPTS...>, typename get_constraints<TYPE>::type>>::value,"invalid concept instantiation");
+    };
+    
+    /// @brief: Convenience wrapper for 'constrain_verified<T,CONCEPTS...>::type', that allows using a type
     ///         but ensuring it has the desired properties in one place.
     template <typename T,typename...CONCEPTS> using
-    constrain_t = typename constrain<T,CONCEPTS...>::type;
+    constrain_t = typename constrain_verified<T,CONCEPTS...>::type;
     
 
     
@@ -154,6 +174,12 @@ namespace concepts {
     template <typename T> using
     ensure_constrained_t = typename ensure_constrained<T>::type;
     
+    
+    /// map any type to void. This is helpful for SFINAE-patterns because 'void_t<some_type>' is more specialized than 'void'.
+    template <typename T> using
+    void_t = void;
+
+    
     /// Use this for SFINAE in order to ensure that all types fulfill their concept requirements
     /// E.g.
     ///     template <
@@ -162,7 +188,7 @@ namespace concepts {
     ///     > struct
     ///     accepts_only_signed_type {}
     template <typename...TS> using
-    check = std::enable_if_t<all_true<ensure_constrained_t<TS>::value...>::value>;
+    check = void_t<std::enable_if_t<all_true<ensure_constrained_t<TS>::value...>::value>>;
 
 
 }
