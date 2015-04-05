@@ -128,7 +128,7 @@ words {
     int_ : push<meta_types::int_<N>> {};
     
     
-    /// [N] succ == [N+1]
+    /// int_<N> succ == int_<N+1>
     struct
     succ {
         template<typename STACK> struct
@@ -141,7 +141,7 @@ words {
         };
     };
 
-    /// [N] pred == [N-1]
+    /// int_<N> pred == int_<N-1>
     struct
     pred {
         template<typename STACK> struct
@@ -154,6 +154,51 @@ words {
         };
     };
     
+    /// int_<0> null == true
+    /// int_<N> null == false
+    struct
+    null {
+        template<typename STACK> struct
+        apply {
+            using top = typename STACK::top;
+            using newStack = typename STACK::pop::template push<meta_types::bool_<top::value==0>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+    
+    /// int_<A> int_<B> multiply == int_<A*B>
+    struct
+    multiply {
+        template<typename STACK> struct
+        apply {
+            using A = typename STACK::top;
+            using B = typename STACK::pop::top;
+            using newStack = typename STACK::pop::pop::template push<meta_types::int_<A::value*B::value>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+    
+    
+    /// [true]  [iftrue] [else] pred == iftrue
+    /// [false] [iftrue] [else] pred == else
+    struct
+    ifte {
+        template<typename STACK> struct
+        apply {
+            using elsequot = typename STACK::top;
+            using ifquot = typename STACK::pop::top;
+            constexpr static bool test = eval_t<typename STACK::pop::pop::top,typename STACK::pop::pop::pop>::top::value;
+            using newStack = typename STACK::pop::pop::pop;
+            using execute = std::conditional_t<test, ifquot, elsequot>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,execute,REST...>;
+        };
+    };
     
     /// [A] zap  ==
     struct zap : word<quote<>,k> {};
@@ -187,6 +232,9 @@ words {
     
     /// [B] [A] cat == [B A]
     struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
+    
+    struct fac;
+    struct fac : word<quote<null>,quote<succ>,quote<dup,pred,fac,multiply>,ifte> {};
     
 }
 
