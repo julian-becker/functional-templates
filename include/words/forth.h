@@ -227,6 +227,25 @@ words {
     };
     
     
+    /// [B] [A] concat == [B A]
+    struct
+    concat {
+        template<typename STACK> struct
+        apply {
+            using quoteA = typename STACK::top;
+            using quoteB = typename STACK::pop::top;
+            template <typename...> struct word_concatenator;
+            template <typename...WS1,typename...WS2> struct word_concatenator<word<WS1...>,word<WS2...>> {
+                using result = word<WS1...,WS2...>;
+            };
+            using newStack = typename STACK::pop::pop::template push<typename word_concatenator<quoteB,quoteA>::result>;
+            
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+    
     /// [A] zap  ==
     struct zap : word<quote<>,k> {};
     
@@ -234,7 +253,7 @@ words {
     struct dip : word<cake,k> {};
     
     /// [B] [A] cons == [[B] A]
-    struct cons : word<cake,quote<>,k> {};
+    struct cons : word<cake,zap> {};
     
     /// [A] i == A
     ///  using i = word<quote<quote<>>,dip,k> {}; // already defined as primitive
@@ -257,9 +276,14 @@ words {
     /// [B] [A] nip == [A]
     struct nip : word<swap,zap> {};
     
-    /// [B] [A] cat == [B A]
-    struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
-    
+    /// int_<N> int_<M> equal == bool_<N==M>
+    struct equal : word<negate,add,null> {};
+
+    /// int_<1> small == bool_<true>
+    /// int_<0> small == bool_<true>
+    /// int_<N> small == bool_<false> // N>1 or N<0
+    struct small : word<quote<int_<1>,equal>,quote<zap,bool_<true>>, quote<null>,ifte> {};
+
     /// int_<N> fac == int_<N!>
     struct fac;
     struct fac : word<quote<null>,quote<succ>,quote<dup,pred,fac,multiply>,ifte> {};
@@ -267,13 +291,14 @@ words {
     /// [x] [y] [A] [B] app2 == [x A] [y B]
     struct app2 : word<dup,dip,dip> {};
     
-    /// int_<1> small == bool_<true>
-    /// int_<0> small == bool_<true>
-    /// int_<N> small == bool_<false> // N>1 or N<0
-    struct small : word<quote<int_<-1>,add,null>,quote<zap,bool_<true>>,quote<null>,ifte> {};
-    
     struct fib;
     struct fib : word<quote<small>,quote<>,quote<pred,dup,pred,quote<fib>,app2,add>,ifte> {};
+    
+    struct fix : word<quote<dup,cons>,swap,concat,dup,cons> {};
+    
+    struct y : word<fix,i> {};
+    struct fib2 : word<quote<quote<zap,small>,quote<zap,zap,int_<1>>,quote<quote<pred,dup,pred>,dip,app2,add>,ifte>,y> {};
+
 }
 
 void forth_test();

@@ -41,13 +41,13 @@ void forth_test() {
     using resT7 = eval_t<word<int_<3>,int_<7>,quote<int_<11>,multiply>,app2>>;
     show<resT7>();
     
-    using resT8 = eval_t<word<int_<2>,small>>;
+    using resT8 = eval_t<word<int_<3>,int_<2>,equal>>;
     show<resT8>();
     
-    using resT9 = eval_t<word<int_<1>,fib>>;
+    using resT9 = eval_t<word<int_<5>,fib2>>;
     show<resT9>();
     
-    using resT10 = eval_t<word<int_<6>,fib>>;
+    using resT10 = eval_t<word<quote<int_<1>,int_<2>>,quote<int_<3>,int_<4>>,concat>>;
     show<resT10>();
     
 }
