@@ -17,10 +17,6 @@
 
 namespace
 words {
-
-    template <typename T> using
-    stack_of = typename T::stack;
-    
     template <typename WORD, typename STACK> using
     apply_to = typename WORD::template apply<STACK>;
     
@@ -30,24 +26,18 @@ words {
     /// @brief: This will be equal to the stack resulting from executing WORD and REMAINING_WORDS
     ///         with the stack STACK as input
     template <typename STACK, typename WORD, typename...REMAINING_WORDS> using
-    do_continuation_ext = stack_of<continuation_of<apply_to<WORD,STACK>,REMAINING_WORDS...>>;
+    do_continuation_ext = continuation_of<apply_to<WORD,STACK>,REMAINING_WORDS...>;
   
     struct
     id {
         template<typename STACK> struct
         apply {
             template<typename...> struct
-            continuation {
-                using
-                stack = STACK;
-            };
+            continuation : STACK {};
      
             template<typename WORD, typename... REST> struct
-            continuation<WORD, REST...> {
-                using
-                stack = do_continuation_ext<STACK,WORD,REST...>;
-            };
-      };
+            continuation<WORD, REST...> : do_continuation_ext<STACK,WORD,REST...> {};
+        };
     };
 
     template <typename STACK, typename...REMAINING_WORDS> using
@@ -57,11 +47,8 @@ words {
     word {
         template<typename STACK> struct
         apply {
-            template<typename... REST> struct
-            continuation {
-                using
-                stack = do_continuation< do_continuation<STACK,WORDS...>, REST...>;
-            };
+            template<typename... REST> using
+            continuation = do_continuation< do_continuation<STACK,WORDS...>, REST...>;
         };
     };
 
@@ -71,11 +58,9 @@ words {
     push {
         template<typename STACK> struct
         apply {
-            template<typename... REST> struct
-            continuation {
-                using newStack = typename STACK::template push<TS...>;
-                using stack = do_continuation<newStack,REST...>;
-            };
+            using newStack = typename STACK::template push<TS...>;
+            template<typename... REST> using
+            continuation = words::do_continuation<newStack,REST...>;
         };
     };
    
@@ -98,10 +83,8 @@ words {
     i {
         template<typename STACK> struct
         apply {
-            template<typename... REST> struct
-            continuation {
-                using stack = do_continuation<typename STACK::pop, typename STACK::top, REST...>;
-            };
+            template<typename... REST> using
+            continuation = do_continuation<typename STACK::pop, typename STACK::top, REST...>;
         };
     };
 
@@ -110,17 +93,15 @@ words {
     cake {
         template<typename STACK> struct
         apply {
-            template<typename... REST> struct
-            continuation {
-                using quotedA = push<typename STACK::top>;
-                using quotedB = push<typename STACK::pop::top>;
-                using newStack = typename STACK::pop::pop::
-                                    template push<
-                                        word<quotedB,quotedA,i>,
-                                        word<quotedA,i,quotedB>
-                                    >;
-                using stack = do_continuation<newStack, REST...>;
-            };
+            using quotedA = push<typename STACK::top>;
+            using quotedB = push<typename STACK::pop::top>;
+            using newStack = typename STACK::pop::pop::
+                                template push<
+                                    word<quotedB,quotedA,i>,
+                                    word<quotedA,i,quotedB>
+                                >;
+            template<typename... REST> using
+            continuation = do_continuation<newStack, REST...>;
         };
     };
     
@@ -129,12 +110,11 @@ words {
     k {
         template<typename STACK> struct
         apply {
-            template<typename... REST> struct
-            continuation {
-                using wordA = typename STACK::top;
-                using newStack = typename STACK::pop::pop;
-                using stack = do_continuation<newStack,wordA,REST...>;
-            };
+            using wordA = typename STACK::top;
+            using newStack = typename STACK::pop::pop;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,wordA,REST...>;
         };
     };
 
@@ -146,6 +126,34 @@ words {
 
     template <int N> struct
     int_ : push<meta_types::int_<N>> {};
+    
+    
+    /// [N] succ == [N+1]
+    struct
+    succ {
+        template<typename STACK> struct
+        apply {
+            using top = typename STACK::top;
+            using newStack = typename STACK::pop::template push<meta_types::int_<top::value+1>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+
+    /// [N] pred == [N-1]
+    struct
+    pred {
+        template<typename STACK> struct
+        apply {
+            using top = typename STACK::top;
+            using newStack = typename STACK::pop::template push<meta_types::int_<top::value-1>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+    
     
     /// [A] zap  ==
     struct zap : word<quote<>,k> {};
@@ -179,7 +187,6 @@ words {
     
     /// [B] [A] cat == [B A]
     struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
-    
     
 }
 
