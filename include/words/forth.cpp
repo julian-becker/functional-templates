@@ -38,5 +38,16 @@ void forth_test() {
     using resT6 = eval_t<word<int_<6>,fac>>; // -> stack<value_type<int,720>>
     show<resT6>();
     
+    using resT7 = eval_t<word<int_<3>,int_<7>,quote<int_<11>,multiply>,app2>>;
+    show<resT7>();
+    
+    using resT8 = eval_t<word<int_<2>,small>>;
+    show<resT8>();
+    
+    using resT9 = eval_t<word<int_<1>,fib>>;
+    show<resT9>();
+    
+    using resT10 = eval_t<word<int_<6>,fib>>;
+    show<resT10>();
     
 }

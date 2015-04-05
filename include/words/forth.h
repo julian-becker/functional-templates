@@ -182,6 +182,32 @@ words {
         };
     };
     
+    /// int_<A> int_<B> add == int_<A+B>
+    struct
+    add {
+        template<typename STACK> struct
+        apply {
+            using A = typename STACK::top;
+            using B = typename STACK::pop::top;
+            using newStack = typename STACK::pop::pop::template push<meta_types::int_<A::value+B::value>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
+    
+    /// int_<N> negate == int_<-N>
+    struct
+    negate {
+        template<typename STACK> struct
+        apply {
+            using A = typename STACK::top;
+            using newStack = typename STACK::pop::template push<meta_types::int_<-A::value>>;
+            
+            template<typename... REST> using
+            continuation = do_continuation<newStack,REST...>;
+        };
+    };
     
     /// [true]  [iftrue] [else] pred == iftrue
     /// [false] [iftrue] [else] pred == else
@@ -199,6 +225,7 @@ words {
             continuation = do_continuation<newStack,execute,REST...>;
         };
     };
+    
     
     /// [A] zap  ==
     struct zap : word<quote<>,k> {};
@@ -233,9 +260,20 @@ words {
     /// [B] [A] cat == [B A]
     struct cat : word<quote<quote<i>,dip,i>,cons,cons> {}; /// something wrong??
     
+    /// int_<N> fac == int_<N!>
     struct fac;
     struct fac : word<quote<null>,quote<succ>,quote<dup,pred,fac,multiply>,ifte> {};
     
+    /// [x] [y] [A] [B] app2 == [x A] [y B]
+    struct app2 : word<dup,dip,dip> {};
+    
+    /// int_<1> small == bool_<true>
+    /// int_<0> small == bool_<true>
+    /// int_<N> small == bool_<false> // N>1 or N<0
+    struct small : word<quote<int_<-1>,add,null>,quote<zap,bool_<true>>,quote<null>,ifte> {};
+    
+    struct fib;
+    struct fib : word<quote<small>,quote<>,quote<pred,dup,pred,quote<fib>,app2,add>,ifte> {};
 }
 
 void forth_test();

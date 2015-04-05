@@ -56,8 +56,10 @@ multithreading {
         ///                     that this actor accepts a 'message_broker' as first constructor argument.
         public: template <typename ACTOR_TYPE, typename...ACTOR_CONSTRUCTOR_ARGS> actor_id
         register_actor(ACTOR_CONSTRUCTOR_ARGS...args) {
+            // do not call constructor under the lock!
             std::unique_ptr<i_actor> new_actor = std::unique_ptr<i_actor>(new ACTOR_TYPE(*this, args...));
             const actor_id new_actor_id = new_actor->get_id();
+            
             std::lock_guard<std::mutex> lock(mutex);
             registry.emplace(new_actor_id,std::move(new_actor));
             registry[new_actor_id]->run();
