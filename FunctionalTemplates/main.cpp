@@ -15,17 +15,20 @@
 #include "playground.h"
 #include <callable/callable.h>
 #include <words/forth.h>
+#include <factory_evolution.h>
 
 int main(int argc, const char * argv[])
 {
     //test_callable();
     //run_playground();
     //test_curry();
-    forth_test();
+    test_polcies();
+/*    forth_test();
     for(auto& x : 10 <DOWN-TO> 1)
         std::cout << "x=" << x << std::endl;
     for(auto& x : 10 <UP-TO> 17)
         std::cout << "x=" << x << std::endl;
+        */
     return 0;
 }
 

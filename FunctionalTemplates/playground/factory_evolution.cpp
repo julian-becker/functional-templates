@@ -405,17 +405,18 @@ struct POperatinSystem {
 struct PChannelType {
     struct SockChannel {};
     struct FaroBusChannel {};
+    struct CanOpen {};
 };
 
-using policies = map<pair<PAllocationPolicy,PAllocationPolicy::NewDelete>>;
-using new_policies =
-        policies
+using new_policies = map<>
+        ::insert<PAllocationPolicy,PAllocationPolicy::MallocFree>
+        ::insert<PSerializationPolicy,PSerializationPolicy::Xml>
         ::insert<PSerializationPolicy,PSerializationPolicy::Xml>
         ::insert<POperatinSystem,POperatinSystem::Windows>;
 
 
 #include <type_traits>
-static_assert(std::is_same<new_policies::get<PAllocationPolicy>,PAllocationPolicy::NewDelete>::value,"error");
+static_assert(std::is_same<new_policies::get<PAllocationPolicy>,PAllocationPolicy::MallocFree>::value,"error");
 static_assert(std::is_same<new_policies::get<PSerializationPolicy>,PSerializationPolicy::Xml>::value,"error");
 
 #include <string>
@@ -454,29 +455,6 @@ ConcreteFile<POperatinSystem::Android> : IFile {
 /// Factory for IFile -------------------------
 
 
-template <typename POLICIES, typename=void> struct
-FileFactory;
-
-template <typename POLICIES> struct
-FileFactory<
-    POLICIES,
-    typename std::enable_if<
-        std::is_same<typename POLICIES::template get<PAllocationPolicy>,PAllocationPolicy::NewDelete>::value
-    >::type
->
-{
-    static IFile* create(){
-        return new File<POLICIES>;
-    }
-};
-
-
-/// Interface: Allocator ---------------------
-class IAllocator {
-    public: virtual void allocate(const size_t) = 0;
-    public: virtual ~IAllocator() throw() {}
-};
-
 template <typename ALLOCATION_POLICY> struct
 ConcreteAllocator;
 
@@ -484,22 +462,43 @@ template <typename POLICIES> using
 Allocator = ConcreteAllocator<get<POLICIES,PAllocationPolicy>>;
 
 
+template <typename POLICIES> struct
+FileFactory
+{
+    template <typename...Ts>
+    static IFile* create(Ts&&...args){
+        auto f = (IFile*)Allocator<POLICIES>().allocate(sizeof(File<POLICIES>));
+        new (f) File<POLICIES>(std::forward<Ts>(args)...);
+        return f;
+    }
+};
+
+
+/// Interface: Allocator ---------------------
+class IAllocator {
+    public: virtual void* allocate(const size_t) = 0;
+    public: virtual ~IAllocator() throw() {}
+};
+
 
 template <> struct
 ConcreteAllocator<PAllocationPolicy::NewDelete> : IAllocator {
-    template <typename T,typename...ARGS> static T* allocate(ARGS...args) {
-        return new T(args...);
+    template virtual void* allocate(const size_t size) override {
+        return new char[size];
     }
 };
 
 template <> struct
 ConcreteAllocator<PAllocationPolicy::MallocFree> : IAllocator {
-    template <typename T,typename...ARGS> static T* allocate(ARGS...args) {
-        T* p = std::malloc(sizeof(T));
+    template virtual void* allocate(const size_t size) override {
+        auto p = std::malloc(sizeof(size));
         if(!p) throw std::bad_alloc();
-        return new (p) T(args...);
+        return p;
     }
 };
 
-
+void test_polcies() {
+    auto f = FileFactory<new_policies>::create();
+    std::cout << "file name = " << f->getName() << std::endl;
+}
 

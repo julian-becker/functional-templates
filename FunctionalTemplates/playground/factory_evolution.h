@@ -11,4 +11,6 @@
 
 #include <stdio.h>
 
+void test_polcies();
+
 #endif /* defined(__FunctionalTemplates__factory_evolution__) */
