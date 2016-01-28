@@ -16,21 +16,6 @@
 #include <future>
 #include <stack>
 
-template <typename T>
-struct TAIL {
-    using rtail = T;
-    using type = TAIL;
-};
-
-template <typename HEAD, typename T = TAIL<HEAD>> struct
-list2 {
-    using head = HEAD;
-    using tail = T;
-    using rhead = typename T::type;
-};
-
-
-
 
 using namespace words;
 
@@ -39,18 +24,24 @@ show() {
     std::cout << demangle<T>() << std::endl;
 }
 
+template <typename T> struct make_lazy {
+    template <typename IN>
+    static auto action(std::future<IN> in) -> std::future<decltype(T::action(std::declval<IN>()))> {
+        return std::async([](std::future<IN>&& in1){ return T::action(in1.get()); },std::move(in));
+    }
+};
 
 struct
 compute {
     static auto action(int input) {
-        return std::async([=]{ return input*100 + 5; });
+        return input*100 + 5;
     }
 };
 
 struct
 add1 {
-    static std::future<double> action(int input) {
-        return std::async([=]{ return static_cast<double>(input+0.123); });
+    static auto action(int input) {
+        return static_cast<double>(input+0.123);
     }
 };
 
@@ -61,9 +52,7 @@ template <> struct
 bind<> {
     template <typename T>
     static auto action(T arg) {
-        std::promise<T> p;
-        p.set_value(arg);
-        return p.get_future();
+        return arg;
     }
 };
 
@@ -71,12 +60,30 @@ template <typename F1, typename...REST> struct
 bind<F1,REST...> {
     template <typename T>
     static auto action(T arg) {
-        return std::async(
-                    [=]{
-                        return bind<REST...>::action(
-                            F1::action(arg).get()
-                        ).get();
-                    });
+        return bind<REST...>::action(
+                        F1::action(arg)
+                    );
+    }
+};
+
+template <typename...> struct
+bind_lazy;
+
+template <> struct
+bind_lazy<> {
+    template <typename T>
+    static auto action(T arg) {
+        return arg;
+    }
+};
+
+template <typename F1, typename...REST> struct
+bind_lazy<F1,REST...> {
+    template <typename T>
+    static auto action(T arg) {
+        return bind_lazy<REST...>::action(
+                        make_lazy<F1>::action(std::move(arg))
+                    );
     }
 };
 
@@ -143,15 +150,22 @@ drop {
 
 template <typename...REST> struct
 comp<dup,drop,REST...> : comp<REST...> {};
-
 }
 
 void forth_test() {
     using act = bind<compute,add1,add1,compute>;
+    using act_lazy = bind_lazy<compute,add1,add1,compute>;
+    std::promise<int> p;
+    p.set_value(1);
+    show<decltype(act_lazy::action(p.get_future()))>();
     auto result_state = act::action(1);
     std::cout << "result=";
-    std::cout << result_state.get();
+    std::cout << result_state;
     std::cout << std::endl;
+    std::cout << "result lazy =";
+    std::cout << act_lazy::action(p.get_future()).get();
+    std::cout << std::endl;
+    
 
     using act1 = testspace1::comp<testspace1::dup,testspace1::drop,testspace1::dup,testspace1::drop>;
     std::stack<int> s;
