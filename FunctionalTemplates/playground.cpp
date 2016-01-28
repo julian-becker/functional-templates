@@ -124,5 +124,19 @@ template <typename T, T val> struct someval {
 };
 
 
+struct
+state {
+    int value;
+};
+
+
+struct
+action {
+    state execute(const state& state_in) {
+        return state{};
+    }
+};
+
+
 
 
