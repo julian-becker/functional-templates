@@ -22,6 +22,10 @@ int main(int argc, const char * argv[])
     //run_playground();
     //test_curry();
     forth_test();
+    for(auto& x : 10 <DOWN-TO> 1)
+        std::cout << "x=" << x << std::endl;
+    for(auto& x : 10 <UP-TO> 17)
+        std::cout << "x=" << x << std::endl;
     return 0;
 }
 

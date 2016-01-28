@@ -33,7 +33,7 @@ make_infix_ext<BINARY_FUNCTION> {
     OPERATOR{ auxiliary };
     
     public: static constexpr auto
-    infix_operator = OPERATOR::auxiliary;
+    result = OPERATOR::auxiliary;
     
     public: friend constexpr delay
     operator < (
@@ -61,9 +61,8 @@ __plus : public std::binary_function<int,int,int> {
 };
 
 
-
 static constexpr auto
-PLUS = make_infix_ext<__plus>::infix_operator;
+PLUS = make_infix_ext<__plus>::result;
 
 
 
@@ -79,11 +78,17 @@ __up_to : public std::binary_function<int,int,std::vector<int>> {
     }
 };
 
-static constexpr auto
-UPTO = make_infix_ext<__up_to>::infix_operator;
+constexpr auto
+UPTO = make_infix_ext<__up_to>::result;
 
+struct __up{};
+struct __to{};
+constexpr auto UP = __up{};
+constexpr auto TO = __to{};
 
-
+constexpr auto operator - (const __up&, const __to&) {
+    return UPTO;
+}
 
 struct
 __down_to : public std::binary_function<int,int,std::vector<int>> {
@@ -95,5 +100,13 @@ __down_to : public std::binary_function<int,int,std::vector<int>> {
     }
 };
 
-static constexpr auto
-DOWNTO = make_infix_ext<__down_to>::infix_operator;
+constexpr auto
+DOWNTO = make_infix_ext<__down_to>::result;
+
+struct __down{};
+constexpr auto DOWN = __down{};
+
+constexpr auto operator - (const __down&, const __to&) {
+    return DOWNTO;
+}
+
