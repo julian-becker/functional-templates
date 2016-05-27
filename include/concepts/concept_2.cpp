@@ -9,53 +9,59 @@
 #include "concept_signed.hpp"
 #include <type_traits>
 #include <functional>
+#include <future>
+#include <iostream>
 
-template <template <typename> class Concept> struct
+
+template <typename T, template <typename...> class Concept, typename = Concept<T>> struct
+concept_assert {};
+
+
+template <template <typename...> class Concept> struct
 c_both {
-    template <typename T1, typename T2, typename = Concept<T1>, typename = Concept<T2>> struct
-    concept_impl{};
+    template <typename T1, typename T2, typename = Concept<T1>, bool = std::is_same<T1,T2>::value> struct
+    concept_impl;
+
+    template <typename T1, typename T2, typename CommonConcept> struct
+    concept_impl<T1,T2,CommonConcept,true> : CommonConcept {};
     
     template <typename T1, typename T2> struct
     concept : concept_impl<T1,T2> {};
 };
 
 
-template <typename> struct
+template <typename T, typename Continuation1=T> struct
 c_monoid;
 
 
 
-template <typename BinOp, template <typename,typename> class Concept, typename = void>
+template <typename BinOp, typename = void>
 struct make_infix_ext;
 
 template <
-    typename BinOp,
-    template <typename,typename> class Concept
+    typename BinOp
 > struct
-make_infix_ext<BinOp, Concept> {
+make_infix_ext<BinOp> {
 
     private: template <typename T> struct
     delay {
         T arg1;
     };
     
-    private: enum class
-    Operator{ auxiliary };
-    
-    public: static constexpr auto
-    result = Operator::auxiliary;
+    public: static constexpr enum class
+    Operator{ } result { };
     
     public: template <typename T> friend
-    constexpr delay<T>
+    constexpr auto
     operator < (T&& arg1, const Operator&) {
-        return delay<T>{ std::forward<T>(arg1) };
+        return delay<std::decay_t<T>>{ std::forward<T>(arg1) };
     }
     
-    public: template <typename T, typename U, typename = Concept<T, U>> friend
-    constexpr U
-    operator > (const delay<T>&& delayed, U arg2)
+    public: template <typename T, typename U> friend
+    constexpr auto
+    operator > (delay<T>&& delayed, U&& arg2)
     {
-        return BinOp{}(std::move(delayed.arg1), arg2);
+        return BinOp{}(std::move(delayed.arg1), std::forward<U>(arg2));
     }
 };
 
@@ -114,33 +120,27 @@ c_signed<double> : c_signed_primitive<double> {};
 /// ###########################################
 /// ## MONOID
 /// ###########################################
-template <typename T> struct
-c_monoid;
-// {
-//      static T append(const T& a, const T& b) { return a <plus> b; }
-//      static constexpr T neutral = (T)0;
-// };
 
-template <typename Monoid, typename concept = c_monoid<Monoid>>
-Monoid operator + (const Monoid& a, const Monoid& b) {
-    return concept::append(a,b);
-}
 
 struct
 __plus_monoid {
-    template <typename T, typename concept = c_monoid<T>>
-    constexpr T operator() (const T& a, const T& b) const {
-        return concept::append(a,b);
+    template <
+        typename T,
+        typename U,
+        typename concept = c_both<c_monoid>::concept<std::decay_t<T>, std::decay_t<U>>
+    >
+    auto operator() (T&& a, U&& b) const {
+        return concept::append(std::forward<T>(a),std::forward<U>(b));
     }
 };
 
 static constexpr auto
-PLUS = make_infix_ext<__plus_monoid, c_both<c_monoid>::concept>::result;
+PLUS = make_infix_ext<__plus_monoid>::result;
 
 
 template <typename T> struct
 c_monoid_integral {
-    constexpr static T neutral = (T)0;
+    constexpr static T neutral() { return (T)0; }
     static T append(T i, T j) {
         return i + j;
     }
@@ -159,15 +159,26 @@ template <> struct
 c_monoid<long> : c_monoid_integral<long> {};
 
 
-
-
+template <typename T> struct
+c_monoid<std::future<T>> {
+    constexpr static std::future<T> neutral() {
+        std::promise<T> p;
+        p.set_value(c_monoid<T>::neutral());
+        return p.get_future();
+    }
+    
+    constexpr static std::future<T> append(std::future<T> a, std::future<T> b) {
+        return std::async(std::bind([](std::future<T>& a, std::future<T>& b){
+            return c_monoid<T>::append(a.get(),b.get());
+        }, std::move(a), std::move(b)));
+    }
+};
 
 
 struct
 my_signed_type {
     int val;
 };
-
 
 template <> struct
 c_signed<my_signed_type> {
@@ -178,6 +189,7 @@ c_signed<my_signed_type> {
         return my_signed_type{ -l.val };
     }
 };
+
 template <> struct
 c_monoid<my_signed_type> {
     static constexpr my_signed_type neutral{ 0 };
@@ -188,13 +200,14 @@ c_monoid<my_signed_type> {
 
 constexpr my_signed_type c_monoid<my_signed_type>::neutral;
 
+
 void test_concepts() {
     my_signed_type i{ -5 }, j{};
-    j = -i;
-    int t = -5, r, s;
-    i = i + j;
-    i = i + c_monoid<my_signed_type>::neutral;
-    auto y = 5 <PLUS> 7.7;
     auto z = i <PLUS> j;
+    auto a = std::async([]{ return my_signed_type{4}; });
+    auto b = std::async([]{ return my_signed_type{7}; });
+    auto c = std::move(a) <PLUS> std::move(b);
+    std::cout << "got: " << c.get().val << std::endl;
+    c_both<c_monoid>::concept<int,int> test;
 }
 
