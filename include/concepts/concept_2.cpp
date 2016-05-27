@@ -11,9 +11,13 @@
 #include <functional>
 #include <future>
 #include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <utility>
+
 
 #define REQUIRES typename =
-#define REQUIRE typename
 
 namespace __dtl {
     template <typename T, template <typename> class Concept>
@@ -24,10 +28,10 @@ namespace __dtl {
 }
 
 template <typename T, template <typename> class Concept> using
-assert_models = std::enable_if_t<decltype(__dtl::__models<T,Concept>({}))::value>;
+req_models = std::enable_if_t<decltype(__dtl::__models<T,Concept>({}))::value>;
 
 template <typename T, typename U> using
-assert_equals = std::enable_if_t<std::is_same<T,U>::value>;
+req_equals = std::enable_if_t<std::is_same<T,U>::value>;
 
 
 
@@ -71,9 +75,9 @@ c_signed;
 //     static T negate(const T&);
 // };
 
-template <typename Signed, REQUIRE concept = c_signed<Signed>>
-Signed operator - (const Signed& value) {
-    return concept::negate(value);
+template <typename T, REQUIRES req_models<std::decay_t<T>,c_signed>>
+auto operator - (T&& value) {
+    return c_signed<std::decay_t<T>>::negate(std::forward<T>(value));
 }
 
 template <typename T> struct
@@ -123,9 +127,9 @@ __plus_monoid {
     template <
         typename T,
         typename U,
-        REQUIRES assert_models<std::decay_t<T>, c_monoid>,
-        REQUIRES assert_models<std::decay_t<U>, c_monoid>,
-        REQUIRES assert_equals<std::decay_t<T>,std::decay_t<U>>
+        REQUIRES req_models<std::decay_t<T>, c_monoid>,
+        REQUIRES req_models<std::decay_t<U>, c_monoid>,
+        REQUIRES req_equals<std::decay_t<T>,std::decay_t<U>>
     >
     auto operator() (T&& a, U&& b) const {
         return c_monoid<std::decay_t<T>>::append(std::forward<T>(a),std::forward<U>(b));
@@ -173,6 +177,117 @@ c_monoid<std::future<T>> {
 };
 
 
+
+template <typename Iterable> struct
+c_monoid_iterable {
+    constexpr static Iterable neutral() {
+        return Iterable{};
+    }
+    
+    template <typename T, typename U, REQUIRES req_equals<std::decay_t<T>, std::decay_t<U>>>
+    constexpr static auto append(T&& a, U&& b) {
+        using std::begin;
+        using std::end;
+        Iterable result{};
+        std::copy(begin(a), end(a), std::back_inserter(result));
+        std::copy(begin(b), end(b), std::back_inserter(result));
+        return result;
+    }
+};
+
+template <typename T> struct
+c_monoid<std::list<T>> : c_monoid_iterable<std::list<T>> {};
+
+template <typename T> struct
+c_monoid<std::vector<T>> : c_monoid_iterable<std::vector<T>> {};
+
+template <typename T, typename U> struct
+c_monoid<std::map<T,U>> : c_monoid_iterable<std::map<T,U>> {};
+
+
+
+
+
+template <typename T> struct
+c_ostreamable;
+
+template <typename Iterable> struct
+c_ostreamable_iterable {
+    template <typename Iterable1, REQUIRES req_equals<std::decay_t<Iterable1>,Iterable>>
+    static std::ostream& writeTo(std::ostream& ostr, Iterable1&& val) {
+        using std::begin;
+        using std::end;
+        auto it = begin(val);
+        ostr << "{";
+        c_ostreamable<typename Iterable::value_type>::writeTo(ostr,*it++);
+        
+        if(it != val.end())
+            ostr << ", ";
+        
+        for(;it != end(val);) {
+            c_ostreamable<typename Iterable::value_type>::writeTo(ostr,*it++);
+            if(it == val.end())
+                break;
+            ostr << ", ";
+        }
+        ostr << "}";
+        return ostr;
+    }
+};
+
+template <typename T> struct
+c_ostreamable<std::vector<T>> : c_ostreamable_iterable<std::vector<T>> {};
+
+template <typename T> struct
+c_ostreamable<std::list<T>> : c_ostreamable_iterable<std::list<T>> {};
+
+template <typename T, typename U> struct
+c_ostreamable<std::map<T,U>> : c_ostreamable_iterable<std::map<T,U>> {};
+
+template <typename T, typename U> struct
+c_ostreamable<std::pair<T,U>> {
+    template <typename V, REQUIRES req_equals<std::decay_t<V>,std::pair<T,U>>>
+    static std::ostream& writeTo(std::ostream& ostr, V&& val) {
+        c_ostreamable<std::decay_t<T>>::writeTo(ostr, val.first);
+        ostr << ": ";
+        c_ostreamable<std::decay_t<U>>::writeTo(ostr, val.second);
+        return ostr;
+    }
+};
+
+template <typename T> struct
+c_ostreamable_builtin {
+    template <typename U, REQUIRES req_equals<std::decay_t<U>,T>>
+    static std::ostream& writeTo(std::ostream& ostr, U&& val) {
+        return ostr << std::forward<U>(val);
+    }
+};
+
+template <> struct
+c_ostreamable<char> {
+    template <typename U, REQUIRES req_equals<std::decay_t<U>,char>>
+    static std::ostream& writeTo(std::ostream& ostr, U&& val) {
+        return ostr << int{std::forward<U>(val)};
+    }
+};
+
+template <> struct
+c_ostreamable<short> : c_ostreamable_builtin<short> {};
+
+template <> struct
+c_ostreamable<int> : c_ostreamable_builtin<int> {};
+
+template <> struct
+c_ostreamable<long> : c_ostreamable_builtin<long> {};
+
+template <typename T, REQUIRES req_models<std::decay_t<T>, c_ostreamable>>
+std::ostream& operator << (std::ostream& ostr, T&& v) {
+    return c_ostreamable<std::decay_t<T>>::writeTo(ostr, std::forward<T>(v));
+}
+
+
+
+
 struct
 my_signed_type {
     int val;
@@ -200,6 +315,9 @@ constexpr my_signed_type c_monoid<my_signed_type>::neutral;
 
 
 
+
+
+
 struct no_monoid {} n;
 
 void test_concepts() {
@@ -207,7 +325,15 @@ void test_concepts() {
     auto z = i <PLUS> j;
     auto a = std::async([]{ return my_signed_type{4}; });
     auto b = std::async([]{ return my_signed_type{7}; });
-    auto c = std::move(a) <PLUS> std::move(b);
+    auto c = std::async([]{ return my_signed_type{111}; });
+    auto d = std::move(a) <PLUS> std::move(b) <PLUS> std::move(c);
     std::cout << "got: " << c.get().val << std::endl;
+    std::vector<int> result = std::vector<int>{ 1,2,3 } <PLUS> std::vector<int>{ 3, 4, 4 };
+    std::list<int> l1{ 1,2,3 }, l2{ 3, 4, 4 };
+    std::list<int> result1 = l1 <PLUS> l2;
+    std::map<char,std::list<std::pair<int,int>>> m{ {1,{{4,55}}}, {4, std::list<std::pair<int,int>>{{6,7},{122,123},{8,9},{98,99}}} };
+    
+    std::cout << m << std::endl;
+    std::cout << result1 << std::endl;
 }
 
