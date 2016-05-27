@@ -38,6 +38,7 @@
 		B91353421A2520C5007F4A5C /* BaseConcepts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91353401A2520C5007F4A5C /* BaseConcepts.cpp */; };
 		B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913534A1A27CA7B007F4A5C /* join_n.cpp */; };
 		B95125B61AA6293C00F7B210 /* type_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B95125B41AA6293C00F7B210 /* type_array.cpp */; };
+		B98B9D4E1CF8BFB200B6AFAB /* concept_2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B98B9D4C1CF8BFB200B6AFAB /* concept_2.cpp */; };
 		B9A2E7B61AA0FB1100EB1FF6 /* forth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */; };
 		B9A2E7B91AA0FB4900EB1FF6 /* stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */; };
 		B9A2E7BB1AA2FFB500EB1FF6 /* curry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9A2E7BA1AA2FFB500EB1FF6 /* curry.cpp */; };
@@ -141,6 +142,8 @@
 		B9443BF319FBD75D00CFA542 /* doxygen.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = doxygen.config; sourceTree = SOURCE_ROOT; };
 		B95125B41AA6293C00F7B210 /* type_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = type_array.cpp; path = playground/type_array.cpp; sourceTree = "<group>"; };
 		B95125B51AA6293C00F7B210 /* type_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = type_array.h; path = playground/type_array.h; sourceTree = "<group>"; };
+		B98B9D4C1CF8BFB200B6AFAB /* concept_2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = concept_2.cpp; path = concepts/concept_2.cpp; sourceTree = "<group>"; };
+		B98B9D4D1CF8BFB200B6AFAB /* concept_signed.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = concept_signed.hpp; path = concepts/concept_signed.hpp; sourceTree = "<group>"; };
 		B9A2E7B41AA0FB1100EB1FF6 /* forth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = forth.cpp; path = words/forth.cpp; sourceTree = "<group>"; };
 		B9A2E7B51AA0FB1100EB1FF6 /* forth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = forth.h; path = words/forth.h; sourceTree = "<group>"; };
 		B9A2E7B71AA0FB4900EB1FF6 /* stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack.cpp; path = words/stack.cpp; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 				B913533D1A251C5C007F4A5C /* concepts.h */,
 				B91353401A2520C5007F4A5C /* BaseConcepts.cpp */,
 				B91353411A2520C5007F4A5C /* BaseConcepts.h */,
+				B98B9D4C1CF8BFB200B6AFAB /* concept_2.cpp */,
+				B98B9D4D1CF8BFB200B6AFAB /* concept_signed.hpp */,
 			);
 			name = concepts;
 			sourceTree = "<group>";
@@ -506,6 +511,7 @@
 				B91017F71A1AD1680063D5D6 /* last.cpp in Sources */,
 				B913533E1A251C5C007F4A5C /* concepts.cpp in Sources */,
 				B913534C1A27CA7B007F4A5C /* join_n.cpp in Sources */,
+				B98B9D4E1CF8BFB200B6AFAB /* concept_2.cpp in Sources */,
 				B91017FD1A1BB7990063D5D6 /* init.cpp in Sources */,
 				B9FF763A1A99B84E0004A7E0 /* Factory.cpp in Sources */,
 				B910180A1A1BC0CE0063D5D6 /* subscript.cpp in Sources */,
