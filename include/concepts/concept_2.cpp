@@ -12,36 +12,27 @@
 #include <future>
 #include <iostream>
 
+#define REQUIRES typename =
+#define REQUIRE typename
 
-template <typename T, template <typename...> class Concept, typename = Concept<T>> struct
-concept_assert {};
+namespace __dtl {
+    template <typename T, template <typename> class Concept>
+    auto __models(Concept<T>) -> std::true_type;
 
+    template <typename T, template <typename> class Concept>
+    auto __models(...) -> std::false_type;
+}
 
-template <template <typename...> class Concept> struct
-c_both {
-    template <typename T1, typename T2, typename = Concept<T1>, bool = std::is_same<T1,T2>::value> struct
-    concept_impl;
+template <typename T, template <typename> class Concept> using
+assert_models = std::enable_if_t<decltype(__dtl::__models<T,Concept>({}))::value>;
 
-    template <typename T1, typename T2, typename CommonConcept> struct
-    concept_impl<T1,T2,CommonConcept,true> : CommonConcept {};
-    
-    template <typename T1, typename T2> struct
-    concept : concept_impl<T1,T2> {};
-};
-
-
-template <typename T, typename Continuation1=T> struct
-c_monoid;
+template <typename T, typename U> using
+assert_equals = std::enable_if_t<std::is_same<T,U>::value>;
 
 
 
-template <typename BinOp, typename = void>
-struct make_infix_ext;
-
-template <
-    typename BinOp
-> struct
-make_infix_ext<BinOp> {
+template <typename BinOp> struct
+make_infix_ext {
 
     private: template <typename T> struct
     delay {
@@ -57,7 +48,9 @@ make_infix_ext<BinOp> {
         return delay<std::decay_t<T>>{ std::forward<T>(arg1) };
     }
     
-    public: template <typename T, typename U> friend
+    public: template <
+        typename T, typename U
+    > friend
     constexpr auto
     operator > (delay<T>&& delayed, U&& arg2)
     {
@@ -78,7 +71,7 @@ c_signed;
 //     static T negate(const T&);
 // };
 
-template <typename Signed, typename concept = c_signed<Signed>>
+template <typename Signed, REQUIRE concept = c_signed<Signed>>
 Signed operator - (const Signed& value) {
     return concept::negate(value);
 }
@@ -121,16 +114,21 @@ c_signed<double> : c_signed_primitive<double> {};
 /// ## MONOID
 /// ###########################################
 
+template <typename T> struct
+c_monoid;
+
 
 struct
 __plus_monoid {
     template <
         typename T,
         typename U,
-        typename concept = c_both<c_monoid>::concept<std::decay_t<T>, std::decay_t<U>>
+        REQUIRES assert_models<std::decay_t<T>, c_monoid>,
+        REQUIRES assert_models<std::decay_t<U>, c_monoid>,
+        REQUIRES assert_equals<std::decay_t<T>,std::decay_t<U>>
     >
     auto operator() (T&& a, U&& b) const {
-        return concept::append(std::forward<T>(a),std::forward<U>(b));
+        return c_monoid<std::decay_t<T>>::append(std::forward<T>(a),std::forward<U>(b));
     }
 };
 
@@ -201,6 +199,9 @@ c_monoid<my_signed_type> {
 constexpr my_signed_type c_monoid<my_signed_type>::neutral;
 
 
+
+struct no_monoid {} n;
+
 void test_concepts() {
     my_signed_type i{ -5 }, j{};
     auto z = i <PLUS> j;
@@ -208,6 +209,5 @@ void test_concepts() {
     auto b = std::async([]{ return my_signed_type{7}; });
     auto c = std::move(a) <PLUS> std::move(b);
     std::cout << "got: " << c.get().val << std::endl;
-    c_both<c_monoid>::concept<int,int> test;
 }
 
