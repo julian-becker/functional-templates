@@ -13,6 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <sstream>
 #include <map>
 #include <utility>
 
@@ -29,6 +30,10 @@ namespace __dtl {
 
 template <typename T, template <typename> class Concept> using
 req_models = std::enable_if_t<decltype(__dtl::__models<T,Concept>({}))::value>;
+
+template <typename T, typename U> using
+req_equals = std::enable_if_t<std::is_same<T,U>::value>;
+
 
 template <typename T, typename U> using
 req_equals = std::enable_if_t<std::is_same<T,U>::value>;
@@ -280,11 +285,66 @@ c_ostreamable<int> : c_ostreamable_builtin<int> {};
 template <> struct
 c_ostreamable<long> : c_ostreamable_builtin<long> {};
 
+template <> struct
+c_ostreamable<double> : c_ostreamable_builtin<double> {};
+
 template <typename T, REQUIRES req_models<std::decay_t<T>, c_ostreamable>>
 std::ostream& operator << (std::ostream& ostr, T&& v) {
     return c_ostreamable<std::decay_t<T>>::writeTo(ostr, std::forward<T>(v));
 }
 
+template <template <typename...> class> struct
+c_functor;
+
+template <template <typename...> class T> struct
+c_functor_iterable {
+    //fmap :: (a -> b) -> f a -> f b
+    template <typename Callable>
+    static auto fmap(Callable&& fn) {
+        return std::bind([](Callable& fn, auto&& iterable) {
+            using std::begin;
+            using call_result_type = decltype(fn(*begin(iterable)));
+            T<std::decay_t<call_result_type>> result;
+            for(auto&& elem : iterable)
+                result.emplace_back(fn(std::forward<decltype(elem)>(elem)));
+            return result;
+        }, std::forward<Callable>(fn), std::placeholders::_1);
+    }
+};
+
+template <> struct
+c_functor<std::list> : c_functor_iterable<std::list> {};
+
+template <> struct
+c_functor<std::vector> : c_functor_iterable<std::vector> {};
+
+template <> struct
+c_functor<std::map> : c_functor_iterable<std::map> {};
+
+
+struct
+__fmap_functor {
+    template <
+        typename Callable,
+        template <typename...> class F,
+        typename U
+    >
+    auto operator() (Callable&& fn, const F<U>& b) const {
+        return c_functor<F>::fmap(std::forward<Callable>(fn))(b);
+    }
+    
+    template <
+        typename Callable,
+        template <typename...> class F,
+        typename U
+    >
+    auto operator() (Callable&& fn, F<U>&& b) const {
+        return c_functor<F>::fmap(std::forward<Callable>(fn))(std::move(b));
+    }
+};
+
+static constexpr auto
+FMAP = make_infix_ext<__fmap_functor>::result;
 
 
 
@@ -316,24 +376,34 @@ constexpr my_signed_type c_monoid<my_signed_type>::neutral;
 
 
 
-
-
 struct no_monoid {} n;
 
 void test_concepts() {
     my_signed_type i{ -5 }, j{};
     auto z = i <PLUS> j;
-    auto a = std::async([]{ return my_signed_type{4}; });
-    auto b = std::async([]{ return my_signed_type{7}; });
-    auto c = std::async([]{ return my_signed_type{111}; });
+    auto a = std::async([]{
+        return my_signed_type{4};
+    });
+    auto b = std::async([]{
+        return my_signed_type{7};
+    });
+    auto c = std::async([]{
+        return my_signed_type{111};
+    });
+    
     auto d = std::move(a) <PLUS> std::move(b) <PLUS> std::move(c);
-    std::cout << "got: " << c.get().val << std::endl;
+    std::cout << "got: " << d.get().val << std::endl;
     std::vector<int> result = std::vector<int>{ 1,2,3 } <PLUS> std::vector<int>{ 3, 4, 4 };
     std::list<int> l1{ 1,2,3 }, l2{ 3, 4, 4 };
     std::list<int> result1 = l1 <PLUS> l2;
     std::map<char,std::list<std::pair<int,int>>> m{ {1,{{4,55}}}, {4, std::list<std::pair<int,int>>{{6,7},{122,123},{8,9},{98,99}}} };
-    
-    std::cout << m << std::endl;
-    std::cout << result1 << std::endl;
+    auto lam = [](std::string s) -> double {
+        double d;
+        std::stringstream{s} >> d;
+        return d;
+    };
+    auto plus2 = [](double x) -> double { return x + 2; };
+    std::list<std::string> l3{ "1.", "3.", "4.5" };
+    std::cout << (lam <FMAP> l3) << std::endl;
 }
 
