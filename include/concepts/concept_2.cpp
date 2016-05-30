@@ -14,7 +14,10 @@
 #include <vector>
 #include <list>
 #include <sstream>
+#include <set>
+#include <unordered_set>
 #include <map>
+#include <unordered_map>
 #include <utility>
 
 
@@ -34,10 +37,8 @@ req_models = std::enable_if_t<decltype(__dtl::__models<T,Concept>({}))::value>;
 template <typename T, typename U> using
 req_equals = std::enable_if_t<std::is_same<T,U>::value>;
 
-
 template <typename T, typename U> using
-req_equals = std::enable_if_t<std::is_same<T,U>::value>;
-
+req_compatible = std::enable_if_t<std::is_same<std::decay_t<T>,std::decay_t<U>>::value>;
 
 
 template <typename BinOp> struct
@@ -69,341 +70,179 @@ make_infix_ext {
 
 
 
-
-
-
-/// concept of signedness:
-template <typename T> struct
-c_signed;
-// {
-//     static bool is_negative(const T&);
-//     static T negate(const T&);
-// };
-
-template <typename T, REQUIRES req_models<std::decay_t<T>,c_signed>>
-auto operator - (T&& value) {
-    return c_signed<std::decay_t<T>>::negate(std::forward<T>(value));
-}
-
-template <typename T> struct
-c_signed_primitive {
-    static bool is_negative(T val) {
-        return val<(T)0;
-    }
-    static T negate(T i) {
-        return -i;
-    }
-};
-
-template <> struct
-c_signed<char> : c_signed_primitive<char> {};
-
-template <> struct
-c_signed<short> : c_signed_primitive<short> {};
-
-template <> struct
-c_signed<int> : c_signed_primitive<int> {};
-
-template <> struct
-c_signed<long> : c_signed_primitive<long> {};
-
-template <> struct
-c_signed<float> : c_signed_primitive<float> {};
-
-template <> struct
-c_signed<double> : c_signed_primitive<double> {};
-
-
-
-
-
-
-
 /// ###########################################
 /// ## MONOID
 /// ###########################################
 
-template <typename T> struct
+
+
+struct __plus_tag{};
+struct __times_tag{};
+
+template <typename T, typename Tag = __plus_tag> struct
 c_monoid;
 
+template <typename T, typename TAG> struct
+c_monoid_builtin;
+
+template <typename T> struct
+c_monoid_builtin<T,__plus_tag> {
+    constexpr static T neutral() { return (T)0; }
+    static T append(T i, T j) {
+        return std::move(i) + std::move(j);
+    }
+};
+
+template <typename T> struct
+c_monoid_builtin<T,__times_tag> {
+    constexpr static T neutral() { return (T)0; }
+    static T append(T i, T j) {
+        return i * j;
+    }
+};
 
 struct
 __plus_monoid {
-    template <
-        typename T,
-        typename U,
-        REQUIRES req_models<std::decay_t<T>, c_monoid>,
-        REQUIRES req_models<std::decay_t<U>, c_monoid>,
-        REQUIRES req_equals<std::decay_t<T>,std::decay_t<U>>
-    >
+    template <typename T, typename U>
     auto operator() (T&& a, U&& b) const {
-        return c_monoid<std::decay_t<T>>::append(std::forward<T>(a),std::forward<U>(b));
+        return c_monoid<std::common_type_t<std::decay_t<T>,std::decay_t<U>>, __plus_tag>::append(std::forward<T>(a),std::forward<U>(b));
     }
 };
 
+struct
+__times_monoid {
+    template <typename T, typename U>
+    auto operator() (T&& a, U&& b) const {
+        return c_monoid<std::common_type_t<std::decay_t<T>,std::decay_t<U>>, __times_tag>::append(std::forward<T>(a),std::forward<U>(b));
+    }
+};
+
+// left associative
 static constexpr auto
 PLUS = make_infix_ext<__plus_monoid>::result;
 
+// left associative
+static constexpr auto
+TIMES = make_infix_ext<__times_monoid>::result;
+
+#define MONOID_BUILTIN_IMPL(T,TAG) \
+    template <> struct \
+    c_monoid<T,TAG> : c_monoid_builtin<T,TAG> {}
+
+MONOID_BUILTIN_IMPL(char,__times_tag);
+MONOID_BUILTIN_IMPL(char,__plus_tag);
+MONOID_BUILTIN_IMPL(unsigned char,__times_tag);
+MONOID_BUILTIN_IMPL(unsigned char,__plus_tag);
+MONOID_BUILTIN_IMPL(short,__times_tag);
+MONOID_BUILTIN_IMPL(short,__plus_tag);
+MONOID_BUILTIN_IMPL(unsigned short,__times_tag);
+MONOID_BUILTIN_IMPL(unsigned short,__plus_tag);
+MONOID_BUILTIN_IMPL(int,__times_tag);
+MONOID_BUILTIN_IMPL(int,__plus_tag);
+MONOID_BUILTIN_IMPL(unsigned int,__times_tag);
+MONOID_BUILTIN_IMPL(unsigned int,__plus_tag);
+MONOID_BUILTIN_IMPL(long,__times_tag);
+MONOID_BUILTIN_IMPL(long,__plus_tag);
+MONOID_BUILTIN_IMPL(unsigned long,__times_tag);
+MONOID_BUILTIN_IMPL(unsigned long,__plus_tag);
+MONOID_BUILTIN_IMPL(std::string,__plus_tag);
+
 
 template <typename T> struct
-c_monoid_integral {
-    constexpr static T neutral() { return (T)0; }
-    static T append(T i, T j) {
-        return i + j;
-    }
-};
-
-template <> struct
-c_monoid<char> : c_monoid_integral<char> {};
-
-template <> struct
-c_monoid<short> : c_monoid_integral<short> {};
-
-template <> struct
-c_monoid<int> : c_monoid_integral<int> {};
-
-template <> struct
-c_monoid<long> : c_monoid_integral<long> {};
-
-
-template <typename T> struct
-c_monoid<std::future<T>> {
-    constexpr static std::future<T> neutral() {
-        std::promise<T> p;
-        p.set_value(c_monoid<T>::neutral());
-        return p.get_future();
-    }
-    
-    constexpr static std::future<T> append(std::future<T> a, std::future<T> b) {
-        return std::async(std::bind([](std::future<T>& a, std::future<T>& b){
-            return c_monoid<T>::append(a.get(),b.get());
-        }, std::move(a), std::move(b)));
-    }
-};
-
-
-
-template <typename Iterable> struct
-c_monoid_iterable {
-    constexpr static Iterable neutral() {
-        return Iterable{};
-    }
-    
-    template <typename T, typename U, REQUIRES req_equals<std::decay_t<T>, std::decay_t<U>>>
-    constexpr static auto append(T&& a, U&& b) {
-        using std::begin;
-        using std::end;
-        Iterable result{};
-        std::copy(begin(a), end(a), std::back_inserter(result));
-        std::copy(begin(b), end(b), std::back_inserter(result));
+c_monoid_builtin_back_insertable {
+    constexpr static T neutral() { return {}; }
+    template <typename U, typename V>
+    static T append(U&& a, V&& b) {
+        T result(a);
+        std::copy(b.begin(), b.end(), std::back_inserter(result));
         return result;
     }
 };
 
 template <typename T> struct
-c_monoid<std::list<T>> : c_monoid_iterable<std::list<T>> {};
+c_monoid_builtin_insertable {
+    constexpr static T neutral() { return {}; }
+    template <typename U, typename V>
+    static T append(U&& a, V&& b) {
+        T result(a);
+        std::copy(b.begin(), b.end(), std::inserter(result,result.end()));
+        return result;
+    }
+};
 
 template <typename T> struct
-c_monoid<std::vector<T>> : c_monoid_iterable<std::vector<T>> {};
+c_monoid<std::vector<T>,__plus_tag> : c_monoid_builtin_back_insertable<std::vector<T>> {};
+
+template <typename T> struct
+c_monoid<std::list<T>,__plus_tag> : c_monoid_builtin_back_insertable<std::list<T>> {};
 
 template <typename T, typename U> struct
-c_monoid<std::map<T,U>> : c_monoid_iterable<std::map<T,U>> {};
-
-
-
-
-
-template <typename T> struct
-c_ostreamable;
-
-template <typename Iterable> struct
-c_ostreamable_iterable {
-    template <typename Iterable1, REQUIRES req_equals<std::decay_t<Iterable1>,Iterable>>
-    static std::ostream& writeTo(std::ostream& ostr, Iterable1&& val) {
-        using std::begin;
-        using std::end;
-        auto it = begin(val);
-        ostr << "{";
-        c_ostreamable<typename Iterable::value_type>::writeTo(ostr,*it++);
-        
-        if(it != val.end())
-            ostr << ", ";
-        
-        for(;it != end(val);) {
-            c_ostreamable<typename Iterable::value_type>::writeTo(ostr,*it++);
-            if(it == val.end())
-                break;
-            ostr << ", ";
-        }
-        ostr << "}";
-        return ostr;
-    }
-};
-
-template <typename T> struct
-c_ostreamable<std::vector<T>> : c_ostreamable_iterable<std::vector<T>> {};
-
-template <typename T> struct
-c_ostreamable<std::list<T>> : c_ostreamable_iterable<std::list<T>> {};
+c_monoid<std::map<T, U>,__plus_tag> : c_monoid_builtin_insertable<std::map<T,U>> {};
 
 template <typename T, typename U> struct
-c_ostreamable<std::map<T,U>> : c_ostreamable_iterable<std::map<T,U>> {};
+c_monoid<std::multimap<T, U>,__plus_tag> : c_monoid_builtin_insertable<std::multimap<T,U>> {};
 
 template <typename T, typename U> struct
-c_ostreamable<std::pair<T,U>> {
-    template <typename V, REQUIRES req_equals<std::decay_t<V>,std::pair<T,U>>>
-    static std::ostream& writeTo(std::ostream& ostr, V&& val) {
-        c_ostreamable<std::decay_t<T>>::writeTo(ostr, val.first);
-        ostr << ": ";
-        c_ostreamable<std::decay_t<U>>::writeTo(ostr, val.second);
-        return ostr;
-    }
-};
+c_monoid<std::unordered_map<T, U>,__plus_tag> : c_monoid_builtin_insertable<std::unordered_map<T,U>> {};
 
 template <typename T> struct
-c_ostreamable_builtin {
-    template <typename U, REQUIRES req_equals<std::decay_t<U>,T>>
-    static std::ostream& writeTo(std::ostream& ostr, U&& val) {
-        return ostr << std::forward<U>(val);
-    }
-};
+c_monoid<std::set<T>,__plus_tag> : c_monoid_builtin_insertable<std::set<T>> {};
 
-template <> struct
-c_ostreamable<char> {
-    template <typename U, REQUIRES req_equals<std::decay_t<U>,char>>
-    static std::ostream& writeTo(std::ostream& ostr, U&& val) {
-        return ostr << int{std::forward<U>(val)};
-    }
-};
+template <typename T> struct
+c_monoid<std::multiset<T>,__plus_tag> : c_monoid_builtin_insertable<std::multiset<T>> {};
 
-template <> struct
-c_ostreamable<short> : c_ostreamable_builtin<short> {};
+template <typename T> struct
+c_monoid<std::unordered_set<T>,__plus_tag> : c_monoid_builtin_insertable<std::unordered_set<T>> {};
 
-template <> struct
-c_ostreamable<int> : c_ostreamable_builtin<int> {};
 
-template <> struct
-c_ostreamable<long> : c_ostreamable_builtin<long> {};
 
-template <> struct
-c_ostreamable<double> : c_ostreamable_builtin<double> {};
-
-template <typename T, REQUIRES req_models<std::decay_t<T>, c_ostreamable>>
-std::ostream& operator << (std::ostream& ostr, T&& v) {
-    return c_ostreamable<std::decay_t<T>>::writeTo(ostr, std::forward<T>(v));
-}
-
-template <template <typename...> class> struct
+//class Functor f where
+//  fmap :: (a -> b) -> f a -> f b
+template <typename T> struct
 c_functor;
 
-template <template <typename...> class T> struct
-c_functor_iterable {
-    //fmap :: (a -> b) -> f a -> f b
-    template <typename Callable>
-    static auto fmap(Callable&& fn) {
-        return std::bind([](Callable& fn, auto&& iterable) {
-            using std::begin;
-            using call_result_type = decltype(fn(*begin(iterable)));
-            T<std::decay_t<call_result_type>> result;
-            for(auto&& elem : iterable)
-                result.emplace_back(fn(std::forward<decltype(elem)>(elem)));
+template <typename T> struct
+c_functor<std::list<T>> {
+    template <typename Fn>
+    static auto fmap(Fn&& f) {
+        return std::bind([](Fn& f, const std::list<T>& a){
+            std::list<decltype(f(std::declval<T>()))> result;
+            std::transform(a.begin(), a.end(), std::back_inserter(result), f);
             return result;
-        }, std::forward<Callable>(fn), std::placeholders::_1);
+        }, std::forward<Fn>(f), std::placeholders::_1);
     }
 };
-
-template <> struct
-c_functor<std::list> : c_functor_iterable<std::list> {};
-
-template <> struct
-c_functor<std::vector> : c_functor_iterable<std::vector> {};
-
-template <> struct
-c_functor<std::map> : c_functor_iterable<std::map> {};
 
 
 struct
-__fmap_functor {
-    template <
-        typename Callable,
-        template <typename...> class F,
-        typename U
-    >
-    auto operator() (Callable&& fn, const F<U>& b) const {
-        return c_functor<F>::fmap(std::forward<Callable>(fn))(b);
-    }
-    
-    template <
-        typename Callable,
-        template <typename...> class F,
-        typename U
-    >
-    auto operator() (Callable&& fn, F<U>&& b) const {
-        return c_functor<F>::fmap(std::forward<Callable>(fn))(std::move(b));
+__functor_fmap {
+    template <typename T, typename U>
+    auto operator() (T&& a, U&& b) const {
+        return c_functor<std::decay_t<U>>::fmap(std::forward<T>(a))(std::forward<U>(b));
     }
 };
 
+// left associative
 static constexpr auto
-FMAP = make_infix_ext<__fmap_functor>::result;
-
-
-
-struct
-my_signed_type {
-    int val;
-};
-
-template <> struct
-c_signed<my_signed_type> {
-    static bool is_negative(const my_signed_type l) {
-        return l.val<0L;
-    }
-    static my_signed_type negate(const my_signed_type& l) {
-        return my_signed_type{ -l.val };
-    }
-};
-
-template <> struct
-c_monoid<my_signed_type> {
-    static constexpr my_signed_type neutral{ 0 };
-    static my_signed_type append(const my_signed_type& a, const my_signed_type& b) {
-        return my_signed_type{ a.val + b.val };
-    }
-};
-
-constexpr my_signed_type c_monoid<my_signed_type>::neutral;
-
-
+FMAP = make_infix_ext<__functor_fmap>::result;
 
 
 struct no_monoid {} n;
 
 void test_concepts() {
-    my_signed_type i{ -5 }, j{};
-    auto z = i <PLUS> j;
-    auto a = std::async([]{
-        return my_signed_type{4};
-    });
-    auto b = std::async([]{
-        return my_signed_type{7};
-    });
-    auto c = std::async([]{
-        return my_signed_type{111};
-    });
-    
-    auto d = std::move(a) <PLUS> std::move(b) <PLUS> std::move(c);
-    std::cout << "got: " << d.get().val << std::endl;
-    std::vector<int> result = std::vector<int>{ 1,2,3 } <PLUS> std::vector<int>{ 3, 4, 4 };
-    std::list<int> l1{ 1,2,3 }, l2{ 3, 4, 4 };
-    std::list<int> result1 = l1 <PLUS> l2;
-    std::map<char,std::list<std::pair<int,int>>> m{ {1,{{4,55}}}, {4, std::list<std::pair<int,int>>{{6,7},{122,123},{8,9},{98,99}}} };
-    auto lam = [](std::string s) -> double {
-        double d;
-        std::stringstream{s} >> d;
-        return d;
-    };
-    auto plus2 = [](double x) -> double { return x + 2; };
-    std::list<std::string> l3{ "1.", "3.", "4.5" };
-    std::cout << (lam <FMAP> l3) << std::endl;
+    auto z1 = 1 <PLUS> 2 <PLUS> 6;
+    auto z2 = 2 <TIMES> 5;
+    auto z3 = std::string("hello") <PLUS> " world!";
+    auto z4 = std::vector<int>{ 1, 2, 3 } <PLUS> std::vector<int>{ 4, 5, 6, 7 };
+    auto z5 = std::set<int>{ 1,2,3 } <PLUS> std::set<int>{ 1, 4, 6 };
+    auto z6 = std::unordered_set<int>{ 1,2,3 } <PLUS> std::unordered_set<int>{ 1, 4, 6 };
+    auto z7 = std::unordered_map<int,int>{ {1, 100}, {2, 200}, {3, 300} } <PLUS> std::unordered_map<int,int>{ {1, 100}, {4, 400}, {6, 600} };
+    auto z8 = std::multiset<int>{ 1,2,3 } <PLUS> std::multiset<int>{ 1, 4, 6 };
+    auto z9 = std::map<int,int>{ {1, 100}, {2, 200}, {3, 300} } <PLUS> std::map<int,int>{ {1, 100}, {4, 400}, {6, 600} };
+    auto z10= std::multimap<int,int>{ {1, 100}, {2, 200}, {3, 300} } <PLUS> std::multimap<int,int>{ {1, 100}, {4, 400}, {6, 600} };
+    std::cout << "z3 = " << z3 << std::endl;
+    auto toString = [](int i){ return (std::ostringstream{} << i).str(); };
+    auto z11 = toString <FMAP> std::list<int>{ 1, 3, 4, 5, 6, 7 };
+    for(const auto&x : z11) std::cout << x << std::endl;
 }
 
